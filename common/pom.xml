@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.blackship</groupId>
+        <artifactId>battlesheep</artifactId>
+        <version>${project.version}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <groupId>com.blackship.battlesheep</groupId>
+    <artifactId>common</artifactId>
+    <version>${project.common.version}</version>
+    <packaging>jar</packaging>
+
+    <name>battlesheep-common</name>
+
+    <properties>
+        <pustefixframework.version>0.20.30</pustefixframework.version>
+        <commons.version>3.6</commons.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.pustefixframework.samples.modules</groupId>
+            <artifactId>common-module</artifactId>
+            <version>${pustefixframework.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>

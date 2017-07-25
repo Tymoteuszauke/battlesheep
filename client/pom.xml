@@ -1,0 +1,28 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.blackship</groupId>
+        <artifactId>battlesheep</artifactId>
+        <version>${project.version}</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <groupId>com.blackship.battlesheep</groupId>
+    <artifactId>client</artifactId>
+    <version>${project.client.version}</version>
+    <packaging>jar</packaging>
+
+    <name>battlesheep-client</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.blackship.battlesheep</groupId>
+            <artifactId>common</artifactId>
+            <version>${project.common.version}</version>
+        </dependency>
+    </dependencies>
+
+</project>
