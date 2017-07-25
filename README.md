@@ -1,6 +1,6 @@
 ### This is readme file for Battleships game (redo).
-#### - Project description for this build:
-- only structure of the project (pom + README)
+#### - Project description for this review:
+- only AppSocketServer (tests)
 #### How to run:
 ##### - Installation:
     - mvn clean install
