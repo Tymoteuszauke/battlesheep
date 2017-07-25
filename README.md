@@ -1,6 +1,6 @@
 ### This is readme file for Battleships game (redo).
 #### - Project description for this build:
-- only structure of the project (pom + README)
+- only add client with function to connect with server
 #### How to run:
 ##### - Installation:
     - mvn clean install
