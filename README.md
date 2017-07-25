@@ -1,5 +1,6 @@
-#### This is readme file for Battleships game (redo).
-
+### This is readme file for Battleships game (redo).
+#### - Project description for this build:
+- only structure of the project (pom + README)
 #### How to run:
 ##### - Installation:
     - mvn clean install
@@ -9,7 +10,7 @@
 ##### - generate test coverage:
     - mvn jacoco:report
 
- - to generate sonar statistic, first download sonar https://www.sonarqube.org/downloads/ , run SonarServer.bat from sonar folder location/bin ,
+ - to generate sonar statistic, first download sonar https://www.sonarqube.org/downloads/ , run SonarServer.bat or SonarServer.sh from sonar folder location/bin ,
  then proceed via terminal in project folder:
     `- mvn sonar:sonar`
 
@@ -20,7 +21,6 @@
     `- mvn checkstyle:checkstyle`
 
 ### For code reviewers
-##### - only structure of the project (pom + README)
  run script with all plugins: inside folder 'script'
 
     - run './generate_reports.sh' generate jacoco, findbugs, checkstyle reports
