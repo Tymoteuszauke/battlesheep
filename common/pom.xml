@@ -6,13 +6,13 @@
     <parent>
         <groupId>com.blackship</groupId>
         <artifactId>battlesheep</artifactId>
-        <version>${project.version}</version>
+        <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <groupId>com.blackship.battlesheep</groupId>
     <artifactId>common</artifactId>
-    <version>${project.common.version}</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>battlesheep-common</name>
