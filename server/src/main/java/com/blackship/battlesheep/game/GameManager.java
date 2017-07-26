@@ -14,7 +14,6 @@ public class GameManager implements Game {
         this.board = new StartingBoard();
     }
 
-    //TODO: refactor
     @Override
     public String boardsState() {
         return board.boardLayout();

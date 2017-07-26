@@ -1,7 +1,6 @@
 package com.blackship.battlesheep.game.state;
 
 import com.blackship.battlesheep.game.TestUtils;
-import com.blackship.battlesheep.game.state.Board;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -14,7 +13,7 @@ import static org.testng.Assert.assertNotNull;
  */
 @Test
 public class StartingBoardTest {
-    Board startingBoard;
+    private Board startingBoard;
 
     @Test
     public void shouldReturnStartingBoardNotNull() {
