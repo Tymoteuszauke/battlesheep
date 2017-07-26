@@ -14,6 +14,11 @@ import static org.testng.Assert.assertNotNull;
 public class GameManagerTest {
     private Game gameManager;
 
+    @BeforeTest
+    public void setUp() {
+        this.gameManager = new GameManager();
+    }
+
     @Test
     public void shouldCreateNewGameManager() {
         //given gameManager
@@ -34,10 +39,5 @@ public class GameManagerTest {
 
         //then
         assertEquals(givenBoardState, expectedBoardState);
-    }
-
-    @BeforeTest
-    public void setUp() {
-        this.gameManager = new GameManager();
     }
 }

@@ -11,6 +11,8 @@ public class TestUtils {
     private static final Integer ROW_SIZE = 10;
     private static final Integer BOARD_FIRST_FIELD = 1;
 
+    private TestUtils(){}
+
     public static String generateEmptyBoardState() {
         StringBuilder stringBuilder = new StringBuilder();
         IntStream.rangeClosed(BOARD_FIRST_FIELD, BOARD_SIZE).forEach(x -> {
