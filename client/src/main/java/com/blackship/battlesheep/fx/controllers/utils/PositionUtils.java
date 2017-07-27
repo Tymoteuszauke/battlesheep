@@ -1,8 +1,8 @@
 package com.blackship.battlesheep.fx.controllers.utils;
 
 /**
- * @author Mateusz Słaboński on 26.07.17
- * @project
+ * @author Mateusz Słaboński
+ * @since 26.07.17
  */
 public class PositionUtils {
 
