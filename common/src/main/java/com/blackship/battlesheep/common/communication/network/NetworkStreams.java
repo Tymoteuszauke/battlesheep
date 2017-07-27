@@ -12,7 +12,7 @@ public class NetworkStreams implements Streams {
 
     private Socket socket;
 
-    NetworkStreams(Socket socket) {
+    public NetworkStreams(Socket socket) {
         this.socket = socket;
     }
 

@@ -10,7 +10,7 @@ public class NetworkReader implements Reader {
 
     private InputStream inputStream;
 
-    NetworkReader(InputStream inputStream) {
+    public NetworkReader(InputStream inputStream) {
         this.inputStream = inputStream;
     }
 
@@ -19,8 +19,9 @@ public class NetworkReader implements Reader {
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
-        for(int inputValue = inputStream.read(); inputValue != -1 || inputStream.available() < 0 ; inputValue = inputStream.read()) {
+        for(int inputValue = inputStream.read(); inputValue != -1; inputValue = inputStream.read()) {
             byteArrayOutputStream.write(inputValue);
+            if (inputStream.available() <= 0) break;
         }
 
         return byteArrayOutputStream.toByteArray();
