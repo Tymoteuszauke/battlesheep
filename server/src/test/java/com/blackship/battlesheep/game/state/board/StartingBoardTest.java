@@ -1,6 +1,8 @@
-package com.blackship.battlesheep.game.state;
+package com.blackship.battlesheep.game.state.board;
 
 import com.blackship.battlesheep.game.TestUtils;
+import com.blackship.battlesheep.game.state.board.Board;
+import com.blackship.battlesheep.game.state.board.StartingBoard;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
