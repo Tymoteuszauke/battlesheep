@@ -26,7 +26,6 @@ public class BoardModifierTest {
     private Object[][] boardSheepData() {
         return new Object[][] {
                 {new ArrayList<>(Arrays.asList(1, 11, 12, 13))},
-                {new ArrayList<>(Arrays.asList(22, 23, 24, 34))},
                 {new ArrayList<>(Arrays.asList(1, 11 , 21, 31))}
         };
     }
@@ -34,7 +33,7 @@ public class BoardModifierTest {
     @DataProvider
     private Object[][] boardSheepsData() {
         return new Object[][] {
-                {}
+                {new ArrayList<>(Arrays.asList(new Ship(new ArrayList<>(Arrays.asList(1, 11, 21)))))}
         };
     }
 
@@ -61,15 +60,8 @@ public class BoardModifierTest {
         //given StartingBoard
 
         //when
-        Board givenBoard = BoardModifier.insertShips(board, givenShips);
+        Board givenBoard = BoardModifier.insertShips(givenShips);
         //then
-
-
-        assertEquals(givenBoard.getShip(givenShips.get(0)), givenShips.get(0));
-        assertEquals(givenBoard.getShip(givenShips.get(1)), givenShips.get(1));
-        assertEquals(givenBoard.getShip(givenShips.get(2)), givenShips.get(2));
+        assertEquals(givenBoard.getPositions().get(1), new Position(1, FieldState.TAKEN));
     }
-
-
-
 }

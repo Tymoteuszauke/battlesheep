@@ -7,6 +7,7 @@ import com.blackship.battlesheep.game.state.fleet.Ship;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 /**
  * @author Anna Gawda
@@ -14,9 +15,8 @@ import java.util.Map;
  */
 public class BoardModifier {
 
-    private BoardModifier() {}
-
-
+    private BoardModifier() {
+    }
 
     public static Board insertShip(Board board, List<Integer> shipPositions) {
         Map<Integer, Position> boardPositions = new HashMap<>(board.getPositions());
@@ -24,11 +24,15 @@ public class BoardModifier {
         return new GameBoard(boardPositions);
     }
 
-    public static Board insertShips(Board board, List<Ship> ships) {
-        Board refreshedBoard = board;
+    public static Board insertShips(List<Ship> ships) {
+        Map<Integer, Position> insertShips = new HashMap<>();
         for (Ship ship : ships) {
-            refreshedBoard = insertShip(refreshedBoard, ship.getPositions());
+            for (Integer i : ship.getPositions()) {
+                insertShips.put(i, new Position(i, FieldState.TAKEN));
+            }
         }
-        return refreshedBoard;
+
+        IntStream.rangeClosed(1, 100).forEach(i -> insertShips.putIfAbsent(i, new Position(i)));
+        return new GameBoard(insertShips);
     }
 }

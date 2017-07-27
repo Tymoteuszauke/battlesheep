@@ -11,6 +11,7 @@ import java.util.Map;
 public class GameBoard implements Board {
 
     private Map<Integer, Position> positions;
+    private final Integer ROW_SIZE = 10;
 
     public GameBoard(Map<Integer, Position> positions) {
         this.positions = positions;
@@ -18,11 +19,23 @@ public class GameBoard implements Board {
 
     @Override
     public String boardLayout() {
-        return null;
+        StringBuilder stringBuilder = new StringBuilder();
+        positions.forEach((k, v) -> {
+            stringBuilder.append(String.format("%2s", String.valueOf(v.getFieldState())));
+            if (isNewLine(v.getPosition())) {
+                stringBuilder.append(System.getProperty("line.separator"));
+            }
+        });
+
+        return stringBuilder.toString();
     }
 
     @Override
     public Map<Integer, Position> getPositions() {
         return positions;
+    }
+
+    private boolean isNewLine(Integer x) {
+        return x % ROW_SIZE == 0;
     }
 }

@@ -2,7 +2,9 @@ package com.blackship.battlesheep.game.state.board;
 
 import com.blackship.battlesheep.game.Position;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 /**
@@ -44,8 +46,6 @@ public class StartingBoard implements Board {
 
     private void fillStartingPositions() {
         IntStream.rangeClosed(BOARD_FIRST_FIELD, BOARD_SIZE)
-                .forEach(x -> {
-                    positions.put(x, new Position(x));
-                });
+                .forEach(x -> positions.put(x, new Position(x)));
     }
 }

@@ -11,12 +11,12 @@ import static org.testng.Assert.assertNotNull;
  * @since 26.07.17
  */
 @Test
-public class GameManagerTest {
+public class StartingGameTest {
     private Game gameManager;
 
     @BeforeTest
     public void setUp() {
-        this.gameManager = new GameManager();
+        this.gameManager = new StartingGame();
     }
 
     @Test
