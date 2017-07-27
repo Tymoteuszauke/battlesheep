@@ -10,9 +10,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * @author Mateusz Słaboński on 27.07.17
+ * @project
+ */
 public class BoardController {
 
     private final static int BOARD_SIZE = 10;
@@ -41,23 +42,13 @@ public class BoardController {
         loggerInfoTextArea.appendText(moveValue + "\n");
         positionTextField.clear();
 
-        int position = Integer.parseInt(moveValue) - 1;
-        int[] positionCoordinates = PositionUtils.calculateOneDimensionalPosition(position, BOARD_SIZE);
+        int position = Integer.parseInt(moveValue);
+        int[] positionCoordinates = PositionUtils.calculateFromOneDimensionalPosition(position - 1, BOARD_SIZE);
 
         Label label = new Label("X");
         label.setStyle("-fx-font-size: 25px;");
         positionTextField.requestFocus();
         playerGridPane.add(label, positionCoordinates[0], positionCoordinates[1]);
         GridPane.setHalignment(label, HPos.CENTER);
-
-
     }
-
-
-
-//    public Label createField(int position) {
-//        int[] positionCoordinates = PositionUtils.calculateOneDimensionalPosition(position, BOARD_SIZE);
-//
-//
-//    }
 }

@@ -17,9 +17,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Mateusz Słaboński on 27.07.17
+ * @project
+ */
 public class ConnectController extends Application {
-
-    private final static Logger logger = LoggerFactory.getLogger(ConnectController.class);
 
     @FXML
     public Button connectButton;
