@@ -9,7 +9,7 @@ public class NetworkWriter implements Writer {
 
     private OutputStream outputStream;
 
-    NetworkWriter(OutputStream outputStream) {
+    public NetworkWriter(OutputStream outputStream) {
         this.outputStream = outputStream;
     }
 
