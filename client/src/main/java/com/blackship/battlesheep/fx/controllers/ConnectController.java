@@ -1,4 +1,4 @@
-package com.blackship.battlesheep.fx;
+package com.blackship.battlesheep.fx.controllers;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -14,16 +14,24 @@ import org.slf4j.LoggerFactory;
 import javafx.scene.Node;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * @author Mateusz Słaboński on 27.07.17
+ * @project
+ */
 public class ConnectController extends Application {
-
-    private final static Logger logger = LoggerFactory.getLogger(ConnectController.class);
 
     @FXML
     public Button connectButton;
 
     @FXML
     public TextField ipAddressTextField;
+
+    public static void main(String[] args) {
+        Application.launch(ConnectController.class);
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -46,5 +54,4 @@ public class ConnectController extends Application {
         boardStage.setScene(scene);
         boardStage.show();
     }
-
 }
