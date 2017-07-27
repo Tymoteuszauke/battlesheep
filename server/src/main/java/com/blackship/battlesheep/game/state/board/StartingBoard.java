@@ -1,7 +1,10 @@
-package com.blackship.battlesheep.game.state;
+package com.blackship.battlesheep.game.state.board;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.blackship.battlesheep.game.Position;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 /**
@@ -9,26 +12,32 @@ import java.util.stream.IntStream;
  * @since 26.07.17
  */
 public class StartingBoard implements Board {
-    private final List<Integer> positions;
+    private final Map<Integer, Position> positions;
     private final Integer BOARD_SIZE = 100;
     private final Integer ROW_SIZE = 10;
     private final Integer BOARD_FIRST_FIELD = 1;
 
     public StartingBoard() {
-        this.positions = new ArrayList<>(BOARD_SIZE);
+        this.positions = new HashMap<>(BOARD_SIZE);
         fillStartingPositions();
     }
 
     @Override
     public String boardLayout() {
         StringBuilder stringBuilder = new StringBuilder();
-        positions.forEach(x -> {
-            stringBuilder.append(String.format("%4s", String.valueOf(x)));
-            if (isNewLine(x)) {
+        positions.forEach((k, v) -> {
+            stringBuilder.append(String.format("%4s", String.valueOf(v.getPosition())));
+            if (isNewLine(v.getPosition())) {
                 stringBuilder.append(System.getProperty("line.separator"));
             }
         });
+
         return stringBuilder.toString();
+    }
+
+    @Override
+    public Map<Integer, Position> getPositions() {
+        return Collections.unmodifiableMap(positions);
     }
 
     private boolean isNewLine(Integer x) {
@@ -37,6 +46,6 @@ public class StartingBoard implements Board {
 
     private void fillStartingPositions() {
         IntStream.rangeClosed(BOARD_FIRST_FIELD, BOARD_SIZE)
-                .forEach(positions::add);
+                .forEach(x -> positions.put(x, new Position(x)));
     }
 }
