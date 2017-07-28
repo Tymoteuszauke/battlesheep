@@ -1,6 +1,4 @@
 ### This is readme file for Battleships game (redo).
-#### - Project description for this review:
-- only AppSocketServer (tests)
 #### How to run:
 ##### - Installation:
     - mvn clean install
@@ -9,6 +7,9 @@
 
 ##### - generate test coverage:
     - mvn jacoco:report
+
+##### - run client application (GUI only)
+    - mvn exec:java -pl client -Dexec.mainClass=com.blackship.battlesheep.AppClient
 
  - to generate sonar statistic, first download sonar https://www.sonarqube.org/downloads/ , run SonarServer.bat or SonarServer.sh from sonar folder location/bin ,
  then proceed via terminal in project folder:

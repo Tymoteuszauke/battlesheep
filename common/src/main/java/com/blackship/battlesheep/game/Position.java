@@ -4,7 +4,7 @@ import com.blackship.battlesheep.game.state.FieldState;
 
 /**
  * @author Anna Gawda
- * @since 26.07.17
+ * @since 26.07.2017
  */
 public class Position {
 

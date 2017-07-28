@@ -11,7 +11,7 @@ import java.util.stream.IntStream;
 
 /**
  * @author Anna Gawda
- * @since 26.07.17
+ * @since 26.07.2017
  */
 public class BoardModifier {
 

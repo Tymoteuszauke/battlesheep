@@ -10,12 +10,13 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.testng.Assert.assertEquals;
 
 /**
  * @author Anna Gawda
- * @since 26.07.17
+ * @since 26.07.2017
  */
 @Test
 public class BoardModifierTest {
@@ -23,7 +24,7 @@ public class BoardModifierTest {
     private Board board;
 
     @DataProvider
-    private Object[][] boardSheepData() {
+    private Object[][] boardPositions() {
         return new Object[][] {
                 {new ArrayList<>(Arrays.asList(1, 11, 12, 13))},
                 {new ArrayList<>(Arrays.asList(1, 11 , 21, 31))}
@@ -31,7 +32,7 @@ public class BoardModifierTest {
     }
 
     @DataProvider
-    private Object[][] boardSheepsData() {
+    private Object[][] boardShips() {
         return new Object[][] {
                 {new ArrayList<>(Arrays.asList(new Ship(new ArrayList<>(Arrays.asList(1, 11, 21)))))}
         };
@@ -42,21 +43,24 @@ public class BoardModifierTest {
         board = new StartingBoard();
     }
 
-    @Test(dataProvider = "boardSheepData")
-    public void insertShipExpectBoardWithInsertedShip(List<Integer> givenShip) {
+    @Test(dataProvider = "boardPositions")
+    public void shouldInsertPositionOnBoard(List<Integer> givenShip) {
         //given StartingBoard
 
         //when
         Board givenBoard  = BoardModifier.insertShip(board, givenShip);
+
         //then
-        assertEquals(givenBoard.getPositions().get(givenShip.get(0)), new Position(givenShip.get(0), FieldState.TAKEN));
-        assertEquals(givenBoard.getPositions().get(givenShip.get(1)), new Position(givenShip.get(1), FieldState.TAKEN));
-        assertEquals(givenBoard.getPositions().get(givenShip.get(2)), new Position(givenShip.get(2), FieldState.TAKEN));
-        assertEquals(givenBoard.getPositions().get(givenShip.get(3)), new Position(givenShip.get(3), FieldState.TAKEN));
+        //TODO givenBoard.getPositions().get(givenShip.get(ship)) to one method
+        IntStream.rangeClosed(0, 3)
+                .forEach(ship -> assertEquals(
+                        givenBoard.getPositions().get(givenShip.get(ship)),
+                        new Position(givenShip.get(ship), FieldState.TAKEN))
+                );
     }
 
-    @Test(dataProvider = "boardSheepsData")
-    public void insertShipsExpectBoardContainingShips(List<Ship> givenShips) {
+    @Test(dataProvider = "boardShips")
+    public void shouldInsertShipOnBoard(List<Ship> givenShips) {
         //given StartingBoard
 
         //when

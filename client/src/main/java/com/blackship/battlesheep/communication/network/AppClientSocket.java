@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+/**
+ * @author milosz
+ * @since 28.07.2017
+ */
 class AppClientSocket {
 
     private final String host;

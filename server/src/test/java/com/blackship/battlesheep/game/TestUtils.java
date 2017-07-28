@@ -4,14 +4,14 @@ import java.util.stream.IntStream;
 
 /**
  * @author Anna Gawda
- * @since 26.07.17
+ * @since 26.07.2017
  */
 public class TestUtils {
     private static final Integer BOARD_SIZE = 100;
     private static final Integer ROW_SIZE = 10;
     private static final Integer BOARD_FIRST_FIELD = 1;
 
-    private TestUtils(){}
+    private TestUtils() {}
 
     public static String generateEmptyBoardState() {
         StringBuilder stringBuilder = new StringBuilder();
@@ -19,6 +19,7 @@ public class TestUtils {
             stringBuilder.append(String.format("%4s", String.valueOf(x)));
             if (x % ROW_SIZE == 0) stringBuilder.append(System.getProperty("line.separator"));
         });
+
         return stringBuilder.toString();
     }
 }

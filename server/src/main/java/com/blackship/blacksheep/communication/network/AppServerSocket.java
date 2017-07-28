@@ -1,8 +1,5 @@
 package com.blackship.blacksheep.communication.network;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -10,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Mateusz on 25.07.2017.
+ * @author Mateusz Słaboński
+ * @since 25.07.2017
  */
 public class AppServerSocket {
 

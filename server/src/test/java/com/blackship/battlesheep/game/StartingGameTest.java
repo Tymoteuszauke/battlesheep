@@ -8,10 +8,11 @@ import static org.testng.Assert.assertNotNull;
 
 /**
  * @author Anna Gawda
- * @since 26.07.17
+ * @since 26.07.2017
  */
 @Test
 public class StartingGameTest {
+
     private Game gameManager;
 
     @BeforeTest
