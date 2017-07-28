@@ -9,10 +9,11 @@ import static org.testng.Assert.assertNotNull;
 
 /**
  * @author Anna Gawda
- * @since 26.07.17
+ * @since 26.07.2017
  */
 @Test
 public class StartingBoardTest {
+
     private Board startingBoard;
 
     @BeforeTest
@@ -21,7 +22,7 @@ public class StartingBoardTest {
     }
 
     @Test
-    public void shouldReturnStartingBoardNotNull() {
+    public void shouldReturnStartingBoard() {
         //given startingBoard
 
         //when created new StartingBoard
@@ -37,6 +38,7 @@ public class StartingBoardTest {
         //when
         String givenBoardState = startingBoard.boardLayout();
         String expectedBoardState = TestUtils.generateEmptyBoardState();
+
         //then
         assertEquals(givenBoardState, expectedBoardState);
     }

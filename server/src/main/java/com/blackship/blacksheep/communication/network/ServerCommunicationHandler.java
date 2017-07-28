@@ -1,6 +1,6 @@
 package com.blackship.blacksheep.communication.network;
 
-import com.blackship.battlesheep.common.communication.packet.Packet;
+import com.blackship.battlesheep.communication.packet.Packet;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * @author milosz
- * @since 7/26/17
+ * @since 27.7.17
  */
 class ServerCommunicationHandler {
 

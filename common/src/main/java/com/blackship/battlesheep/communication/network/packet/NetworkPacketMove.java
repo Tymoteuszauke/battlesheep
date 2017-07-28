@@ -1,14 +1,18 @@
-package com.blackship.battlesheep.common.communication.network.packet;
+package com.blackship.battlesheep.communication.network.packet;
 
-import com.blackship.battlesheep.common.communication.packet.BasePacket;
-import com.blackship.battlesheep.common.communication.packet.Packet;
-import com.blackship.battlesheep.common.communication.packet.PacketMove;
-import com.blackship.battlesheep.common.communication.packet.enums.PacketType;
+import com.blackship.battlesheep.communication.packet.BasePacket;
+import com.blackship.battlesheep.communication.packet.Packet;
+import com.blackship.battlesheep.communication.packet.PacketMove;
+import com.blackship.battlesheep.communication.packet.enums.PacketType;
 
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @author milosz
+ * @since 28.07.2017
+ */
 public class NetworkPacketMove extends BasePacket implements PacketMove {
 
     private Set<Integer> positions;

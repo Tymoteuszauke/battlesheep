@@ -1,10 +1,14 @@
-package com.blackship.battlesheep.common.communication.network;
+package com.blackship.battlesheep.communication.network;
 
-import com.blackship.battlesheep.common.communication.Writer;
+import com.blackship.battlesheep.communication.Writer;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * @author milosz
+ * @since 28.07.2017
+ */
 public class NetworkWriter implements Writer {
 
     private OutputStream outputStream;

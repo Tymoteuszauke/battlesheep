@@ -9,7 +9,7 @@ import java.util.function.Function;
 
 /**
  * @author Anna Gawda
- * @since 26.07.17
+ * @since 26.07.2017
  */
 public class StartingGame implements Game {
     private Board playerOneBoard;

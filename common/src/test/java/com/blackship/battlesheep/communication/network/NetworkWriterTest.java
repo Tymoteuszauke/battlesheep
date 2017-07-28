@@ -1,17 +1,19 @@
-package com.blackship.battlesheep.common.communication.network;
+package com.blackship.battlesheep.communication.network;
 
-import com.blackship.battlesheep.common.communication.Writer;
+import com.blackship.battlesheep.communication.Writer;
 import org.testng.annotations.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import static org.testng.Assert.*;
-
+/**
+ * @author milosz
+ * @since 28.07.2017
+ */
 public class NetworkWriterTest {
 
     @Test
-    public void writeAndExpectNoExceptionTest() throws IOException {
+    public void shouldWriteToStream() throws IOException {
 
         //given
         Writer givenNetworkWriter = new NetworkWriter(new ByteArrayOutputStream(1));

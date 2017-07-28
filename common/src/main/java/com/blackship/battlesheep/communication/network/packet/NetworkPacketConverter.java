@@ -1,13 +1,17 @@
-package com.blackship.battlesheep.common.communication.network.packet;
+package com.blackship.battlesheep.communication.network.packet;
 
-import com.blackship.battlesheep.common.communication.packet.Packet;
-import com.blackship.battlesheep.common.communication.packet.PacketConverter;
+import com.blackship.battlesheep.communication.packet.Packet;
+import com.blackship.battlesheep.communication.packet.PacketConverter;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.ByteArrayInputStream;
 
 /**
  * @author milosz
- * @since 7/26/17
+ * @since 28.07.2017
  */
 public class NetworkPacketConverter implements PacketConverter {
 

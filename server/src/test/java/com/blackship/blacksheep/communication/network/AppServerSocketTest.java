@@ -7,13 +7,12 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import java.net.ServerSocket;
 
-import static org.mockito.Mockito.mock;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.assertTrue;
 
 /**
- * Created by Mateusz on 25.07.2017.
+ * @author Mateusz Słaboński
+ * @since 25.07.2017
  */
 @Test
 public class AppServerSocketTest {
@@ -27,11 +26,11 @@ public class AppServerSocketTest {
     }
 
     @AfterMethod
-    public void closeServerSocket() throws IOException {
+    public void shouldCloseServerSocket() throws IOException {
         appServerSocket.getServerSocket().close();
     }
 
-    public void getPortExpectNotZeroTest() throws IOException {
+    public void shouldReturnCorrectPortNumber() throws IOException {
         //given battleshipServerSocket
 
         //when
@@ -41,7 +40,7 @@ public class AppServerSocketTest {
         assertEquals(givenPort, expectedPort);
     }
 
-    public void getServerSocketExpectNotNull() throws IOException {
+    public void shouldReturnServerSocket() throws IOException {
         //given battleshipServerSocket
 
         //when

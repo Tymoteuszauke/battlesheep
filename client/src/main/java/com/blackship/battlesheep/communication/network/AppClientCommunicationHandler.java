@@ -1,13 +1,10 @@
 package com.blackship.battlesheep.communication.network;
 
-import com.blackship.battlesheep.common.communication.Reader;
-import com.blackship.battlesheep.common.communication.Streams;
-import com.blackship.battlesheep.common.communication.Writer;
-import com.blackship.battlesheep.common.communication.network.NetworkReader;
-import com.blackship.battlesheep.common.communication.network.NetworkStreams;
-import com.blackship.battlesheep.common.communication.network.NetworkWriter;
-import com.blackship.battlesheep.common.communication.network.packet.NetworkPacketConverter;
-import com.blackship.battlesheep.common.communication.packet.Packet;
+import com.blackship.battlesheep.communication.Reader;
+import com.blackship.battlesheep.communication.Streams;
+import com.blackship.battlesheep.communication.Writer;
+import com.blackship.battlesheep.communication.network.packet.NetworkPacketConverter;
+import com.blackship.battlesheep.communication.packet.Packet;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +12,7 @@ import java.io.OutputStream;
 
 /**
  * @author milosz
- * @since 7/26/17
+ * @since 26.7.17
  */
 class AppClientCommunicationHandler {
 

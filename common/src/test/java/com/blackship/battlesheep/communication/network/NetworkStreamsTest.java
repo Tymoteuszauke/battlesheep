@@ -1,4 +1,4 @@
-package com.blackship.battlesheep.common.communication.network;
+package com.blackship.battlesheep.communication.network;
 
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -11,6 +11,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.*;
 
+/**
+ * @author milosz
+ * @since 28.07.2017
+ */
 public class NetworkStreamsTest {
 
     private Socket givenSocket;
@@ -23,7 +27,7 @@ public class NetworkStreamsTest {
     }
 
     @Test
-    public void getOutputAndExpectGivenObjectTest() throws IOException {
+    public void shouldReturnOutputStream() throws IOException {
 
         //given - givenSocket, givenNetworkStream
         OutputStream expectedOutputStream = new ByteArrayOutputStream(1);
@@ -37,7 +41,7 @@ public class NetworkStreamsTest {
     }
 
     @Test
-    public void getInputAndExpectNotNullObjectTest() throws IOException {
+    public void shouldReturnInputStream() throws IOException {
 
         //given
         InputStream expectedInputStream = new ByteArrayInputStream(new byte[1]);
@@ -51,7 +55,7 @@ public class NetworkStreamsTest {
     }
 
     @Test
-    public void getOutputAndExpectOptionalEmpty() throws IOException {
+    public void shouldReturnNoOutputStream() throws IOException {
 
         //given
 
@@ -64,7 +68,7 @@ public class NetworkStreamsTest {
     }
 
     @Test
-    public void getInputAndExpectOptionalEmpty() throws IOException {
+    public void shouldReturnNoInputStream() throws IOException {
 
         //given
 

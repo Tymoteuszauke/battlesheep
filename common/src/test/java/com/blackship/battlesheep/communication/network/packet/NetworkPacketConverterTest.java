@@ -1,16 +1,16 @@
-package com.blackship.battlesheep.common.communication.network.packet;
+package com.blackship.battlesheep.communication.network.packet;
 
-import com.blackship.battlesheep.common.communication.packet.Packet;
+import com.blackship.battlesheep.communication.packet.Packet;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertTrue;
 
 /**
  * @author milosz
- * @since 7/27/17
+ * @since 28.07.2017
  */
 public class NetworkPacketConverterTest {
 
