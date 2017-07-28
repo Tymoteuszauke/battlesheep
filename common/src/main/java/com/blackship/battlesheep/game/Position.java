@@ -1,5 +1,7 @@
 package com.blackship.battlesheep.game;
 
+import com.blackship.battlesheep.game.state.FieldState;
+
 /**
  * @author Anna Gawda
  * @since 26.07.17

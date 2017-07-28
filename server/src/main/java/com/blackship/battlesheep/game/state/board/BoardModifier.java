@@ -1,6 +1,6 @@
 package com.blackship.battlesheep.game.state.board;
 
-import com.blackship.battlesheep.game.FieldState;
+import com.blackship.battlesheep.game.state.FieldState;
 import com.blackship.battlesheep.game.Position;
 import com.blackship.battlesheep.game.state.fleet.Ship;
 
