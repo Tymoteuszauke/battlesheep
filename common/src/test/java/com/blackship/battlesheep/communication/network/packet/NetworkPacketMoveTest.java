@@ -1,7 +1,7 @@
-package com.blackship.battlesheep.common.communication.network.packet;
+package com.blackship.battlesheep.communication.network.packet;
 
-import com.blackship.battlesheep.common.communication.packet.PacketMove;
-import com.blackship.battlesheep.common.communication.packet.enums.PacketType;
+import com.blackship.battlesheep.communication.packet.PacketMove;
+import com.blackship.battlesheep.communication.packet.enums.PacketType;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -10,15 +10,19 @@ import java.util.Set;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+/**
+ * @author milosz
+ * @since 28.07.2017
+ */
 public class NetworkPacketMoveTest {
 
-    @DataProvider(name = "packetTypes")
+    @DataProvider
     public static Object[][] packetTypes() {
         return new Object[][] { { PacketType.MOVE }, { PacketType.UPDATE }, { PacketType.ERROR } };
     }
 
     @Test(dataProvider = "packetTypes")
-    public void getPacketTypeFromPacketAndExpectGivenTypeTest(PacketType expectedPacketType) {
+    public void shouldReturnCorrectPacketTypeFromPacket(PacketType expectedPacketType) {
 
         //given - expectedPacketType
 
@@ -30,7 +34,7 @@ public class NetworkPacketMoveTest {
     }
 
     @Test
-    public void addPositionInPacketMoveAndExpectPutPositionInSetInPacketMoveTest() {
+    public void shouldAddPositionToPacketMoveAndPutPositionInMoveSet() {
 
         //given
         PacketMove givenPacketMove = new NetworkPacketMove(PacketType.MOVE);

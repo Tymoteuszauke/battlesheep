@@ -1,6 +1,6 @@
-package com.blackship.battlesheep.common.communication.network;
+package com.blackship.battlesheep.communication.network;
 
-import com.blackship.battlesheep.common.communication.Reader;
+import com.blackship.battlesheep.communication.Reader;
 import org.testng.annotations.Test;
 
 import java.io.ByteArrayInputStream;
@@ -8,10 +8,14 @@ import java.io.IOException;
 
 import static org.testng.Assert.*;
 
+/**
+ * @author milosz
+ * @since 28.07.2017
+ */
 public class NetworkReaderTest {
 
     @Test
-    public void readAndExpectGivenStringTest() throws IOException {
+    public void shouldReadCorrectStringFromStream() throws IOException {
 
         //given
         String expectedWord = "test";

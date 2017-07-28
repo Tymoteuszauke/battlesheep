@@ -4,22 +4,18 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javafx.scene.Node;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
- * @author Mateusz Słaboński on 27.07.17
- * @project
+ * @author Mateusz Słaboński
+ * @since 26.07.2017
  */
 public class ConnectController extends Application {
 
@@ -41,9 +37,7 @@ public class ConnectController extends Application {
 
     @FXML
     public void handleConnectButtonAction(ActionEvent actionEvent) throws IOException {
-        Parent parent = null;
-
-        parent = FXMLLoader.load(getClass().getResource("/fx/BoardView.fxml"));
+        Parent parent = FXMLLoader.load(getClass().getResource("/fx/BoardView.fxml"));
 
         Scene scene = new Scene(parent);
         Stage boardStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

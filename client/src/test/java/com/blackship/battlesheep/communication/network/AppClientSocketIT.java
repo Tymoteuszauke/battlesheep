@@ -1,7 +1,7 @@
 package com.blackship.battlesheep.communication.network;
 
-import com.blackship.battlesheep.common.communication.network.packet.PacketFactory;
-import com.blackship.battlesheep.common.communication.packet.Packet;
+import com.blackship.battlesheep.communication.network.packet.PacketFactory;
+import com.blackship.battlesheep.communication.packet.Packet;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.testng.annotations.Test;
 
@@ -12,6 +12,10 @@ import java.time.LocalTime;
 
 import static org.testng.Assert.assertTrue;
 
+/**
+ * @author milosz
+ * @since 28.07.2017
+ */
 public class AppClientSocketIT {
 
     private static Boolean receivedPacketIsTheSameAsSent;
@@ -20,15 +24,17 @@ public class AppClientSocketIT {
     public void shouldConnectAndReceiveSentPackage() throws IOException, InterruptedException {
 
         //given
+        String givenHost = "localhost";
         Integer givenPort = 8085;
-        AppClientCommunicationHandler givenHandler = new AppClientCommunicationHandler(new AppClientSocket("localhost", 8085));
+        Integer givenThreadSleepTime = 500;
+        AppClientCommunicationHandler givenHandler = new AppClientCommunicationHandler(new AppClientSocket(givenHost, givenPort));
         ServerSocket givenServerSocket = new ServerSocket(givenPort);
         Packet givenPacketToSend = PacketFactory.createMove().setCreationTime(LocalTime.now());
 
         //when
         Thread connectAndHandle = new Thread(() -> {
             try {
-                Thread.sleep(500);
+                Thread.sleep(givenThreadSleepTime);
                 givenHandler.connect();
                 givenHandler.write(givenPacketToSend);
 
@@ -44,9 +50,13 @@ public class AppClientSocketIT {
 
         Socket givenClientSocket = givenServerSocket.accept();
 
-        byte[] buffer = new byte[2048];
-        givenClientSocket.getInputStream().read(buffer);
-        givenClientSocket.getOutputStream().write(buffer);
+
+        byte [] receivedBytesFromClient = new NetworkReader(
+                new NetworkStreams(givenClientSocket)
+                        .getInput()
+                        .orElseThrow(() -> new IOException("no inputStream !"))
+                ).read();
+        givenClientSocket.getOutputStream().write(receivedBytesFromClient);
 
         connectAndHandle.join();
 

@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Mateusz on 25.07.2017.
+ * @author Mateusz Słaboński
+ * @since 25.07.2017
  */
 public class AppServerSocket {
 

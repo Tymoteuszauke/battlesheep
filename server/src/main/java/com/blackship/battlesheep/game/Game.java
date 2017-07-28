@@ -2,7 +2,7 @@ package com.blackship.battlesheep.game;
 
 /**
  * @author Anna Gawda
- * @since 26.07.17
+ * @since 26.07.2017
  *
  * Keeps state of the boards for both players. It returns the state and in the future
  * it will also update it.

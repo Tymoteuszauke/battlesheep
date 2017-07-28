@@ -1,10 +1,10 @@
 package com.blackship.blacksheep.communication.network;
 
-import com.blackship.battlesheep.common.communication.network.NetworkReader;
-import com.blackship.battlesheep.common.communication.network.NetworkWriter;
-import com.blackship.battlesheep.common.communication.network.packet.NetworkPacketConverter;
-import com.blackship.battlesheep.common.communication.network.packet.PacketFactory;
-import com.blackship.battlesheep.common.communication.packet.Packet;
+import com.blackship.battlesheep.communication.network.NetworkReader;
+import com.blackship.battlesheep.communication.network.NetworkWriter;
+import com.blackship.battlesheep.communication.network.packet.NetworkPacketConverter;
+import com.blackship.battlesheep.communication.network.packet.PacketFactory;
+import com.blackship.battlesheep.communication.packet.Packet;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.testng.annotations.Test;
 
@@ -15,24 +15,26 @@ import java.time.LocalTime;
 import static org.testng.Assert.assertTrue;
 
 /**
- * Created by Mateusz on 25.07.2017.
+ * @author Mateusz Słaboński
+ * @since 25.07.2017
  */
 public class AppServerSocketIT {
 
     private static Boolean receivedPacketIsTheSameAsSent;
 
     @Test
-    public void shouldConnectAndSentReceivedPacketWithoutException() throws IOException, ClassNotFoundException, InterruptedException {
+    public void shouldConnectAndSentReceivedPacket() throws IOException, ClassNotFoundException, InterruptedException {
 
         //given
         int givenPort = 8282;
+        Integer givenThreadSleepTime = 500;
         ServerCommunicationHandler givenServerHandler = new ServerCommunicationHandler(new AppServerSocket(givenPort));
 
         //when
         Thread connectClientWithEcho = new Thread(() -> {
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(givenThreadSleepTime);
                 Socket givenClient = new Socket("localhost", givenPort);
 
                 Packet givenPacketToSend = PacketFactory.createMove().setCreationTime(LocalTime.now());

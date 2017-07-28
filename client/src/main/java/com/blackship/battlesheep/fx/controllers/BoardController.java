@@ -11,12 +11,13 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 /**
- * @author Mateusz Słaboński on 27.07.17
- * @project
+ * @author Mateusz Słaboński
+ * @since 26.07.2017
  */
 public class BoardController {
 
     private final static int BOARD_SIZE = 10;
+    private final static String LINE_SEPARATOR = System.getProperty("line.separator");
 
     @FXML
     public TextArea loggerInfoTextArea;
@@ -36,10 +37,8 @@ public class BoardController {
     @FXML
     public void handleMoveButtonAction(ActionEvent actionEvent) {
 
-        String moveValue = "";
-
-        moveValue = positionTextField.getText();
-        loggerInfoTextArea.appendText(moveValue + "\n");
+        String moveValue = positionTextField.getText();
+        loggerInfoTextArea.appendText(moveValue + LINE_SEPARATOR);
         positionTextField.clear();
 
         int position = Integer.parseInt(moveValue);

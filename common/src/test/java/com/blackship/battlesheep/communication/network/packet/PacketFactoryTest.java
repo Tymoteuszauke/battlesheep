@@ -1,13 +1,13 @@
-package com.blackship.battlesheep.common.communication.network.packet;
+package com.blackship.battlesheep.communication.network.packet;
 
-import com.blackship.battlesheep.common.communication.packet.Packet;
+import com.blackship.battlesheep.communication.packet.Packet;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
 /**
  * @author milosz
- * @since 7/27/17
+ * @since 28.07.2017
  */
 public class PacketFactoryTest {
 

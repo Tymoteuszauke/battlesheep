@@ -3,15 +3,15 @@ package com.blackship.battlesheep.fx.controllers.utils;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 /**
- * @author Mateusz Słaboński on 27.07.17
- * @project
+ * @author Mateusz Słaboński
+ * @since 26.07.2017
  */
 public class PositionUtilsTest {
 
-    public static final int BOARD_SIZE = 10;
+    private static final int BOARD_SIZE = 10;
 
     @DataProvider
     public static Object[][] oneDimensionalPositionData() {
@@ -24,20 +24,23 @@ public class PositionUtilsTest {
     }
 
     @Test(dataProvider = "oneDimensionalPositionData")
-    public void testCalculateFromTwoDimensionalPosition(int expectedPosition, int givenX, int givenY) throws Exception {
-        //given
+    public void shouldReturnPositionFromCoordinates(int expectedPosition, int givenX, int givenY) throws Exception {
+        //given - expectedPosition, givenX, givenY
+
         //when
         int givenPosition = PositionUtils.calculateFromTwoDimensionalPosition(BOARD_SIZE, givenX, givenY);
+
         //then
         assertEquals(expectedPosition, givenPosition);
     }
 
     @Test(dataProvider = "oneDimensionalPositionData")
-    public void testCalculateFromOneDimensionalPosition(int position, int expectedX, int expectedY) throws Exception {
-        //given position
+    public void shouldReturnCoordinatesFromPosition(int position, int expectedX, int expectedY) throws Exception {
+        //given - position, expectedX, expectedY
 
         //when
         int[] givenData = PositionUtils.calculateFromOneDimensionalPosition(position, BOARD_SIZE);
+
         //then
         assertEquals(givenData[0], expectedX);
         assertEquals(givenData[1], expectedY);
