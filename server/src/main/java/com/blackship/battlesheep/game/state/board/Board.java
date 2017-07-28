@@ -1,6 +1,6 @@
 package com.blackship.battlesheep.game.state.board;
 
-import com.blackship.battlesheep.game.Position;
+import com.blackship.battlesheep.game.state.FieldState;
 
 import java.util.Map;
 
@@ -13,11 +13,13 @@ import java.util.Map;
  * TODO getPosition(int position) method
  */
 public interface Board {
+
+    Map<Integer, FieldState> getPositions();
+
     /**
-     * Returns current state of the board as a String.
-     *
-     * @return Current board state.
+     * Returns the state of the given field.
+     * @param shipPosition Board field number to be checked.
+     * @return State of the field that is being checked.
      */
-    String boardLayout();
-    Map<Integer, Position> getPositions();
+    FieldState getPositionState(Integer shipPosition);
 }

@@ -1,7 +1,9 @@
 package com.blackship.battlesheep.game.state.board;
 
 import com.blackship.battlesheep.game.TestUtils;
+import com.blackship.battlesheep.game.state.FieldState;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -21,6 +23,15 @@ public class StartingBoardTest {
         this.startingBoard = new StartingBoard();
     }
 
+    @DataProvider
+    private Object[][] fieldNumbers() {
+        return new Object[][] {
+                {1},
+                {23},
+                {46}
+        };
+    }
+
     @Test
     public void shouldReturnStartingBoard() {
         //given startingBoard
@@ -32,14 +43,24 @@ public class StartingBoardTest {
     }
 
     @Test
-    public void shouldReturnBoardFieldNumbers() {
+    public void shouldReturnBoardFieldSymbols() {
         //given startingBoard
 
         //when
-        String givenBoardState = startingBoard.boardLayout();
+        String givenBoardState = startingBoard.toString();
         String expectedBoardState = TestUtils.generateEmptyBoardState();
 
         //then
         assertEquals(givenBoardState, expectedBoardState);
+    }
+
+    @Test(dataProvider = "fieldNumbers")
+    public void shouldReturnEmptyFieldState(Integer fieldNumber) {
+        //given startingBoard
+
+        //when
+
+        //then
+        assertEquals(startingBoard.getPositionState(fieldNumber), FieldState.EMPTY);
     }
 }

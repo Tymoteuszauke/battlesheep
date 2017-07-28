@@ -1,7 +1,6 @@
 package com.blackship.battlesheep.game.state.board;
 
 import com.blackship.battlesheep.game.state.FieldState;
-import com.blackship.battlesheep.game.Position;
 import com.blackship.battlesheep.game.state.fleet.Ship;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -18,10 +17,17 @@ import static org.testng.Assert.assertEquals;
  * @author Anna Gawda
  * @since 26.07.2017
  */
+
+//TODO: fix the tests
 @Test
 public class BoardModifierTest {
 
     private Board board;
+
+    @BeforeTest
+    public void setupBoard() {
+        board = new StartingBoard();
+    }
 
     @DataProvider
     private Object[][] boardPositions() {
@@ -38,25 +44,17 @@ public class BoardModifierTest {
         };
     }
 
-    @BeforeTest
-    public void setupBoard() {
-        board = new StartingBoard();
-    }
-
     @Test(dataProvider = "boardPositions")
     public void shouldInsertPositionOnBoard(List<Integer> givenShip) {
         //given StartingBoard
 
         //when
         Board givenBoard  = BoardModifier.insertShip(board, givenShip);
-
         //then
         //TODO givenBoard.getPositions().get(givenShip.get(ship)) to one method
         IntStream.rangeClosed(0, 3)
-                .forEach(ship -> assertEquals(
-                        givenBoard.getPositions().get(givenShip.get(ship)),
-                        new Position(givenShip.get(ship), FieldState.TAKEN))
-                );
+                .forEach(shipPosition ->
+                        assertEquals(givenBoard.getPositionState(givenShip.get(shipPosition)), FieldState.TAKEN));
     }
 
     @Test(dataProvider = "boardShips")
@@ -66,6 +64,6 @@ public class BoardModifierTest {
         //when
         Board givenBoard = BoardModifier.insertShips(givenShips);
         //then
-        assertEquals(givenBoard.getPositions().get(1), new Position(1, FieldState.TAKEN));
+        assertEquals(givenBoard.getPositionState(1), FieldState.TAKEN);
     }
 }

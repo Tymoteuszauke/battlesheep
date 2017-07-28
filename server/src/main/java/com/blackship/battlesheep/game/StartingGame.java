@@ -29,6 +29,6 @@ public class StartingGame implements Game {
 
     @Override
     public String boardsState() {
-        return playerOneBoard.boardLayout();
+        return playerOneBoard.toString();
     }
 }

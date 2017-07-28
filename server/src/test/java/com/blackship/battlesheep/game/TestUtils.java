@@ -1,5 +1,7 @@
 package com.blackship.battlesheep.game;
 
+import com.blackship.battlesheep.game.state.FieldState;
+
 import java.util.stream.IntStream;
 
 /**
@@ -16,7 +18,7 @@ public class TestUtils {
     public static String generateEmptyBoardState() {
         StringBuilder stringBuilder = new StringBuilder();
         IntStream.rangeClosed(BOARD_FIRST_FIELD, BOARD_SIZE).forEach(x -> {
-            stringBuilder.append(String.format("%4s", String.valueOf(x)));
+            stringBuilder.append(String.format("%2s", FieldState.EMPTY));
             if (x % ROW_SIZE == 0) stringBuilder.append(System.getProperty("line.separator"));
         });
 

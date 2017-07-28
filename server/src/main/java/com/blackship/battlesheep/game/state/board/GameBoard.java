@@ -1,6 +1,6 @@
 package com.blackship.battlesheep.game.state.board;
 
-import com.blackship.battlesheep.game.Position;
+import com.blackship.battlesheep.game.state.FieldState;
 
 import java.util.Map;
 
@@ -10,19 +10,19 @@ import java.util.Map;
  */
 public class GameBoard implements Board {
 
-    private Map<Integer, Position> positions;
+    private Map<Integer, FieldState> positions;
     private final Integer ROW_SIZE = 10;
 
-    public GameBoard(Map<Integer, Position> positions) {
+    public GameBoard(Map<Integer, FieldState> positions) {
         this.positions = positions;
     }
 
     @Override
-    public String boardLayout() {
+    public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         positions.forEach((k, v) -> {
-            stringBuilder.append(String.format("%2s", String.valueOf(v.getFieldState())));
-            if (isNewLine(v.getPosition())) {
+            stringBuilder.append(String.format("%2s", v));
+            if (isNewLine(k)) {
                 stringBuilder.append(System.getProperty("line.separator"));
             }
         });
@@ -31,8 +31,13 @@ public class GameBoard implements Board {
     }
 
     @Override
-    public Map<Integer, Position> getPositions() {
+    public Map<Integer, FieldState> getPositions() {
         return positions;
+    }
+
+    @Override
+    public FieldState getPositionState(Integer shipPosition) {
+        return positions.get(shipPosition);
     }
 
     private boolean isNewLine(Integer x) {
