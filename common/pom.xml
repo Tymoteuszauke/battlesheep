@@ -17,23 +17,54 @@
 
     <name>battlesheep-common</name>
 
+    <description>
+        Common things for client and server.
+    </description>
+
     <properties>
-        <pustefixframework.version>0.20.30</pustefixframework.version>
-        <commons.version>3.6</commons.version>
+        <skipSite>false</skipSite>
+        <pathToScript>../scripts/generate_reports.sh</pathToScript>
+        <cleanInstallFlag>-ci</cleanInstallFlag>
+        <jacocoFlag>-j</jacocoFlag>
+        <findbugsResultFlag>-f</findbugsResultFlag>
+        <checkstyleFlag>-c</checkstyleFlag>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.pustefixframework.samples.modules</groupId>
-            <artifactId>common-module</artifactId>
-            <version>${pustefixframework.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>${commons.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>${execVersion}</version>
+                <executions>
+                    <execution>
+                        <id>run-generate-reports</id>
+                        <phase>post-site</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration combine.self="override">
+                            <executable>${pathToScript}</executable>
+                            <arguments>
+                                <arguments>${project.basedir}</arguments>
+                                <arguments>${cleanInstallFlag}</arguments>
+                                <argument>${jacocoFlag}</argument>
+                                <argument>${findbugsResultFlag}</argument>
+                                <argument>${checkstyleFlag}</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${siteVersion}</version>
+                <configuration combine.self="override">
+                    <skip>${skipSite}</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

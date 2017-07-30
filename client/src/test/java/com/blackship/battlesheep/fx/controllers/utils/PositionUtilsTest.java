@@ -16,10 +16,10 @@ public class PositionUtilsTest {
     @DataProvider
     public static Object[][] oneDimensionalPositionData() {
         return new Object[][] {
-                {1, 0, 1},
-                {23, 2, 3},
-                {56, 5, 6},
-                {100, 10, 0}
+                {1, 1, 0},
+                {23, 3, 2},
+                {56, 6, 5},
+                {100, 0, 10}
         };
     }
 
@@ -45,5 +45,4 @@ public class PositionUtilsTest {
         assertEquals(givenData[0], expectedX);
         assertEquals(givenData[1], expectedY);
     }
-
 }
