@@ -2,7 +2,7 @@ package com.blackship.battlesheep.game;
 
 import com.blackship.battlesheep.game.state.board.Board;
 import com.blackship.battlesheep.game.state.board.StartingBoard;
-import com.blackship.battlesheep.game.state.fleet.Ship;
+import com.blackship.battlesheep.game.fleet.Ship;
 
 import java.util.List;
 import java.util.function.Function;

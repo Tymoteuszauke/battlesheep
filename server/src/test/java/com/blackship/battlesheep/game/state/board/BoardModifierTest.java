@@ -1,7 +1,7 @@
 package com.blackship.battlesheep.game.state.board;
 
 import com.blackship.battlesheep.game.state.FieldState;
-import com.blackship.battlesheep.game.state.fleet.Ship;
+import com.blackship.battlesheep.game.fleet.Ship;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -18,7 +18,6 @@ import static org.testng.Assert.assertEquals;
  * @since 26.07.2017
  */
 
-//TODO: fix the tests
 @Test
 public class BoardModifierTest {
 
@@ -51,7 +50,6 @@ public class BoardModifierTest {
         //when
         Board givenBoard  = BoardModifier.insertShip(board, givenShip);
         //then
-        //TODO givenBoard.getPositions().get(givenShip.get(ship)) to one method
         IntStream.rangeClosed(0, 3)
                 .forEach(shipPosition ->
                         assertEquals(givenBoard.getPositionState(givenShip.get(shipPosition)), FieldState.TAKEN));

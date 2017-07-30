@@ -24,6 +24,10 @@ public class StartingBoard implements Board {
         fillStartingPositions();
     }
 
+    public StartingBoard(Map<Integer, FieldState> boardPositions) {
+        this.positions = boardPositions;
+    }
+
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
