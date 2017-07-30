@@ -1,11 +1,11 @@
-package com.blackship.battlesheep.game;
+package com.blackship.battlesheep.game.state;
 
 import com.blackship.battlesheep.game.state.board.Board;
+import com.blackship.battlesheep.game.state.board.BoardModifier;
 import com.blackship.battlesheep.game.state.board.StartingBoard;
-import com.blackship.battlesheep.game.fleet.Ship;
 
 import java.util.List;
-import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * @author Anna Gawda
@@ -13,18 +13,19 @@ import java.util.function.Function;
  */
 public class StartingGame implements Game {
     private Board playerOneBoard;
-    private Function<List<Ship>, Board> insertShips;
 
     public StartingGame() {
         this.playerOneBoard = new StartingBoard();
     }
-    //TODO: these methods are not used, but I need them here
-    public StartingGame(Function<List<Ship>, Board> insertShips) {
-        this.insertShips = insertShips;
+
+    public StartingGame(Board playerOneBoard) {
+        this.playerOneBoard = playerOneBoard;
     }
 
-    public void fillBoard(List<Ship> ships) {
-        this.playerOneBoard = insertShips.apply(ships);
+    //TODO: create a parser and forward moveSet there
+    @Override
+    public Game changeState(Supplier<List<Integer>> moveSet) {
+        return new StartingGame(BoardModifier.insertPositions(moveSet.get()));
     }
 
     @Override

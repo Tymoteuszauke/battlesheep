@@ -1,7 +1,7 @@
 package com.blackship.battlesheep.game.state.board;
 
-import com.blackship.battlesheep.game.state.FieldState;
-import com.blackship.battlesheep.game.fleet.Ship;
+import com.blackship.battlesheep.game.state.state.FieldState;
+import com.blackship.battlesheep.game.state.fleet.Ship;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +23,7 @@ public class BoardModifier {
         return new StartingBoard(boardPositions);
     }
 
+
     public static Board insertShips(List<Ship> ships) {
         Map<Integer, FieldState> insertShips = new HashMap<>();
         for (Ship ship : ships) {
@@ -30,8 +31,18 @@ public class BoardModifier {
                 insertShips.put(i, FieldState.TAKEN);
             }
         }
-
         IntStream.rangeClosed(1, 100).forEach(i -> insertShips.putIfAbsent(i, FieldState.EMPTY));
+
+        return new StartingBoard(insertShips);
+    }
+
+    public static Board insertPositions(List<Integer> positions) {
+        Map<Integer, FieldState> insertShips = new HashMap<>();
+        for (Integer i : positions) {
+            insertShips.put(i, FieldState.TAKEN);
+        }
+        IntStream.rangeClosed(1, 100).forEach(i -> insertShips.putIfAbsent(i, FieldState.EMPTY));
+
         return new StartingBoard(insertShips);
     }
 }

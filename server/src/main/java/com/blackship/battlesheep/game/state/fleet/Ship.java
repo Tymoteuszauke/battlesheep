@@ -1,4 +1,4 @@
-package com.blackship.battlesheep.game.fleet;
+package com.blackship.battlesheep.game.state.fleet;
 
 import java.util.List;
 

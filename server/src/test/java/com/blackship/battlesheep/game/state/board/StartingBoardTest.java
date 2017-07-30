@@ -1,7 +1,7 @@
 package com.blackship.battlesheep.game.state.board;
 
-import com.blackship.battlesheep.game.TestUtils;
-import com.blackship.battlesheep.game.state.FieldState;
+import com.blackship.battlesheep.game.state.TestUtils;
+import com.blackship.battlesheep.game.state.state.FieldState;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -48,7 +48,7 @@ public class StartingBoardTest {
 
         //when
         String givenBoardState = startingBoard.toString();
-        String expectedBoardState = TestUtils.generateEmptyBoardState();
+        String expectedBoardState = TestUtils.generateBoardState(FieldState.EMPTY);
 
         //then
         assertEquals(givenBoardState, expectedBoardState);

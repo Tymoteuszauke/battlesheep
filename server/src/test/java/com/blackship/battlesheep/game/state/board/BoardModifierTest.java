@@ -1,7 +1,9 @@
 package com.blackship.battlesheep.game.state.board;
 
-import com.blackship.battlesheep.game.state.FieldState;
-import com.blackship.battlesheep.game.fleet.Ship;
+import com.blackship.battlesheep.game.state.TestUtils;
+import com.blackship.battlesheep.game.state.state.FieldState;
+import com.blackship.battlesheep.game.state.fleet.Ship;
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -52,7 +54,7 @@ public class BoardModifierTest {
         //then
         IntStream.rangeClosed(0, 3)
                 .forEach(shipPosition ->
-                        assertEquals(givenBoard.getPositionState(givenShip.get(shipPosition)), FieldState.TAKEN));
+                        Assert.assertEquals(givenBoard.getPositionState(givenShip.get(shipPosition)), FieldState.TAKEN));
     }
 
     @Test(dataProvider = "boardShips")
@@ -62,6 +64,17 @@ public class BoardModifierTest {
         //when
         Board givenBoard = BoardModifier.insertShips(givenShips);
         //then
-        assertEquals(givenBoard.getPositionState(1), FieldState.TAKEN);
+        Assert.assertEquals(givenBoard.getPositionState(1), FieldState.TAKEN);
+    }
+
+    @Test
+    public void shouldInsertPositionsOnBoard () {
+        //given
+        Board givenBoard = BoardModifier.insertPositions(TestUtils.generateListWithNumbers());
+        //when
+        String givenLayout = givenBoard.toString();
+        String expectedLayout = TestUtils.generateBoardState(FieldState.TAKEN);
+        //then
+        assertEquals(givenLayout, expectedLayout);
     }
 }
