@@ -18,38 +18,29 @@ import static org.testng.Assert.assertTrue;
  */
 public class AppClientSocketIT {
 
-    private static Boolean receivedPacketIsTheSameAsSent;
-
-    @Test
+    @Test(timeOut = 2000)
     public void shouldConnectAndReceiveSentPackage() throws IOException, InterruptedException {
 
         //given
         String givenHost = "localhost";
         Integer givenPort = 8085;
         Integer givenThreadSleepTime = 500;
-        AppClientCommunicationHandler givenHandler = new AppClientCommunicationHandler(new AppClientSocket(givenHost, givenPort));
+        AppClientCommunicationHandler givenCommunicationHandler = new AppClientCommunicationHandler(new AppClientSocket(givenHost, givenPort));
+        AppClientHandler givenHandler = new AppClientHandler(givenCommunicationHandler);
         ServerSocket givenServerSocket = new ServerSocket(givenPort);
-        Packet givenPacketToSend = PacketFactory.createMove().setCreationTime(LocalTime.now());
 
         //when
         Thread connectAndHandle = new Thread(() -> {
             try {
                 Thread.sleep(givenThreadSleepTime);
-                givenHandler.connect();
-                givenHandler.write(givenPacketToSend);
-
-                Packet receivedPacket =  givenHandler.read();
-
-                receivedPacketIsTheSameAsSent = EqualsBuilder.reflectionEquals(givenPacketToSend, receivedPacket);
+                givenHandler.startClientLoop();
             } catch (IOException | ClassNotFoundException | InterruptedException e) {
                 e.printStackTrace();
-                receivedPacketIsTheSameAsSent = false;
             }
         });
         connectAndHandle.start();
 
         Socket givenClientSocket = givenServerSocket.accept();
-
 
         byte [] receivedBytesFromClient = new NetworkReader(
                 new NetworkStreams(givenClientSocket)
@@ -61,6 +52,5 @@ public class AppClientSocketIT {
         connectAndHandle.join();
 
         //then no exception expected
-        assertTrue(receivedPacketIsTheSameAsSent);
     }
 }

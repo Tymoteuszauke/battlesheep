@@ -19,6 +19,7 @@ class AppClientCommunicationHandler {
     private AppClientSocket client;
     private Writer clientWriter;
     private Reader clientReader;
+    private NetworkPacketConverter clientPacketConverter;
 
     AppClientCommunicationHandler(AppClientSocket client) {
         this.client = client;
@@ -36,14 +37,15 @@ class AppClientCommunicationHandler {
 
         clientReader = new NetworkReader(clientInputStream);
         clientWriter = new NetworkWriter(clientOutputStream);
+        clientPacketConverter = new NetworkPacketConverter();
     }
 
     void write(Packet packet) throws IOException {
-        clientWriter.write(new NetworkPacketConverter().toByte(packet));
+        clientWriter.write(clientPacketConverter.toByte(packet));
     }
 
     Packet read() throws IOException, ClassNotFoundException {
-        return new NetworkPacketConverter().toPacket(clientReader.read());
+        return clientPacketConverter.toPacket(clientReader.read());
     }
 
 }

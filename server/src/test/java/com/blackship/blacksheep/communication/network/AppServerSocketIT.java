@@ -20,9 +20,34 @@ import static org.testng.Assert.assertTrue;
  */
 public class AppServerSocketIT {
 
-    private static Boolean receivedPacketIsTheSameAsSent;
+    private static Boolean sameSentPacketFromFirstClient;
+    private static Boolean sameSentPacketFromSecondClient;
 
-    @Test
+    private Boolean clientEcho(Integer givenThreadSleepTime, Integer givenPort) {
+        Boolean samePacketAsSent;
+        try {
+            Thread.sleep(givenThreadSleepTime);
+            Socket givenClient = new Socket("localhost", givenPort);
+
+            Packet givenPacketToSend = PacketFactory.createMove().setCreationTime(LocalTime.now());
+            byte[] givenPacketToSendAsBytes = new NetworkPacketConverter().toByte(givenPacketToSend);
+
+            new NetworkWriter(givenClient.getOutputStream())
+                    .write(givenPacketToSendAsBytes);
+
+            byte[] receivedPacketAsBytes = new NetworkReader(givenClient.getInputStream()).read();
+            Packet receivedPacket = new NetworkPacketConverter().toPacket(receivedPacketAsBytes);
+
+            samePacketAsSent = EqualsBuilder.reflectionEquals(givenPacketToSend, receivedPacket);
+        } catch (IOException | InterruptedException | ClassNotFoundException e) {
+            e.printStackTrace();
+            samePacketAsSent = false;
+        }
+
+        return samePacketAsSent;
+    }
+
+    @Test(timeOut = 2000)
     public void shouldConnectAndSentReceivedPacket() throws IOException, ClassNotFoundException, InterruptedException {
 
         //given
@@ -31,35 +56,21 @@ public class AppServerSocketIT {
         ServerCommunicationHandler givenServerHandler = new ServerCommunicationHandler(new AppServerSocket(givenPort));
 
         //when
-        Thread connectClientWithEcho = new Thread(() -> {
+        Thread connectFirstClientWithEcho = new Thread(() ->
+                sameSentPacketFromFirstClient = clientEcho(givenThreadSleepTime, givenPort));
+        connectFirstClientWithEcho.start();
 
-            try {
-                Thread.sleep(givenThreadSleepTime);
-                Socket givenClient = new Socket("localhost", givenPort);
-
-                Packet givenPacketToSend = PacketFactory.createMove().setCreationTime(LocalTime.now());
-                byte[] givenPacketToSendAsBytes = new NetworkPacketConverter().toByte(givenPacketToSend);
-
-                new NetworkWriter(givenClient.getOutputStream())
-                        .write(givenPacketToSendAsBytes);
-
-                byte[] receivedPacketAsBytes = new NetworkReader(givenClient.getInputStream()).read();
-                Packet receivedPacket = new NetworkPacketConverter().toPacket(receivedPacketAsBytes);
-
-                receivedPacketIsTheSameAsSent = EqualsBuilder.reflectionEquals(givenPacketToSend, receivedPacket);
-            } catch (IOException | InterruptedException | ClassNotFoundException e) {
-                e.printStackTrace();
-                receivedPacketIsTheSameAsSent = false;
-            }
-
-        });
-        connectClientWithEcho.start();
+        Thread connectSecondClientWithEcho = new Thread(() ->
+                sameSentPacketFromSecondClient = clientEcho(givenThreadSleepTime, givenPort));
+        connectSecondClientWithEcho.start();
 
         givenServerHandler.acceptClients().echo();
 
-        connectClientWithEcho.join();
+        connectFirstClientWithEcho.join();
+        connectSecondClientWithEcho.join();
 
         //then
-        assertTrue(receivedPacketIsTheSameAsSent);
+        assertTrue(sameSentPacketFromFirstClient);
+        assertTrue(sameSentPacketFromSecondClient);
     }
 }
