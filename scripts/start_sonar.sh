@@ -32,7 +32,7 @@ echo -n $PATH_TO_RUN
 echo ' mvn sonar:sonar'
 
 (cd $PATH_TO_RUN ; mvn sonar:sonar)
-xdg-open $PATH_TO_RUN/target/sonar/report-task.txt
+(cd $PATH_TO_RUN ; xdg-open ./target/sonar/report-task.txt)
 
 echo ' '
 echo 'IF IT IS A PROBLEM, KILL PROCESS TAKING PORT 9000 AND STOP RUNNED SONAR SERVER'
