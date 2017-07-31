@@ -22,11 +22,11 @@
     `- mvn checkstyle:checkstyle`
 
 ### For code reviewers
- run script with all plugins: inside folder 'script'
+ run script with all plugins: inside main folder
 
-    - run './generate_reports.sh' generate jacoco, findbugs, checkstyle reports
-    - run './run_sonar.sh' run sonar server and run mvn sonar:sonar in all modules
-    - run './stop_sonar.sh' stop sonar server
+    - run './scripts/generate_reports.sh ../ -j -f -c' generate jacoco, findbugs, checkstyle reports
+    - run './scripts/run_sonar.sh ../' run sonar server and run mvn sonar:sonar in all modules
+    - run './scripts/stop_sonar.sh' stop sonar server
     - it requires UNIX 64bit (with wget and unzip)
 
 #### Requirements:

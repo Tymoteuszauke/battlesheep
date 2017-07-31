@@ -20,6 +20,8 @@
     <description>
         Client program for playing with GUI.
     </description>
+   
+    <url>none</url>
 
     <properties>
         <skipSite>false</skipSite>

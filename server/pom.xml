@@ -21,6 +21,8 @@
         Server for game with logic.
     </description>
 
+    <url>none</url>
+
     <properties>
         <skipSite>false</skipSite>
         <pathToScript>../scripts/generate_reports.sh</pathToScript>
