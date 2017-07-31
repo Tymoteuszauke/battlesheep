@@ -45,5 +45,4 @@ public class PositionUtilsTest {
         assertEquals(givenData[0], expectedX);
         assertEquals(givenData[1], expectedY);
     }
-
 }

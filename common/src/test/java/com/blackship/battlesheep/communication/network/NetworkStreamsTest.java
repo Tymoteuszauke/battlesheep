@@ -1,5 +1,6 @@
 package com.blackship.battlesheep.communication.network;
 
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -53,31 +54,4 @@ public class NetworkStreamsTest {
         //then
         assertEquals(givenInputStream, expectedInputStream);
     }
-
-    @Test
-    public void shouldReturnNoOutputStream() throws IOException {
-
-        //given
-
-        //when
-        when(givenSocket.getOutputStream()).thenThrow(new IOException());
-        Optional<OutputStream> givenOutputStream = givenNetworkStream.getOutput();
-
-        //then
-        assertEquals(givenOutputStream, Optional.empty());
-    }
-
-    @Test
-    public void shouldReturnNoInputStream() throws IOException {
-
-        //given
-
-        //when
-        when(givenSocket.getInputStream()).thenThrow(new IOException());
-        Optional<InputStream> givenInputStream = givenNetworkStream.getInput();
-
-        //then
-        assertEquals(givenInputStream, Optional.empty());
-    }
-
 }
