@@ -10,5 +10,6 @@ import javafx.application.Application;
 public class AppClient  {
     public static void main(String[] args) {
         new Thread(() -> Application.launch(ConnectController.class)).start();
+
     }
 }
