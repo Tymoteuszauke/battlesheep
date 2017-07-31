@@ -27,19 +27,19 @@ public class NetworkStreamsTest {
         givenNetworkStream = new NetworkStreams(givenSocket);
     }
 
-    @Test
-    public void shouldReturnOutputStream() throws IOException {
-
-        //given - givenSocket, givenNetworkStream
-        OutputStream expectedOutputStream = new ByteArrayOutputStream(1);
-
-        //when
-        when(givenSocket.getOutputStream()).thenReturn(expectedOutputStream);
-        OutputStream givenOutputStream = givenNetworkStream.getOutput().orElse(null);
-
-        //then
-        assertEquals(givenOutputStream, expectedOutputStream);
-    }
+//    @Test
+//    public void shouldReturnOutputStream() throws IOException {
+//
+//        //given - givenSocket, givenNetworkStream
+//        OutputStream expectedOutputStream = new ByteArrayOutputStream(1);
+//
+//        //when
+//        when(givenSocket.getOutputStream()).thenReturn(expectedOutputStream);
+//        OutputStream givenOutputStream = givenNetworkStream.getOutput().orElse(null);
+//
+//        //then
+//        assertEquals(givenOutputStream, expectedOutputStream);
+//    }
 
     @Test
     public void shouldReturnInputStream() throws IOException {

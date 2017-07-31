@@ -1,4 +1,4 @@
-package com.blackship.battlesheep.game;
+package com.blackship.battlesheep.game.state.state;
 
 /**
  * @author Anna Gawda

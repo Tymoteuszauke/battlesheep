@@ -1,6 +1,6 @@
 package com.blackship.battlesheep.game.state.board;
 
-import com.blackship.battlesheep.game.Position;
+import com.blackship.battlesheep.game.state.state.FieldState;
 
 import java.util.Map;
 
@@ -8,16 +8,17 @@ import java.util.Map;
  * @author Anna Gawda
  * @since 26.07.2017
  *
- * Represents the game board (10x10 size). It makes it possible to get board state and in the future
- * - to update the board.
- * TODO getPosition(int position) method
+ * Represents the game board (10x10 size).
+ * For testing purposes there is toString method which prints entire board.
  */
 public interface Board {
+
+    Map<Integer, FieldState> getPositions();
+
     /**
-     * Returns current state of the board as a String.
-     *
-     * @return Current board state.
+     * Returns the state of the given field.
+     * @param shipPosition Board field number to be checked.
+     * @return State of the field that is being checked.
      */
-    String boardLayout();
-    Map<Integer, Position> getPositions();
+    FieldState getPositionState(Integer shipPosition);
 }

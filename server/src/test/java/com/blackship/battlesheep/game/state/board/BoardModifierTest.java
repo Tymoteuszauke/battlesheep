@@ -1,8 +1,9 @@
 package com.blackship.battlesheep.game.state.board;
 
-import com.blackship.battlesheep.game.FieldState;
-import com.blackship.battlesheep.game.Position;
+import com.blackship.battlesheep.game.state.TestUtils;
+import com.blackship.battlesheep.game.state.state.FieldState;
 import com.blackship.battlesheep.game.state.fleet.Ship;
+import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -18,10 +19,16 @@ import static org.testng.Assert.assertEquals;
  * @author Anna Gawda
  * @since 26.07.2017
  */
+
 @Test
 public class BoardModifierTest {
 
     private Board board;
+
+    @BeforeTest
+    public void setupBoard() {
+        board = new StartingBoard();
+    }
 
     @DataProvider
     private Object[][] boardPositions() {
@@ -38,25 +45,16 @@ public class BoardModifierTest {
         };
     }
 
-    @BeforeTest
-    public void setupBoard() {
-        board = new StartingBoard();
-    }
-
     @Test(dataProvider = "boardPositions")
     public void shouldInsertPositionOnBoard(List<Integer> givenShip) {
         //given StartingBoard
 
         //when
         Board givenBoard  = BoardModifier.insertShip(board, givenShip);
-
         //then
-        //TODO givenBoard.getPositions().get(givenShip.get(ship)) to one method
         IntStream.rangeClosed(0, 3)
-                .forEach(ship -> assertEquals(
-                        givenBoard.getPositions().get(givenShip.get(ship)),
-                        new Position(givenShip.get(ship), FieldState.TAKEN))
-                );
+                .forEach(shipPosition ->
+                        Assert.assertEquals(givenBoard.getPositionState(givenShip.get(shipPosition)), FieldState.TAKEN));
     }
 
     @Test(dataProvider = "boardShips")
@@ -66,6 +64,17 @@ public class BoardModifierTest {
         //when
         Board givenBoard = BoardModifier.insertShips(givenShips);
         //then
-        assertEquals(givenBoard.getPositions().get(1), new Position(1, FieldState.TAKEN));
+        Assert.assertEquals(givenBoard.getPositionState(1), FieldState.TAKEN);
+    }
+
+    @Test
+    public void shouldInsertPositionsOnBoard () {
+        //given
+        Board givenBoard = BoardModifier.insertPositions(TestUtils.generateListWithNumbers());
+        //when
+        String givenLayout = givenBoard.toString();
+        String expectedLayout = TestUtils.generateBoardState(FieldState.TAKEN);
+        //then
+        assertEquals(givenLayout, expectedLayout);
     }
 }
