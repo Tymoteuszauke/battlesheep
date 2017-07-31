@@ -1,6 +1,7 @@
 package com.blackship.battlesheep.fx.controllers;
 
 import com.blackship.battlesheep.fx.controllers.utils.PositionUtils;
+import com.blackship.battlesheep.utils.LogUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -9,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import org.slf4j.Logger;
 
 /**
  * @author Mateusz Słaboński
@@ -16,6 +18,7 @@ import javafx.scene.layout.GridPane;
  */
 public class BoardController {
 
+    private final static Logger log = LogUtils.getLogger();
     private final static int BOARD_SIZE = 10;
     private final static String LINE_SEPARATOR = System.getProperty("line.separator");
 
@@ -49,5 +52,6 @@ public class BoardController {
         positionTextField.requestFocus();
         playerGridPane.add(label, positionCoordinates[0], positionCoordinates[1]);
         GridPane.setHalignment(label, HPos.CENTER);
+        log.info(String.format("...Player shoots on position %d", position));
     }
 }

@@ -1,5 +1,6 @@
 package com.blackship.battlesheep.fx.controllers;
 
+import com.blackship.battlesheep.utils.LogUtils;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 
@@ -19,6 +21,8 @@ import java.io.IOException;
  */
 public class ConnectController extends Application {
 
+    private final static Logger log = LogUtils.getLogger();
+
     @FXML
     public Button connectButton;
 
@@ -27,6 +31,7 @@ public class ConnectController extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        log.info("...Starting battlesheep client...");
         primaryStage.setTitle("Blackship battlesheep");
         Parent root = FXMLLoader.load(getClass().getResource("/fx/ConnectView.fxml"));
 
@@ -42,6 +47,7 @@ public class ConnectController extends Application {
         Scene scene = new Scene(parent);
         Stage boardStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         boardStage.setScene(scene);
+        log.info("...Connecting to ...");
         boardStage.show();
     }
 }
