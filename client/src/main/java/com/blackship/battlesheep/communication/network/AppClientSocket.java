@@ -8,13 +8,13 @@ import java.net.Socket;
  * @author milosz
  * @since 28.07.2017
  */
-class AppClientSocket {
+public class AppClientSocket {
 
     private final String host;
     private final int port;
     private final Socket socket;
 
-    AppClientSocket(String host, int port) {
+    public AppClientSocket(String host, int port) {
         this.host = host;
         this.port = port;
         socket = new Socket();
