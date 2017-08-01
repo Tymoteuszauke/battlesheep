@@ -1,11 +1,14 @@
 package com.blackship.battlesheep.game.state;
 
-import com.blackship.battlesheep.game.state.state.FieldState;
+import com.blackship.battlesheep.game.state.board.Board;
+import com.blackship.battlesheep.game.state.board.BoardModifier;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
+import java.util.Map;
+
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 /**
  * @author Anna Gawda
@@ -18,38 +21,25 @@ public class StartingGameTest {
 
     @BeforeTest
     public void setUp() {
-        this.game = new StartingGame();
+        this.game = new StartingGame(BoardModifier.insertPositions(TestUtils.generateEmptyList()));
     }
 
     @Test
-    public void shouldCreateNewGameManager() {
-        //given game
-
-        //when game is created
-
-        //then
-        assertNotNull(game);
-    }
-
-    @Test
-    public void shouldReturnBoardFilledNumbers() {
+    public void shouldReturnBoardEmptyFields() {
         //given game
 
         //when
-        String givenBoardState = game.boardsState();
-        String expectedBoardState = TestUtils.generateBoardState(FieldState.EMPTY);
+        Map<Integer, Board> givenBoardState = game.boardsState();
 
         //then
-        assertEquals(givenBoardState, expectedBoardState);
+        assertFalse(givenBoardState.isEmpty());
     }
 
     @Test
     public void shouldReturnGameInProgress () {
         //given game
 
-        //when
-
         //then
-        assertNotNull(game.changeState(TestUtils::generateListWithNumbers));
+        assertTrue(game.changeState(TestUtils::generateListWithNumbers) instanceof GameInProgress);
     }
 }
