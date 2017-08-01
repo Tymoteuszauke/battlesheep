@@ -1,4 +1,4 @@
-package com.blackship.blacksheep.communication.network;
+package com.blackship.battlesheep.communication.network;
 
 import com.blackship.battlesheep.communication.network.packet.PacketFactory;
 import com.blackship.battlesheep.communication.packet.Packet;

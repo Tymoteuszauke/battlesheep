@@ -1,4 +1,4 @@
-package com.blackship.blacksheep.communication.network;
+package com.blackship.battlesheep.communication.network;
 
 import java.io.IOException;
 import java.net.ServerSocket;

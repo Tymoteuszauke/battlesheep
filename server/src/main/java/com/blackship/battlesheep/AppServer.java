@@ -1,7 +1,7 @@
-package com.blackship;
+package com.blackship.battlesheep;
 
-import com.blackship.blacksheep.communication.network.AppServerSocket;
-import com.blackship.blacksheep.communication.network.ServerCommunicationHandler;
+import com.blackship.battlesheep.communication.network.AppServerSocket;
+import com.blackship.battlesheep.communication.network.ServerCommunicationHandler;
 
 import java.io.IOException;
 

@@ -1,7 +1,9 @@
-package com.blackship.blacksheep.communication.network;
+package com.blackship.battlesheep.communication.network;
 
+import com.blackship.battlesheep.communication.network.AppServerSocket;
 import com.blackship.battlesheep.communication.network.NetworkReader;
 import com.blackship.battlesheep.communication.network.NetworkWriter;
+import com.blackship.battlesheep.communication.network.ServerCommunicationHandler;
 import com.blackship.battlesheep.communication.network.packet.NetworkPacketConverter;
 import com.blackship.battlesheep.communication.network.packet.PacketFactory;
 import com.blackship.battlesheep.communication.packet.Packet;
