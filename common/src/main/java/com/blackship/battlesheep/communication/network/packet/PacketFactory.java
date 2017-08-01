@@ -14,4 +14,8 @@ public class PacketFactory {
         return new NetworkPacketMove(PacketType.MOVE);
     }
 
+    public static NetworkPacketBoard createBoards() {
+        return new NetworkPacketBoard(PacketType.BOARDS);
+    }
+
 }

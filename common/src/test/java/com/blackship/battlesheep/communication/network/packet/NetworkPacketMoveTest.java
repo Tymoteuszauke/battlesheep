@@ -5,6 +5,8 @@ import com.blackship.battlesheep.communication.packet.enums.PacketType;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
@@ -37,15 +39,15 @@ public class NetworkPacketMoveTest {
     public void shouldAddPositionToPacketMoveAndPutPositionInMoveSet() {
 
         //given
-        PacketMove givenPacketMove = new NetworkPacketMove(PacketType.MOVE);
-        Integer givenPosition = 1;
+        PacketMove givenPacketMove = PacketFactory.createMove();
+        List<Integer> givenPositionsToAdd = Arrays.asList(1, 2);
 
         //when
-        Boolean givenAddStatement = givenPacketMove.addPosition(givenPosition);
+        Boolean givenAddStatement = givenPacketMove.addPositions(givenPositionsToAdd);
         Set<Integer> givenPositions = givenPacketMove.getPositions();
 
         //then
         assertTrue(givenAddStatement);
-        assertTrue(givenPositions.contains(givenPosition));
+        assertTrue(givenPositions.containsAll(givenPositionsToAdd));
     }
 }

@@ -29,6 +29,8 @@ public class AppServerSocketIT {
             Thread.sleep(givenThreadSleepTime);
             Socket givenClient = new Socket("localhost", givenPort);
 
+            new NetworkReader(givenClient.getInputStream()).read();
+
             Packet givenPacketToSend = PacketFactory.createMove().setCreationTime(LocalTime.now());
             byte[] givenPacketToSendAsBytes = new NetworkPacketConverter().toByte(givenPacketToSend);
 
@@ -64,7 +66,7 @@ public class AppServerSocketIT {
                 sameSentPacketFromSecondClient = clientEcho(givenThreadSleepTime, givenPort));
         connectSecondClientWithEcho.start();
 
-        givenServerHandler.acceptClients().echo();
+        givenServerHandler.acceptClients().sendHardcodedBoardsToClients().echo();
 
         connectFirstClientWithEcho.join();
         connectSecondClientWithEcho.join();

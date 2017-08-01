@@ -1,5 +1,6 @@
 package com.blackship.battlesheep.communication.packet;
 
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -17,8 +18,8 @@ public interface PacketMove {
 
     /**
      * Method add position to the set of positions to update board.
-     * @param position Given position.
+     * @param positionsToAdd Given positions.
      * @return True if add was successful or else return false.
      */
-    Boolean addPosition(Integer position);
+    Boolean addPositions(Collection<? extends Integer> positionsToAdd);
 }
