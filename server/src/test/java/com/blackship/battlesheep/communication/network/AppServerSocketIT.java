@@ -1,7 +1,9 @@
-package com.blackship.blacksheep.communication.network;
+package com.blackship.battlesheep.communication.network;
 
+import com.blackship.battlesheep.communication.network.AppServerSocket;
 import com.blackship.battlesheep.communication.network.NetworkReader;
 import com.blackship.battlesheep.communication.network.NetworkWriter;
+import com.blackship.battlesheep.communication.network.ServerCommunicationHandler;
 import com.blackship.battlesheep.communication.network.packet.NetworkPacketConverter;
 import com.blackship.battlesheep.communication.network.packet.PacketFactory;
 import com.blackship.battlesheep.communication.packet.Packet;
@@ -28,6 +30,8 @@ public class AppServerSocketIT {
         try {
             Thread.sleep(givenThreadSleepTime);
             Socket givenClient = new Socket("localhost", givenPort);
+
+            new NetworkReader(givenClient.getInputStream()).read();
 
             Packet givenPacketToSend = PacketFactory.createMove().setCreationTime(LocalTime.now());
             byte[] givenPacketToSendAsBytes = new NetworkPacketConverter().toByte(givenPacketToSend);
@@ -64,7 +68,7 @@ public class AppServerSocketIT {
                 sameSentPacketFromSecondClient = clientEcho(givenThreadSleepTime, givenPort));
         connectSecondClientWithEcho.start();
 
-        givenServerHandler.acceptClients().echo();
+        givenServerHandler.acceptClients().sendHardcodedBoardsToClients().echo();
 
         connectFirstClientWithEcho.join();
         connectSecondClientWithEcho.join();

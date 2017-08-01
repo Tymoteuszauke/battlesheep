@@ -1,13 +1,11 @@
-package com.blackship.blacksheep.communication.network;
+package com.blackship.battlesheep.communication.network;
 
 import com.blackship.battlesheep.communication.Reader;
 import com.blackship.battlesheep.communication.Streams;
 import com.blackship.battlesheep.communication.Writer;
-import com.blackship.battlesheep.communication.network.NetworkReader;
-import com.blackship.battlesheep.communication.network.NetworkStreams;
-import com.blackship.battlesheep.communication.network.NetworkWriter;
 import com.blackship.battlesheep.communication.network.packet.NetworkPacketConverter;
 import com.blackship.battlesheep.communication.packet.Packet;
+import com.blackship.battlesheep.communication.packet.PacketConverter;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,9 +21,11 @@ class ClientSocketHandler {
     private Socket client;
     private Writer clientWriter;
     private Reader clientReader;
+    private PacketConverter clientPacketConverter;
 
     ClientSocketHandler(Socket client) throws IOException {
         this.client = client;
+        clientPacketConverter = new NetworkPacketConverter();
         setReaderAndWriter();
     }
 
@@ -44,10 +44,15 @@ class ClientSocketHandler {
     }
 
     void write(Packet packet) throws IOException {
-        clientWriter.write(new NetworkPacketConverter().toByte(packet));
+        clientWriter.write(clientPacketConverter.toByte(packet));
     }
 
     Packet read() throws IOException, ClassNotFoundException {
-        return new NetworkPacketConverter().toPacket(clientReader.read());
+        return clientPacketConverter.toPacket(clientReader.read());
+    }
+
+    @Override
+    public String toString() {
+        return client.toString();
     }
 }

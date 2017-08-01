@@ -11,6 +11,27 @@ import java.time.LocalTime;
 public abstract class BasePacket implements Packet {
 
     protected PacketType packetType;
-    protected LocalTime time;
+    private LocalTime time;
 
+    @Override
+    public PacketType getPacketType() {
+        return packetType;
+    }
+
+    @Override
+    public LocalTime getCreationTime() {
+        return time;
+    }
+
+    @Override
+    public Packet setCreationTime(LocalTime time) {
+        this.time = time;
+
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Packet " + packetType;
+    }
 }

@@ -14,14 +14,14 @@ import java.io.OutputStream;
  * @author milosz
  * @since 26.7.17
  */
-class AppClientCommunicationHandler {
+public class AppClientCommunicationHandler {
 
     private AppClientSocket client;
     private Writer clientWriter;
     private Reader clientReader;
     private NetworkPacketConverter clientPacketConverter;
 
-    AppClientCommunicationHandler(AppClientSocket client) {
+    public AppClientCommunicationHandler(AppClientSocket client) {
         this.client = client;
     }
 
