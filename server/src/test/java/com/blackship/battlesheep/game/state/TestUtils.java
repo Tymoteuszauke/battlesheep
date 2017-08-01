@@ -3,6 +3,7 @@ package com.blackship.battlesheep.game.state;
 import com.blackship.battlesheep.game.state.state.FieldState;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -36,5 +37,16 @@ public class TestUtils {
 
     public static List<Integer> generateEmptyList() {
         return new ArrayList<>();
+    }
+
+    public static List<Integer> exampleShip() {
+        return Arrays
+                .asList(12, 14, 15, 16, 19, 22, 32, 37, 42, 47, 54, 57, 72, 73, 76, 77, 80, 94, 99, 100);
+    }
+
+    public static List<List<Integer>> generateShipList() {
+        List<List<Integer>> shipList = new ArrayList<>();
+        shipList.add(TestUtils.exampleShip());
+        return shipList;
     }
 }

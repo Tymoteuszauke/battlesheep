@@ -12,7 +12,6 @@ import java.util.Map;
  * For testing purposes there is toString method which prints entire board.
  */
 public interface Board {
-
     Map<Integer, FieldState> getPositions();
 
     /**
@@ -21,4 +20,6 @@ public interface Board {
      * @return State of the field that is being checked.
      */
     FieldState getPositionState(Integer shipPosition);
+
+    boolean isEmpty();
 }

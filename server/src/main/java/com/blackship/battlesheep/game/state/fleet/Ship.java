@@ -1,6 +1,10 @@
 package com.blackship.battlesheep.game.state.fleet;
 
+import com.blackship.battlesheep.game.state.state.FieldState;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Anna Gawda
@@ -8,17 +12,19 @@ import java.util.List;
  */
 public class Ship {
 
-    private final List<Integer> positions;
+    private final Map<Integer, FieldState> shipPositions;
 
     public Ship(List<Integer> positions) {
-        this.positions = positions;
+        shipPositions = new HashMap<>();
+        positions.forEach(position -> shipPositions.put(position, FieldState.TAKEN));
     }
 
     public boolean containsPosition(Integer position) {
-        return positions.contains(position);
+        return shipPositions.containsKey(position);
     }
 
-    public List<Integer> getPositions() {
-        return positions;
+    //TODO: it will return true if all of the states in shipPositions will be FieldState.SUNK
+    public boolean isSunk() {
+        return false;
     }
 }

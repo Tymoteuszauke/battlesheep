@@ -1,6 +1,9 @@
 package com.blackship.battlesheep.game.state;
 
+import com.blackship.battlesheep.game.state.board.Board;
 import org.testng.annotations.Test;
+
+import java.util.Map;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -16,10 +19,9 @@ public class FinishedGameTest {
         //given
         Game game = new FinishedGame();
         //when
-        String givenBoard = game.boardsState();
-        String expectedBoard = "Game finished";
+        Map<Integer, Board> givenBoard = game.boardsState();
         //then
-        assertEquals(givenBoard, expectedBoard);
+        assertTrue(givenBoard.isEmpty());
     }
 
     @Test

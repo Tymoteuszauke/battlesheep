@@ -12,15 +12,11 @@ import java.util.stream.IntStream;
  * @since 26.07.2017
  */
 
-//TODO: remove starting and game boards - have just one board, introduce states instead
 public class StartingBoard implements Board {
     private final Map<Integer, FieldState> positions;
-    private final Integer BOARD_SIZE = 100;
-    private final Integer ROW_SIZE = 10;
-    private final Integer BOARD_FIRST_FIELD = 1;
 
     public StartingBoard() {
-        this.positions = new HashMap<>(BOARD_SIZE);
+        this.positions = new HashMap<>(BoardSettings.BOARD_SIZE.getValue());
         fillStartingPositions();
     }
 
@@ -31,9 +27,9 @@ public class StartingBoard implements Board {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        positions.forEach((k, v) -> {
-            stringBuilder.append(String.format("%2s", v));
-            if (isNewLine(k)) {
+        positions.forEach((position, state) -> {
+            stringBuilder.append(String.format("%2s", state));
+            if (isNewLine(position)) {
                 stringBuilder.append(System.getProperty("line.separator"));
             }
         });
@@ -51,12 +47,17 @@ public class StartingBoard implements Board {
         return positions.get(shipPosition);
     }
 
-    private boolean isNewLine(Integer x) {
-        return x % ROW_SIZE == 0;
+    @Override
+    public boolean isEmpty() {
+        return positions.isEmpty();
+    }
+
+    private boolean isNewLine(Integer position) {
+        return position % BoardSettings.BOARD_WIDTH.getValue() == 0;
     }
 
     private void fillStartingPositions() {
-        IntStream.rangeClosed(BOARD_FIRST_FIELD, BOARD_SIZE)
+        IntStream.rangeClosed(BoardSettings.BOARD_STARTING_FIELD.getValue(), BoardSettings.BOARD_SIZE.getValue())
                 .forEach(position -> positions.put(position, FieldState.EMPTY));
     }
 }
