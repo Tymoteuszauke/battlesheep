@@ -57,16 +57,6 @@ public class BoardModifierTest {
                         Assert.assertEquals(givenBoard.getPositionState(givenShip.get(shipPosition)), FieldState.TAKEN));
     }
 
-    @Test(dataProvider = "boardShips")
-    public void shouldInsertShipOnBoard(List<Ship> givenShips) {
-        //given StartingBoard
-
-        //when
-        Board givenBoard = BoardModifier.insertShips(givenShips);
-        //then
-        Assert.assertEquals(givenBoard.getPositionState(1), FieldState.TAKEN);
-    }
-
     @Test
     public void shouldInsertPositionsOnBoard () {
         //given

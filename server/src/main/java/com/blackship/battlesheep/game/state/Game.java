@@ -1,6 +1,9 @@
 package com.blackship.battlesheep.game.state;
 
+import com.blackship.battlesheep.game.state.board.Board;
+
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 /**
@@ -12,11 +15,12 @@ import java.util.function.Supplier;
  * and to change the state of the game. The states: starting, in progress and finished.
  */
 public interface Game {
+    int NUMBER_OF_PLAYERS = 2;
     /**
      * Returns current state of both boards as a String.
      * @return Current state of the boards.
      */
-    String boardsState();
+    Map<Integer, Board> boardsState();
 
     /**
      * Returns new game state.
