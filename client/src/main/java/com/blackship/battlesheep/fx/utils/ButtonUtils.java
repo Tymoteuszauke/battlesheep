@@ -1,6 +1,10 @@
-package com.blackship.battlesheep.fx.controllers.utils;
+package com.blackship.battlesheep.fx.utils;
 
 import javafx.scene.control.Button;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * @author Mateusz Słaboński
@@ -28,5 +32,13 @@ public class ButtonUtils {
         button.setMinWidth(MIN_BUTTON_WIDTH);
         button.setMinHeight(MIN_BUTTON_HEIGHT);
         return button;
+    }
+
+    public static List<Button> generateButtons(int boardSize) {
+        List<Button> buttons = new ArrayList<>();
+        IntStream
+                .rangeClosed(1, boardSize * boardSize)
+                .forEach(data -> buttons.add(ButtonUtils.createStyledButton(data)));
+        return buttons;
     }
 }

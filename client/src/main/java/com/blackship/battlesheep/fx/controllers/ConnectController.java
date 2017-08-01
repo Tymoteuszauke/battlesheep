@@ -47,6 +47,7 @@ public class ConnectController extends Application {
         Scene scene = new Scene(parent);
         Stage boardStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         boardStage.setScene(scene);
+
         log.info("...Connecting to ...");
         boardStage.show();
     }

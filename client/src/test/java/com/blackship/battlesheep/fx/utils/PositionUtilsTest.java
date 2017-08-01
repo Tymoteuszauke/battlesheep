@@ -1,4 +1,4 @@
-package com.blackship.battlesheep.fx.controllers.utils;
+package com.blackship.battlesheep.fx.utils;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
