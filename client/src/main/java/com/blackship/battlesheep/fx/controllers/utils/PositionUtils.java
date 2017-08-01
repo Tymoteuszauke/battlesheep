@@ -6,6 +6,8 @@ package com.blackship.battlesheep.fx.controllers.utils;
  */
 public class PositionUtils {
 
+    private PositionUtils() {}
+
     public static int calculateFromTwoDimensionalPosition(int columns, int column, int row) {
         return row * columns + column;
     }

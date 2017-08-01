@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
@@ -36,7 +35,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
-        <GridPane fx:id="enemyGridPane" gridLinesVisible="true" layoutX="506.0" layoutY="14.0" prefHeight="320.0" prefWidth="480.0">
+        <GridPane fx:id="enemyGridPane" layoutX="506.0" layoutY="14.0" prefHeight="320.0" prefWidth="480.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -62,8 +61,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
-      <Button fx:id="moveButton" layoutX="223.0" layoutY="417.0" mnemonicParsing="false" onAction="#handleMoveButtonAction" text="Move" />
+      <Button fx:id="moveButton" layoutX="223.0" layoutY="417.0" mnemonicParsing="false" onAction="#handleCreateEnemyBoardActionButton" text="Create Enemy Board" />
       <TextArea fx:id="loggerInfoTextArea" editable="false" layoutX="552.0" layoutY="344.0" prefHeight="221.0" prefWidth="434.0" />
-      <TextField fx:id="positionTextField" layoutX="196.0" layoutY="382.0" prefHeight="26.0" prefWidth="107.0" />
     </children>
 </Pane>
