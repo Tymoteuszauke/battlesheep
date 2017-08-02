@@ -15,14 +15,6 @@ import java.io.IOException;
 public class AppClient  {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-
-        new AppClientHandler(
-                new AppClientCommunicationHandler(
-                        new AppClientSocket("localhost", 8096)))
-                .connectWithServer()
-                .receiveBoards()
-                .startClientLoop();
-
         new Thread(() -> Application.launch(ConnectController.class)).start();
     }
 }

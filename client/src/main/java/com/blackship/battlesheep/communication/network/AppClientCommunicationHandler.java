@@ -25,7 +25,7 @@ public class AppClientCommunicationHandler {
         this.client = client;
     }
 
-    void connect() throws IOException {
+    public void connect() throws IOException {
         client.connect();
 
         Streams clientStreams = new NetworkStreams(client.getSocket());
@@ -40,12 +40,11 @@ public class AppClientCommunicationHandler {
         clientPacketConverter = new NetworkPacketConverter();
     }
 
-    void write(Packet packet) throws IOException {
+    public void write(Packet packet) throws IOException {
         clientWriter.write(clientPacketConverter.toByte(packet));
     }
 
-    Packet read() throws IOException, ClassNotFoundException {
+    public Packet read() throws IOException, ClassNotFoundException {
         return clientPacketConverter.toPacket(clientReader.read());
     }
-
 }

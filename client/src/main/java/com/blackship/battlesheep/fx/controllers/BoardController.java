@@ -1,36 +1,35 @@
 package com.blackship.battlesheep.fx.controllers;
 
-import com.blackship.battlesheep.fx.controllers.utils.ButtonUtils;
-import com.blackship.battlesheep.fx.controllers.utils.PositionUtils;
+import com.blackship.battlesheep.communication.network.AppClientCommunicationHandler;
+import com.blackship.battlesheep.communication.network.AppClientSocket;
+import com.blackship.battlesheep.fx.BoardViewUpdater;
+import com.blackship.battlesheep.fx.BoardViewUpdaterListener;
+import com.blackship.battlesheep.fx.utils.ButtonUtils;
+import com.blackship.battlesheep.fx.utils.PositionUtils;
 import com.blackship.battlesheep.utils.LogUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-import java.util.stream.IntStream;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * @author Mateusz Słaboński
  * @since 26.07.2017
  */
-public class BoardController implements Observer {
+public class BoardController implements BoardViewUpdaterListener {
 
     private final static Logger log = LogUtils.getLogger();
     private final static int BOARD_SIZE = 10;
     private final static int X = 0;
     private final static int Y = 1;
 
-    private List<Button> buttons;
-
-    private NetworkObservableHandler networkObservableHandler;
+    private BoardViewUpdater boardViewUpdater;
+    private List<Button> enemyMastPositions;
 
     @FXML
     public TextArea loggerInfoTextArea;
@@ -45,59 +44,51 @@ public class BoardController implements Observer {
     public GridPane enemyGridPane;
 
     @FXML
-    public void handleCreateEnemyBoardActionButton(ActionEvent actionEvent) {
-        buttons = generateButtons();
+    public void handleCreateEnemyBoardActionButton(ActionEvent actionEvent) throws IOException, ClassNotFoundException {
+        enemyMastPositions = ButtonUtils.generateButtons(BOARD_SIZE);
+        enemyMastPositions.forEach(this::setButtonListener);
 
-        networkObservableHandler = new NetworkObservableHandler();
-        networkObservableHandler.addObserver(this);
+        log.info("...Drawing Board...");
+        loggerInfoTextArea.appendText("...Drawing Board... \n");
 
-        log.info("...Creating Board...");
-        loggerInfoTextArea.appendText("...Creating Board... \n");
-
-        for (int i = 0; i < BOARD_SIZE*BOARD_SIZE; i++) {
-            int[] twoDimensionalBoardPosition = PositionUtils.calculateFromOneDimensionalPosition(i, BOARD_SIZE);
-            enemyGridPane.add(buttons.get(i), twoDimensionalBoardPosition[X], twoDimensionalBoardPosition[Y]);
-        }
+        arrangeButtonsOnEnemyBoard();
         moveButton.setVisible(false);
+        boardViewUpdater = new BoardViewUpdater
+                .BoardViewUpdaterBuilder()
+                .boardViewUpdaterListener(this)
+                .enemyMastPositions(enemyMastPositions)
+                .salvoHandler(setupSalvoHandler())
+                .build();
     }
 
-    private Button generateButton(int value) {
-        Button button = ButtonUtils.createStyledButton(value);
-        //TODO do something with layout
+    private void arrangeButtonsOnEnemyBoard() {
+        for (int i = 0; i < BOARD_SIZE * BOARD_SIZE; i++) {
+            int[] twoDimensionalBoardPosition = PositionUtils.calculateFromOneDimensionalPosition(i, BOARD_SIZE);
+            enemyGridPane.add(enemyMastPositions.get(i), twoDimensionalBoardPosition[X], twoDimensionalBoardPosition[Y]);
+        }
+    }
+
+    private SalvoHandler setupSalvoHandler() throws IOException {
+        AppClientSocket appClientSocket = new AppClientSocket("localhost", 8096);
+        AppClientCommunicationHandler appClientCommunicationHandler = new AppClientCommunicationHandler(appClientSocket);
+        appClientCommunicationHandler.connect();
+        return new SalvoHandler(appClientCommunicationHandler);
+    }
+
+    private Button setButtonListener(Button button) {
         button.setOnAction(event -> {
             button.setStyle(ButtonUtils.pinkButtonColorStyle());
-            log.info(String.format("...Preparing to shoot into position %s...", button.getId()));
+            log.info(String.format("...Preparing to shoot into position %s...", button.getText()));
             loggerInfoTextArea.appendText(String.format("...Player shoots on position %s...\n", button.getId()));
             button.setDisable(true);
             enemyGridPane.requestFocus();
-            networkObservableHandler.positionsChanged(value);
+            boardViewUpdater.feedCannon(Integer.parseInt(button.getText()));
         });
         return button;
     }
 
-    private List<Button> generateButtons() {
-        List<Button> buttons = new ArrayList<>();
-        IntStream
-                .rangeClosed(1, BOARD_SIZE * BOARD_SIZE)
-                .forEach(data -> buttons.add(generateButton(data)));
-        return buttons;
-    }
-
-
     @Override
-    public void update(Observable o, Object arg) {
-        networkObservableHandler = (NetworkObservableHandler) o;
-
-        Label label = new Label();
-        label.setText("X");
-
-        networkObservableHandler
-                .getPositions()
-                .forEach(data -> {
-                    int[] positions = PositionUtils.calculateFromOneDimensionalPosition(data - 1, BOARD_SIZE);
-                    playerGridPane.add(label, positions[X], positions[Y]);
-                });
-
-        buttons.forEach(data -> data.setStyle(ButtonUtils.defaultButtonColorStyle()));
+    public void update(String log) {
+        loggerInfoTextArea.appendText(log);
     }
 }
