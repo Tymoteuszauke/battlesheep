@@ -2,13 +2,9 @@ package com.blackship.battlesheep.game;
 
 import com.blackship.battlesheep.game.state.GameState;
 import com.blackship.battlesheep.game.state.StartingGameState;
-import com.blackship.battlesheep.game.state.fleet.Fleet;
-import com.blackship.battlesheep.game.state.fleet.FleetGenerator;
 import com.blackship.battlesheep.utils.LogUtils;
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,7 +17,7 @@ public class Game {
 
     public GameState gameState;
 
-    Game() {
+    public Game() {
         gameState = new StartingGameState();
     }
 
@@ -38,22 +34,6 @@ public class Game {
         log.info(String.format("Positions shot: %s", shotPositions));
 
         return shotPositions;
-    }
-
-    public static void main(String[] args) {
-
-        List<List<Integer>> abc = FleetGenerator.hardcodeShips();
-//        abc.add(Arrays.asList(12, 14, 15, 16, 19, 22, 32, 37, 42, 47, 54, 57, 72, 73, 76, 77, 80, 94, 99, 100));
-
-        Game game = new Game();
-        game.startGame(abc, abc);
-
-        List<List<Integer>> moves = new ArrayList<>();
-        moves.add(Arrays.asList(12, 14));
-        game.move(moves, moves);
-        moves = new ArrayList<>();
-        moves.add(Arrays.asList(100));
-        game.move(moves, moves);
     }
 
 }

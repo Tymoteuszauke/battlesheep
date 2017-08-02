@@ -3,11 +3,7 @@ package com.blackship.battlesheep.communication.network.packet;
 import com.blackship.battlesheep.communication.packet.Packet;
 import com.blackship.battlesheep.communication.packet.PacketConverter;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.ByteArrayInputStream;
+import java.io.*;
 
 /**
  * @author milosz

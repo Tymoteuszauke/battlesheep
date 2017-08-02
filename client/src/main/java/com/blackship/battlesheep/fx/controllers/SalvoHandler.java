@@ -38,8 +38,8 @@ public class SalvoHandler extends Observable {
         PacketMove packet = (PacketMove) appClientCommunicationHandler.read();
 
         if (((Packet)packet).getPacketType() == PacketType.MOVE) {
-            enemyHitPositions.addAll(packet.getPositions());
-            //playerHitPositions.addAll(packet.getPlayerPositions());
+            enemyHitPositions.addAll(packet.getPositions().get(0));
+            playerHitPositions.addAll(packet.getPositions().get(1));
             setChanged();
             notifyObservers();
             enemyHitPositions.clear();
@@ -67,10 +67,8 @@ public class SalvoHandler extends Observable {
 
             encounterSalvos();
 
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             log.error(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
     }
 }

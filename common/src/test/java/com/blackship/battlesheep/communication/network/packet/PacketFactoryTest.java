@@ -3,7 +3,7 @@ package com.blackship.battlesheep.communication.network.packet;
 import com.blackship.battlesheep.communication.packet.Packet;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertTrue;
 
 /**
  * @author milosz
