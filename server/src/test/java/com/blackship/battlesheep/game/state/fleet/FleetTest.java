@@ -1,8 +1,14 @@
 package com.blackship.battlesheep.game.state.fleet;
 
 import com.blackship.battlesheep.game.state.TestUtils;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 
 /**
@@ -12,12 +18,28 @@ import static org.testng.Assert.assertFalse;
 @Test
 public class FleetTest {
 
-    @Test
-    public void shouldReturnFalseForAliveShip() {
+    @DataProvider
+    private Object[][] shipCreationDataWithExpectationsOfSunk() {
+        return new Object[][] {
+                {Arrays.asList(1, 2), Arrays.asList(1, 2), true},
+                {Arrays.asList(1, 2), Arrays.asList(), false}
+        };
+    }
+
+    @Test(dataProvider = "shipCreationDataWithExpectationsOfSunk")
+    public void shouldReturnFalseForAliveShip(
+            List<Integer> givenShipPositions,
+            List<Integer> givenShotPositions,
+            boolean expectedSunkResult) {
         //given
-        Fleet fleet = new Fleet(TestUtils.generateShipList());
+        Fleet givenFleet = new Fleet(Arrays.asList(givenShipPositions));
+
+        //when
+        givenFleet.shootShipPositions(givenShotPositions);
 
         //then
-        assertFalse(fleet.isSunk());
+        assertEquals(givenFleet.getShotPositions(), givenShotPositions);
+        assertEquals(givenFleet.isSunk(), expectedSunkResult);
     }
+
 }

@@ -6,6 +6,8 @@ package com.blackship.battlesheep.game.state.state;
  */
 public enum FieldState {
     EMPTY("O"),
+    SHOT("+"),
+    SUNK("X"),
     TAKEN("-");
 
     private String symbol;

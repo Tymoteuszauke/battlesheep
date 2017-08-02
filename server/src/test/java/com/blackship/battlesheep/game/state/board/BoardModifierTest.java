@@ -60,7 +60,7 @@ public class BoardModifierTest {
     @Test
     public void shouldInsertPositionsOnBoard () {
         //given
-        Board givenBoard = BoardModifier.insertPositions(TestUtils.generateListWithNumbers());
+        Board givenBoard = BoardModifier.initialBoard(TestUtils.generateListWithNumbers());
         //when
         String givenLayout = givenBoard.toString();
         String expectedLayout = TestUtils.generateBoardState(FieldState.TAKEN);

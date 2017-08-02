@@ -18,7 +18,7 @@
     <name>battlesheep-server</name>
 
     <description>
-        Server for game with logic.
+        Server for gameState with logic.
     </description>
 
     <url>none</url>
