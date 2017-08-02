@@ -1,5 +1,7 @@
 package com.blackship.battlesheep.game.state;
 
+import com.blackship.battlesheep.game.state.exceptions.FirstPlayerWon;
+import com.blackship.battlesheep.game.state.exceptions.SecondPlayerWon;
 import com.blackship.battlesheep.game.state.fleet.Fleet;
 
 import java.util.ArrayList;
@@ -21,11 +23,16 @@ public class GameStateInProgress implements GameState {
     }
 
     @Override
-    public GameState changeState(List<List<Integer>> firstPlayerPositions, List<List<Integer>> secondPlayerPositions) {
+    public GameState changeState(List<List<Integer>> firstPlayerPositions, List<List<Integer>> secondPlayerPositions)
+            throws FirstPlayerWon, SecondPlayerWon {
         List<Integer> firstPlayerMoves = firstPlayerPositions.get(0);
         List<Integer> secondPlayerMoves = secondPlayerPositions.get(0);
         firstPlayerFleet.shootShipPositions(firstPlayerMoves);
         secondPlayerFleet.shootShipPositions(secondPlayerMoves);
+
+        if(firstPlayerFleet.isSunk()) throw new FirstPlayerWon();
+        if(secondPlayerFleet.isSunk()) throw new SecondPlayerWon();
+
         return this;
     }
 
