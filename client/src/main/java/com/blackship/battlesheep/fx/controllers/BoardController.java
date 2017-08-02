@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.IntStream;
 
 /**
  * @author Mateusz Słaboński
@@ -30,6 +31,7 @@ public class BoardController implements BoardViewUpdaterListener {
 
     private BoardViewUpdater boardViewUpdater;
     private List<Button> enemyMastPositions;
+    private List<Button> playerMastPositions;
 
     @FXML
     public TextArea loggerInfoTextArea;
@@ -51,21 +53,39 @@ public class BoardController implements BoardViewUpdaterListener {
         log.info("...Drawing Board...");
         loggerInfoTextArea.appendText("...Drawing Board... \n");
 
+        arrangeButtonsOnPlayerBoard();
         arrangeButtonsOnEnemyBoard();
         moveButton.setVisible(false);
         boardViewUpdater = new BoardViewUpdater
                 .BoardViewUpdaterBuilder()
                 .boardViewUpdaterListener(this)
+                .playerMastPositions(playerMastPositions)
                 .enemyMastPositions(enemyMastPositions)
                 .salvoHandler(setupSalvoHandler())
                 .build();
     }
 
     private void arrangeButtonsOnEnemyBoard() {
-        for (int i = 0; i < BOARD_SIZE * BOARD_SIZE; i++) {
-            int[] twoDimensionalBoardPosition = PositionUtils.calculateFromOneDimensionalPosition(i, BOARD_SIZE);
-            enemyGridPane.add(enemyMastPositions.get(i), twoDimensionalBoardPosition[X], twoDimensionalBoardPosition[Y]);
-        }
+        IntStream.range(0, BOARD_SIZE * BOARD_SIZE).forEach(data -> {
+            int[] twoDimensionalBoardPosition = PositionUtils.calculateFromOneDimensionalPosition(data, BOARD_SIZE);
+            enemyGridPane.add(enemyMastPositions.get(data), twoDimensionalBoardPosition[X], twoDimensionalBoardPosition[Y]);
+        });
+//        for (int i = 0; i < BOARD_SIZE * BOARD_SIZE; i++) {
+//            int[] twoDimensionalBoardPosition = PositionUtils.calculateFromOneDimensionalPosition(i, BOARD_SIZE);
+//            enemyGridPane.add(enemyMastPositions.get(i), twoDimensionalBoardPosition[X], twoDimensionalBoardPosition[Y]);
+//        }
+    }
+
+    //TODO remove hard coding and refactor
+    private void arrangeButtonsOnPlayerBoard() {
+        int[] hardCodedArray = {12, 14, 15, 16, 19, 22, 32, 37, 42, 47, 54, 57, 72, 73, 76, 77, 80, 94, 99, 100};
+        playerMastPositions = new ArrayList<>();
+        Arrays.stream(hardCodedArray).forEach(data -> {
+            Button button = ButtonUtils.createStyledButton(data);
+            playerMastPositions.add(button);
+            int[] twoDimensionalBoardPosition = PositionUtils.calculateFromOneDimensionalPosition(data, BOARD_SIZE);
+            playerGridPane.add(button, twoDimensionalBoardPosition[X], twoDimensionalBoardPosition[Y]);
+        });
     }
 
     private SalvoHandler setupSalvoHandler() throws IOException {

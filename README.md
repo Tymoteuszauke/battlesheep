@@ -2,18 +2,25 @@
 #### How to run:
 ##### - Installation:
     - mvn clean install
-##### - Tests:
+##### - Run unit tests:
     - mvn test
+    
+##### - Run integration tests:
+    - mvn failsafe:integration-test
 
 ##### - generate test coverage:
     - mvn jacoco:report
 
-##### - run client application (GUI only)
+##### - run client application
     - mvn exec:java -pl client -Dexec.mainClass=com.blackship.battlesheep.AppClient
-
+    
+##### - run server application
+    - mvn exec:java -pl server -Dexec.mainClass=com.blackship.battlesheep.AppServer
+    
  - to generate sonar statistic, first download sonar https://www.sonarqube.org/downloads/ , run SonarServer.bat or SonarServer.sh from sonar folder location/bin ,
  then proceed via terminal in project folder:
     `- mvn sonar:sonar`
+    or run our script located in scripts folder `start_sonar.sh`
 
 - to generate FindBugs report:
      `- mvn site`
@@ -25,7 +32,7 @@
  run script with all plugins: inside main folder
 
     - run './scripts/generate_reports.sh ../ -j -f -c' generate jacoco, findbugs, checkstyle reports
-    - run './scripts/run_sonar.sh ../' run sonar server and run mvn sonar:sonar in all modules
+    - run './scripts/start_sonar.sh ../' run sonar server and run mvn sonar:sonar in all modules
     - run './scripts/stop_sonar.sh' stop sonar server
     - it requires UNIX 64bit (with wget and unzip)
 

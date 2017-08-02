@@ -14,13 +14,13 @@ public class BoardViewUpdater implements Observer {
 
     private BoardViewUpdaterListener boardViewUpdaterListener;
     private List<Button> enemyMastPositions;
-    private int tempCannonsAmount = 4;
+    private List<Button> playerMastPositions;
     private SalvoHandler salvoHandler;
 
-    private List<Integer> currentSalvo;
+    private List<Integer> loadedCannons;
 
     private BoardViewUpdater() {
-        currentSalvo = new LinkedList<>();
+        loadedCannons = new LinkedList<>();
     }
 
     public static class BoardViewUpdaterBuilder {
@@ -33,6 +33,11 @@ public class BoardViewUpdater implements Observer {
 
         public BoardViewUpdaterBuilder enemyMastPositions(List<Button> enemyMastPositions) {
             boardViewUpdater.enemyMastPositions = enemyMastPositions;
+            return this;
+        }
+
+        public BoardViewUpdaterBuilder playerMastPositions(List<Button> playerMastButtons) {
+            boardViewUpdater.playerMastPositions = playerMastButtons;
             return this;
         }
 
@@ -52,7 +57,7 @@ public class BoardViewUpdater implements Observer {
         salvoHandler = (SalvoHandler) o;
 
         updateEnemyBoard(salvoHandler.getEnemyHitPositions());
-//        updatePlayerBoard(salvoHandler.getPlayerHitPositions());
+        updatePlayerBoard(salvoHandler.getPlayerHitPositions());
         enemyMastPositions
                 .stream()
                 .filter(data -> !data.isDisabled())
@@ -60,25 +65,22 @@ public class BoardViewUpdater implements Observer {
     }
 
     public void feedCannon(int cannonBall) {
-        currentSalvo.add(cannonBall);
-        if (tempCannonsAmount == 0) {
-            salvoHandler.fireSalvoCannonade(currentSalvo);
-            currentSalvo.clear();
-            tempCannonsAmount = 4;
+        loadedCannons.add(cannonBall);
+        if (loadedCannons.size() == playerMastPositions.size()) {
+            salvoHandler.fireSalvoCannonade(loadedCannons);
+            loadedCannons.clear();
             boardViewUpdaterListener.update("...!!!!FIRE!!!!...\n");
-        } else {
-            tempCannonsAmount--;
         }
     }
-
-//    private void updatePlayerBoard(Set<Integer> positions) {
-//        positions.forEach(data -> {
-//            Label label = new Label();
-//            label.setText("X");
-//            int[] twoDimensionalBoardPosition = PositionUtils.calculateFromOneDimensionalPosition(data - 1, BOARD_SIZE);
-//            playerGridPane.add(label, twoDimensionalBoardPosition[X], twoDimensionalBoardPosition[Y]);
-//        });
-//    }
+    //TODO Solve magic number bug(?)
+    private void updatePlayerBoard(Set<Integer> positions) {
+        positions.forEach(data -> {
+            Button playerMast = playerMastPositions.get(data - 1);
+            playerMastPositions.remove(data - 1);
+            playerMast.setText("X");
+            playerMast.setDisable(true);
+        });
+    }
 
     //TODO Solve magic number bug(?)
     private void updateEnemyBoard(Set<Integer> positions) {

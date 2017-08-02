@@ -14,6 +14,7 @@ public class ButtonUtils {
 
     private final static int MIN_BUTTON_HEIGHT = 30;
     private final static int MIN_BUTTON_WIDTH = 46;
+    private final static int BOARD_STARTING_POSITION = 1;
 
     private ButtonUtils() {}
 
@@ -37,7 +38,7 @@ public class ButtonUtils {
     public static List<Button> generateButtons(int boardSize) {
         List<Button> buttons = new ArrayList<>();
         IntStream
-                .rangeClosed(1, boardSize * boardSize)
+                .rangeClosed(BOARD_STARTING_POSITION, boardSize * boardSize)
                 .forEach(data -> buttons.add(ButtonUtils.createStyledButton(data)));
         return buttons;
     }

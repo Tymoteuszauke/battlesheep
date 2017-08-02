@@ -3,14 +3,16 @@ package com.blackship.battlesheep.fx.controllers;
 import com.blackship.battlesheep.communication.network.AppClientCommunicationHandler;
 import com.blackship.battlesheep.communication.network.packet.PacketFactory;
 import com.blackship.battlesheep.communication.packet.Packet;
-import com.blackship.battlesheep.communication.packet.PacketBoards;
 import com.blackship.battlesheep.communication.packet.PacketMove;
 import com.blackship.battlesheep.communication.packet.enums.PacketType;
 import com.blackship.battlesheep.utils.LogUtils;
 import org.slf4j.Logger;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Observable;
+import java.util.Set;
 
 /**
  * @author Mateusz Słaboński
@@ -37,7 +39,7 @@ public class SalvoHandler extends Observable {
 
         if (((Packet)packet).getPacketType() == PacketType.MOVE) {
             enemyHitPositions.addAll(packet.getPositions());
-//            playerHitPositions.addAll(packet.getPlayerPositions());
+            //playerHitPositions.addAll(packet.getPlayerPositions());
             setChanged();
             notifyObservers();
             enemyHitPositions.clear();
