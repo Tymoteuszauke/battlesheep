@@ -38,8 +38,9 @@ public class SalvoHandler extends Observable {
         PacketMove packet = (PacketMove) appClientCommunicationHandler.read();
 
         if (((Packet)packet).getPacketType() == PacketType.MOVE) {
-            enemyHitPositions.addAll(packet.getPositions().get(0));
-            playerHitPositions.addAll(packet.getPositions().get(1));
+            enemyHitPositions.addAll(packet.getPositions());
+            //playerHitPositions.addAll();
+          
             setChanged();
             notifyObservers();
             enemyHitPositions.clear();
@@ -57,7 +58,7 @@ public class SalvoHandler extends Observable {
         return playerHitPositions;
     }
 
-    public void fireSalvoCannonade(List<Integer> positionsToBeBalled) {
+    public boolean fireSalvoCannonade(List<Integer> positionsToBeBalled) {
 
         try {
             Packet packet = PacketFactory.createMove();
@@ -70,5 +71,6 @@ public class SalvoHandler extends Observable {
         } catch (IOException | ClassNotFoundException e) {
             log.error(e.getMessage());
         }
+        return true;
     }
 }
