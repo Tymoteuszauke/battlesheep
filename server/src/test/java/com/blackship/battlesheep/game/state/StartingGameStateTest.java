@@ -1,5 +1,9 @@
 package com.blackship.battlesheep.game.state;
 
+import com.blackship.battlesheep.game.state.exceptions.FirstPlayerWon;
+import com.blackship.battlesheep.game.state.exceptions.SecondPlayerWon;
+import com.blackship.battlesheep.utils.LogUtils;
+import org.slf4j.Logger;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -13,6 +17,8 @@ import static org.testng.Assert.assertTrue;
  */
 @Test
 public class StartingGameStateTest {
+
+    private final static Logger log = LogUtils.getLogger();
 
     @Test
     public void shouldReturnNull() {
@@ -28,7 +34,13 @@ public class StartingGameStateTest {
         //given
         GameState givenGameState = new StartingGameState();
         //when
-        givenGameState = givenGameState.changeState(new ArrayList<>(), new ArrayList<>());
+        try {
+            givenGameState = givenGameState.changeState(new ArrayList<>(), new ArrayList<>());
+        } catch (FirstPlayerWon firstPlayerWon) {
+            log.info("First player won.");
+        } catch (SecondPlayerWon secondPlayerWon) {
+            log.info("Second player won.");
+        }
         //then
         assertTrue(givenGameState instanceof GameStateInProgress);
     }

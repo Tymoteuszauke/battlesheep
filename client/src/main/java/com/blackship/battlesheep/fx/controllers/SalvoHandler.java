@@ -40,6 +40,7 @@ public class SalvoHandler extends Observable {
         if (((Packet)packet).getPacketType() == PacketType.MOVE) {
             enemyHitPositions.addAll(packet.getPositions());
             //playerHitPositions.addAll();
+          
             setChanged();
             notifyObservers();
             enemyHitPositions.clear();
@@ -67,10 +68,8 @@ public class SalvoHandler extends Observable {
 
             encounterSalvos();
 
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             log.error(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         return true;
     }
