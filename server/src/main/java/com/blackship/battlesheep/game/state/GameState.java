@@ -1,5 +1,8 @@
 package com.blackship.battlesheep.game.state;
 
+import com.blackship.battlesheep.game.state.exceptions.FirstPlayerWon;
+import com.blackship.battlesheep.game.state.exceptions.SecondPlayerWon;
+
 import java.util.List;
 
 /**
@@ -16,7 +19,7 @@ public interface GameState {
     /**
      * @return Returns new game state with an updated board.
      */
-    GameState changeState(List<List<Integer>> firstPlayerPositions, List<List<Integer>> secondPlayerPositions);
+    GameState changeState(List<List<Integer>> firstPlayerPositions, List<List<Integer>> secondPlayerPositions) throws FirstPlayerWon, SecondPlayerWon;
 
     //TODO: change list of integers into an object
     List<List<Integer>> shotPositions();

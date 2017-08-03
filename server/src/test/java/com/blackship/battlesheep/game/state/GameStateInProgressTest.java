@@ -1,5 +1,9 @@
 package com.blackship.battlesheep.game.state;
 
+import com.blackship.battlesheep.game.state.exceptions.FirstPlayerWon;
+import com.blackship.battlesheep.game.state.exceptions.SecondPlayerWon;
+import com.blackship.battlesheep.utils.LogUtils;
+import org.slf4j.Logger;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -16,6 +20,8 @@ import static org.testng.Assert.assertTrue;
  */
 @Test
 public class GameStateInProgressTest {
+
+    private final static Logger log = LogUtils.getLogger();
 
     @DataProvider
     private Object[][] listOfShips() {
@@ -36,7 +42,13 @@ public class GameStateInProgressTest {
         //given
         GameState givenGameState = new GameStateInProgress(givenShipPositions, givenShipPositions);
         //when
-        givenGameState = givenGameState.changeState(Arrays.asList(Arrays.asList()),Arrays.asList(Arrays.asList()));
+        try {
+            givenGameState = givenGameState.changeState(Arrays.asList(Arrays.asList()),Arrays.asList(Arrays.asList()));
+        } catch (FirstPlayerWon firstPlayerWon) {
+            log.info("First player won.");
+        } catch (SecondPlayerWon secondPlayerWon) {
+            log.info("Second player won.");
+        }
         //then
         assertTrue(givenGameState instanceof GameStateInProgress);
     }
@@ -49,7 +61,13 @@ public class GameStateInProgressTest {
         givenPlayerPositions.add(givenShotPositions);
 
         //when
-        givenGameState.changeState(givenPlayerPositions, givenPlayerPositions);
+        try {
+            givenGameState.changeState(givenPlayerPositions, givenPlayerPositions);
+        } catch (FirstPlayerWon firstPlayerWon) {
+            log.info("First player won.");
+        } catch (SecondPlayerWon secondPlayerWon) {
+            log.info("Second player won.");
+        }
 
         //then
         assertEquals(givenGameState.shotPositions().get(0).size(), givenShotPositions.size());

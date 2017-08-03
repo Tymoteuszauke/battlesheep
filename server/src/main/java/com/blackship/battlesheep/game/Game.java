@@ -2,6 +2,9 @@ package com.blackship.battlesheep.game;
 
 import com.blackship.battlesheep.game.state.GameState;
 import com.blackship.battlesheep.game.state.StartingGameState;
+import com.blackship.battlesheep.game.state.exceptions.FirstPlayerWon;
+import com.blackship.battlesheep.game.state.exceptions.SecondPlayerWon;
+import com.blackship.battlesheep.game.state.fleet.FleetGenerator;
 import com.blackship.battlesheep.utils.LogUtils;
 import org.slf4j.Logger;
 
@@ -20,12 +23,11 @@ public class Game {
     public Game() {
         gameState = new StartingGameState();
     }
-
-    public void startGame(List<List<Integer>> firstPlayerShips, List<List<Integer>> secondPlayerShips) {
+    public void startGame(List<List<Integer>> firstPlayerShips, List<List<Integer>> secondPlayerShips) throws FirstPlayerWon, SecondPlayerWon {
         gameState = gameState.changeState(firstPlayerShips, secondPlayerShips);
     }
 
-    public List<List<Integer>> move(List<List<Integer>> firstPlayerPositions, List<List<Integer>> secondPlayerPositions) {
+    public List<List<Integer>> move(List<List<Integer>> firstPlayerPositions, List<List<Integer>> secondPlayerPositions) throws FirstPlayerWon, SecondPlayerWon {
         gameState = gameState.changeState(firstPlayerPositions, secondPlayerPositions);
         List<List<Integer>> shotPositions = gameState.shotPositions();
 
@@ -36,4 +38,19 @@ public class Game {
         return shotPositions;
     }
 
+    public static void main(String[] args) throws FirstPlayerWon, SecondPlayerWon {
+
+        List<List<Integer>> abc = FleetGenerator.hardcodeShips();
+//        abc.add(Arrays.asList(12, 14, 15, 16, 19, 22, 32, 37, 42, 47, 54, 57, 72, 73, 76, 77, 80, 94, 99, 100));
+
+        Game game = new Game();
+        game.startGame(abc, abc);
+
+        List<List<Integer>> moves = new ArrayList<>();
+        moves.add(Arrays.asList(12, 14));
+        game.move(moves, moves);
+        moves = new ArrayList<>();
+        moves.add(Arrays.asList(100));
+        game.move(moves, moves);
+    }
 }
