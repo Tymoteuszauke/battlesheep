@@ -1,8 +1,8 @@
 package com.blackship.battlesheep.game.state.board;
 
 import com.blackship.battlesheep.game.state.TestUtils;
-import com.blackship.battlesheep.game.state.state.FieldState;
 import com.blackship.battlesheep.game.state.fleet.Ship;
+import com.blackship.battlesheep.game.state.state.FieldState;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;

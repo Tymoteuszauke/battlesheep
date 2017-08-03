@@ -1,8 +1,5 @@
 package com.blackship.battlesheep;
 
-import com.blackship.battlesheep.communication.network.AppClientCommunicationHandler;
-import com.blackship.battlesheep.communication.network.AppClientHandler;
-import com.blackship.battlesheep.communication.network.AppClientSocket;
 import com.blackship.battlesheep.fx.controllers.ConnectController;
 import javafx.application.Application;
 

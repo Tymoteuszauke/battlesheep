@@ -1,7 +1,6 @@
 package com.blackship.battlesheep.communication.packet;
 
-import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author milosz
@@ -12,14 +11,14 @@ import java.util.Set;
 public interface PacketMove {
     /**
      * Return positions to update board.
-     * @return Set<Integer> positions to update.
+     * @return List<List<Integer>> positions to update.
      */
-    Set<Integer> getPositions();
+    List<List<Integer>> getPositions();
 
     /**
      * Method add position to the set of positions to update board.
      * @param positionsToAdd Given positions.
      * @return True if add was successful or else return false.
      */
-    Boolean addPositions(Collection<? extends Integer> positionsToAdd);
+    Boolean addPositions(List<Integer> positionsToAdd);
 }

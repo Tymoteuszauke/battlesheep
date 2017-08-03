@@ -1,15 +1,12 @@
 package com.blackship.battlesheep.game.state.fleet;
 
-import com.blackship.battlesheep.game.state.TestUtils;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
 
 /**
  * @author Anna Gawda

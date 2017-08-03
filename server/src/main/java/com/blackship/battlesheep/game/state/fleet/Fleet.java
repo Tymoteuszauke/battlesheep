@@ -1,7 +1,6 @@
 package com.blackship.battlesheep.game.state.fleet;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
