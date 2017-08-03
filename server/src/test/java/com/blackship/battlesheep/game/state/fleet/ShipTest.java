@@ -30,20 +30,46 @@ public class ShipTest {
     @Test(dataProvider = "shipCreationData")
     public void shouldReturnTrueForEachPosition(List<Integer> shipPositions) {
         //given
-        Ship ship = new Ship(shipPositions);
+        Ship givenShip = new Ship(shipPositions);
 
         //then
         for(Integer position: shipPositions) {
-            assertTrue(ship.containsPosition(position));
+            assertTrue(givenShip.containsPosition(position));
         }
     }
 
     @Test(dataProvider = "shipCreationData")
     public void shouldReturnFalseForAliveShip(List<Integer> shipPositions) {
         //given
-        Ship ship = new Ship(shipPositions);
+        Ship givenShip = new Ship(shipPositions);
 
         //then
-        assertFalse(ship.isSunk());
+        assertFalse(givenShip.isSunk());
+    }
+
+    @DataProvider
+    private Object[][] shipCreateAndListOfShot() {
+        return new Object[][] {
+                {Arrays.asList(1, 2, 3, 4), Arrays.asList(1 , 2), Arrays.asList(1, 2)},
+                {Arrays.asList( 22, 23, 24), Arrays.asList(1 , 2, 3), Arrays.asList()},
+                {Arrays.asList(23, 24, 34), Arrays.asList(), Arrays.asList()},
+                {Arrays.asList(5), Arrays.asList(1, 2, 3, 4, 5), Arrays.asList(5)},
+        };
+    }
+
+    @Test(dataProvider = "shipCreateAndListOfShot")
+    public void shouldReturnListOfShotPositions(
+            List<Integer> shipPositions,
+            List<Integer> shotPositions,
+            List<Integer> expectedListOfShotPositions) {
+        //given
+        Ship givenShip = new Ship(shipPositions);
+
+        //when
+        shotPositions.forEach(givenShip::setShotPosition);
+        List<Integer> givenListOfShotPositions = givenShip.getShotPositions();
+
+        //then
+        assertEquals(givenListOfShotPositions, expectedListOfShotPositions);
     }
 }

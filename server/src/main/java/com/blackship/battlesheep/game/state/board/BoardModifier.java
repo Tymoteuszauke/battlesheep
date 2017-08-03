@@ -22,7 +22,7 @@ public class BoardModifier {
         return new StartingBoard(boardPositions);
     }
 
-    public static Board insertPositions(List<Integer> positions) {
+    public static Board initialBoard(List<Integer> positions) {
         Map<Integer, FieldState> insertShips = new HashMap<>();
         for (Integer i : positions) {
             insertShips.put(i, FieldState.TAKEN);
