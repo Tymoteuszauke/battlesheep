@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 /**
  * @author milosz

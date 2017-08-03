@@ -2,7 +2,6 @@ package com.blackship.battlesheep.communication.network;
 
 import com.blackship.battlesheep.communication.network.packet.NetworkPacketMove;
 import com.blackship.battlesheep.communication.network.packet.PacketFactory;
-
 import com.blackship.battlesheep.communication.packet.Packet;
 import com.blackship.battlesheep.utils.LogUtils;
 import org.slf4j.Logger;

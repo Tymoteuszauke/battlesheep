@@ -8,8 +8,6 @@ import com.blackship.battlesheep.game.state.fleet.FleetGenerator;
 import com.blackship.battlesheep.utils.LogUtils;
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -22,7 +20,7 @@ public class Game {
 
     public GameState gameState;
 
-    Game() {
+    public Game() {
         gameState = new StartingGameState();
     }
     public void startGame(List<List<Integer>> firstPlayerShips, List<List<Integer>> secondPlayerShips) throws FirstPlayerWon, SecondPlayerWon {
@@ -55,5 +53,4 @@ public class Game {
         moves.add(Arrays.asList(100));
         game.move(moves, moves);
     }
-
 }

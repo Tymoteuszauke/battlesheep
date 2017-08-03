@@ -7,7 +7,6 @@ import org.testng.annotations.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -44,7 +43,7 @@ public class NetworkPacketMoveTest {
 
         //when
         Boolean givenAddStatement = givenPacketMove.addPositions(givenPositionsToAdd);
-        Set<Integer> givenPositions = givenPacketMove.getPositions();
+        List<Integer> givenPositions = givenPacketMove.getPositions().get(0);
 
         //then
         assertTrue(givenAddStatement);

@@ -1,4 +1,4 @@
-package com.blackship.battlesheep.fx.controllers.utils;
+package com.blackship.battlesheep.fx.utils;
 
 /**
  * @author Mateusz Słaboński

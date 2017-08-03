@@ -16,7 +16,7 @@ public class AppServer {
         new ServerCommunicationHandler(
                 new AppServerSocket(8096))
                 .acceptClients()
-                .sendHardcodedBoardsToClients()
+                //.sendHardcodedBoardsToClients()
                 .echo();
     }
 
