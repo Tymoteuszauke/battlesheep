@@ -55,7 +55,7 @@ public class BoardViewUpdater implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         salvoHandler = (SalvoHandler) o;
-        Set<Integer> enemyHitPositions = salvoHandler.getEnemyHitPositions();
+        List<Integer> enemyHitPositions = salvoHandler.getEnemyHitPositions();
         updateEnemyBoard(enemyHitPositions);
         updatePlayerBoard(salvoHandler.getPlayerHitPositions());
         enemyMastPositions
@@ -85,7 +85,7 @@ public class BoardViewUpdater implements Observer {
         boardViewUpdaterListener.update("...!!!!FIRE!!!!...\n");
     }
     //TODO Solve magic number bug(?)
-    private void updatePlayerBoard(Set<Integer> positions) {
+    private void updatePlayerBoard(List<Integer> positions) {
         positions.forEach(data -> {
             Button playerMast = playerMastPositions.get(data - 1);
             playerMast.setText("X");
@@ -94,7 +94,7 @@ public class BoardViewUpdater implements Observer {
     }
 
     //TODO Solve magic number bug(?)
-    private void updateEnemyBoard(Set<Integer> positions) {
+    private void updateEnemyBoard(List<Integer> positions) {
         positions.forEach(data -> {
             Button enemyMast = enemyMastPositions.get(data - 1);
             enemyMast.setText("X");

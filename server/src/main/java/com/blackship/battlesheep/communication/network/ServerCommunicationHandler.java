@@ -4,6 +4,8 @@ import com.blackship.battlesheep.communication.network.packet.PacketFactory;
 import com.blackship.battlesheep.communication.packet.Packet;
 import com.blackship.battlesheep.communication.packet.PacketMove;
 import com.blackship.battlesheep.game.Game;
+import com.blackship.battlesheep.game.state.exceptions.FirstPlayerWon;
+import com.blackship.battlesheep.game.state.exceptions.SecondPlayerWon;
 import com.blackship.battlesheep.game.state.fleet.FleetGenerator;
 import com.blackship.battlesheep.utils.LogUtils;
 import org.slf4j.Logger;
@@ -47,7 +49,7 @@ public class ServerCommunicationHandler {
         runningLoop = false;
     }
 
-    public void echo() throws IOException, ClassNotFoundException {
+    public void echo() throws IOException, ClassNotFoundException, FirstPlayerWon, SecondPlayerWon {
         ClientSocketHandler firstClient = clients.get(0);
         ClientSocketHandler secondClient = clients.get(1);
 
@@ -72,7 +74,14 @@ public class ServerCommunicationHandler {
             List<List<Integer>> secondPlayerShotPositions = new ArrayList<>(1);
             secondPlayerShotPositions.add(receivedPacketMoveSecondPlayer.getPositions().get(0));
 
-            List<List<Integer>> shotPositions = game.move(firstPlayerShotPositions, secondPlayerShotPositions);
+            List<List<Integer>> shotPositions;
+            try {
+                shotPositions = game.move(firstPlayerShotPositions, secondPlayerShotPositions);
+
+            } catch (FirstPlayerWon | SecondPlayerWon e) {
+                log.error(e.getMessage());
+                break;
+            }
 
             PacketMove shotPositionsForFirstPlayer = PacketFactory.createMove();
             shotPositionsForFirstPlayer.addPositions(shotPositions.get(0));
