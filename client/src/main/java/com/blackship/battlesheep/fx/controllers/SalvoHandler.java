@@ -39,7 +39,7 @@ public class SalvoHandler extends Observable {
 
         if (((Packet)packet).getPacketType() == PacketType.MOVE) {
             enemyHitPositions.addAll(packet.getPositions());
-            playerHitPositions.addAll(packet.getPlayerPositions());
+            //playerHitPositions.addAll();
             setChanged();
             notifyObservers();
             enemyHitPositions.clear();
