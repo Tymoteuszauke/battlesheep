@@ -28,6 +28,7 @@ public class BoardController implements BoardViewUpdaterListener {
     private final static int BOARD_SIZE = 10;
     private final static int X = 0;
     private final static int Y = 1;
+    private final static int BOARD_OFFSET = 1;
 
     private BoardViewUpdater boardViewUpdater;
     private List<Button> enemyMastPositions;
@@ -70,10 +71,6 @@ public class BoardController implements BoardViewUpdaterListener {
             int[] twoDimensionalBoardPosition = PositionUtils.calculateFromOneDimensionalPosition(data, BOARD_SIZE);
             enemyGridPane.add(enemyMastPositions.get(data), twoDimensionalBoardPosition[X], twoDimensionalBoardPosition[Y]);
         });
-//        for (int i = 0; i < BOARD_SIZE * BOARD_SIZE; i++) {
-//            int[] twoDimensionalBoardPosition = PositionUtils.calculateFromOneDimensionalPosition(i, BOARD_SIZE);
-//            enemyGridPane.add(enemyMastPositions.get(i), twoDimensionalBoardPosition[X], twoDimensionalBoardPosition[Y]);
-//        }
     }
 
     //TODO remove hard coding and refactor
@@ -83,7 +80,7 @@ public class BoardController implements BoardViewUpdaterListener {
         Arrays.stream(hardCodedArray).forEach(data -> {
             Button button = ButtonUtils.createStyledButton(data);
             playerMastPositions.add(button);
-            int[] twoDimensionalBoardPosition = PositionUtils.calculateFromOneDimensionalPosition(data, BOARD_SIZE);
+            int[] twoDimensionalBoardPosition = PositionUtils.calculateFromOneDimensionalPosition(data - BOARD_OFFSET, BOARD_SIZE);
             playerGridPane.add(button, twoDimensionalBoardPosition[X], twoDimensionalBoardPosition[Y]);
         });
     }
