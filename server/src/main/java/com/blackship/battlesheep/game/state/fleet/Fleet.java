@@ -21,10 +21,7 @@ public class Fleet {
     }
 
     public boolean isSunk() {
-        for(Ship ship: ships) {
-            if(ship.isSunk()) return true;
-        }
-        return false;
+        return ships.stream().allMatch(Ship::isSunk);
     }
 
     public List<Integer> getShotPositions() {

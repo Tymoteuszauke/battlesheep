@@ -19,7 +19,8 @@ public interface GameState {
     /**
      * @return Returns new game state with an updated board.
      */
-    GameState changeState(List<List<Integer>> firstPlayerPositions, List<List<Integer>> secondPlayerPositions) throws FirstPlayerWon, SecondPlayerWon;
+    GameState changeState(List<List<Integer>> firstPlayerPositions, List<List<Integer>> secondPlayerPositions)
+            throws FirstPlayerWon, SecondPlayerWon;
 
     //TODO: change list of integers into an object
     List<List<Integer>> shotPositions();
