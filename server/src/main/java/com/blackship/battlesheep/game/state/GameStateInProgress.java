@@ -30,8 +30,8 @@ public class GameStateInProgress implements GameState {
         firstPlayerFleet.shootShipPositions(firstPlayerMoves);
         secondPlayerFleet.shootShipPositions(secondPlayerMoves);
 
-        if(firstPlayerFleet.isSunk()) throw new FirstPlayerWon();
-        if(secondPlayerFleet.isSunk()) throw new SecondPlayerWon();
+        //if(firstPlayerFleet.isSunk()) throw new FirstPlayerWon();
+        //if(secondPlayerFleet.isSunk()) throw new SecondPlayerWon();
 
         return this;
     }

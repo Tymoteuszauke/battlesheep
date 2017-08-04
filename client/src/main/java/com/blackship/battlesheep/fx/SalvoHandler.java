@@ -1,4 +1,4 @@
-package com.blackship.battlesheep.fx.controllers;
+package com.blackship.battlesheep.fx;
 
 import com.blackship.battlesheep.communication.network.AppClientCommunicationHandler;
 import com.blackship.battlesheep.communication.network.packet.PacketFactory;
@@ -9,10 +9,7 @@ import com.blackship.battlesheep.utils.LogUtils;
 import org.slf4j.Logger;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Observable;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Mateusz Słaboński
@@ -22,39 +19,41 @@ public class SalvoHandler extends Observable {
 
     private static final Logger log = LogUtils.getLogger();
 
-    private Set<Integer> enemyHitPositions = new HashSet<>();
-    private Set<Integer> playerHitPositions = new HashSet<>();
+    private List<Integer> enemyHitPositions;
+    private List<Integer> playerHitPositions;
 
     private AppClientCommunicationHandler appClientCommunicationHandler;
 
     public SalvoHandler(AppClientCommunicationHandler appClientCommunicationHandler) {
         this.appClientCommunicationHandler = appClientCommunicationHandler;
-        enemyHitPositions = new HashSet<>();
-        enemyHitPositions = new HashSet<>();
+
+        enemyHitPositions = new ArrayList<>();
+        playerHitPositions = new ArrayList<>();
     }
 
     public boolean encounterSalvos() throws IOException, ClassNotFoundException {
 
+        enemyHitPositions.clear();
+        playerHitPositions.clear();
         PacketMove packet = (PacketMove) appClientCommunicationHandler.read();
 
         if (((Packet)packet).getPacketType() == PacketType.MOVE) {
-            enemyHitPositions.addAll(packet.getPositions());
-            //playerHitPositions.addAll();
-          
+            enemyHitPositions.addAll(packet.getPositions().get(0));
+            playerHitPositions.addAll(packet.getPositions().get(1));
+
             setChanged();
             notifyObservers();
-            enemyHitPositions.clear();
-            playerHitPositions.clear();
+
             return true;
         }
         return false;
     }
 
-    public Set<Integer> getEnemyHitPositions() {
+    public List<Integer> getEnemyHitPositions() {
         return enemyHitPositions;
     }
 
-    public Set<Integer> getPlayerHitPositions() {
+    public List<Integer> getPlayerHitPositions() {
         return playerHitPositions;
     }
 

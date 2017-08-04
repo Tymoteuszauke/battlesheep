@@ -1,10 +1,11 @@
 package com.blackship.battlesheep.fx;
 
-import com.blackship.battlesheep.fx.controllers.SalvoHandler;
 import com.blackship.battlesheep.fx.utils.ButtonUtils;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBuilder;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Mateusz Słaboński
@@ -55,12 +56,12 @@ public class BoardViewUpdater implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         salvoHandler = (SalvoHandler) o;
-        Set<Integer> enemyHitPositions = salvoHandler.getEnemyHitPositions();
+        List<Integer> enemyHitPositions = salvoHandler.getEnemyHitPositions();
         updateEnemyBoard(enemyHitPositions);
         updatePlayerBoard(salvoHandler.getPlayerHitPositions());
         enemyMastPositions
                 .stream()
-                .filter(data -> enemyHitPositions.contains(Integer.parseInt(data.getId())))
+                .filter(data -> !data.getText().equals("X"))
                 .forEach(data -> {
                     data.setDisable(false);
                     data.setStyle(ButtonUtils.defaultButtonColorStyle());
@@ -84,19 +85,26 @@ public class BoardViewUpdater implements Observer {
         loadedCannons.clear();
         boardViewUpdaterListener.update("...!!!!FIRE!!!!...\n");
     }
-    //TODO Solve magic number bug(?)
-    private void updatePlayerBoard(Set<Integer> positions) {
+    //TODO update to fix
+    private void updatePlayerBoard(List<Integer> positions) {
         positions.forEach(data -> {
-            Button playerMast = playerMastPositions.get(data - 1);
+            Button playerMast = playerMastPositions
+                    .stream()
+                    .filter(button -> button.getId().equals(String.valueOf(data)))
+                    .findAny()
+                    .get();
             playerMast.setText("X");
             playerMast.setDisable(true);
         });
     }
-
-    //TODO Solve magic number bug(?)
-    private void updateEnemyBoard(Set<Integer> positions) {
+    //TODO update to fix
+    private void updateEnemyBoard(List<Integer> positions) {
         positions.forEach(data -> {
-            Button enemyMast = enemyMastPositions.get(data - 1);
+            Button enemyMast = enemyMastPositions
+                    .stream()
+                    .filter(button -> button.getId().equals(String.valueOf(data)))
+                    .findAny()
+                    .get();
             enemyMast.setText("X");
             enemyMast.setDisable(true);
         });

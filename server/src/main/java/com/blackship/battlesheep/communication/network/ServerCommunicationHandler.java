@@ -4,6 +4,8 @@ import com.blackship.battlesheep.communication.network.packet.PacketFactory;
 import com.blackship.battlesheep.communication.packet.Packet;
 import com.blackship.battlesheep.communication.packet.PacketMove;
 import com.blackship.battlesheep.game.Game;
+import com.blackship.battlesheep.game.state.exceptions.FirstPlayerWon;
+import com.blackship.battlesheep.game.state.exceptions.SecondPlayerWon;
 import com.blackship.battlesheep.game.state.fleet.FleetGenerator;
 import com.blackship.battlesheep.utils.LogUtils;
 import org.slf4j.Logger;
@@ -23,7 +25,6 @@ public class ServerCommunicationHandler {
 
     private AppServerSocket server;
     private List<ClientSocketHandler> clients;
-    private transient boolean runningLoop;
 
     public ServerCommunicationHandler(AppServerSocket server) {
         this.server = server;
@@ -43,18 +44,15 @@ public class ServerCommunicationHandler {
         return this;
     }
 
-    public void stopLoop() {
-        runningLoop = false;
-    }
+    public void echo() throws IOException, ClassNotFoundException, FirstPlayerWon, SecondPlayerWon {
 
-    public void echo() throws IOException, ClassNotFoundException {
         ClientSocketHandler firstClient = clients.get(0);
         ClientSocketHandler secondClient = clients.get(1);
 
         Game game = new Game();
         game.startGame(FleetGenerator.hardcodeShips(), FleetGenerator.hardcodeShips());
 
-        while(runningLoop) {
+        while(true) {
 
             log.info("...Receiving packet...");
             Packet receivedPacketFirstPlayer = firstClient.read();
@@ -72,7 +70,9 @@ public class ServerCommunicationHandler {
             List<List<Integer>> secondPlayerShotPositions = new ArrayList<>(1);
             secondPlayerShotPositions.add(receivedPacketMoveSecondPlayer.getPositions().get(0));
 
-            List<List<Integer>> shotPositions = game.move(firstPlayerShotPositions, secondPlayerShotPositions);
+            List<List<Integer>> shotPositions;
+
+            shotPositions = game.move(firstPlayerShotPositions, secondPlayerShotPositions);
 
             PacketMove shotPositionsForFirstPlayer = PacketFactory.createMove();
             shotPositionsForFirstPlayer.addPositions(shotPositions.get(0));
@@ -89,5 +89,4 @@ public class ServerCommunicationHandler {
             log.info("..." + shotPositionsForSecondPlayer + " has been sent to " + secondClient + "...");
         }
     }
-
 }

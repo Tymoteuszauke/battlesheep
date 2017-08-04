@@ -2,6 +2,8 @@ package com.blackship.battlesheep;
 
 import com.blackship.battlesheep.communication.network.AppServerSocket;
 import com.blackship.battlesheep.communication.network.ServerCommunicationHandler;
+import com.blackship.battlesheep.game.state.exceptions.FirstPlayerWon;
+import com.blackship.battlesheep.game.state.exceptions.SecondPlayerWon;
 
 import java.io.IOException;
 
@@ -11,7 +13,7 @@ import java.io.IOException;
  */
 public class AppServer {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, FirstPlayerWon, SecondPlayerWon {
 
         new ServerCommunicationHandler(
                 new AppServerSocket(8096))
