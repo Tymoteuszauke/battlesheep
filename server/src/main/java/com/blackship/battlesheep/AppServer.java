@@ -2,6 +2,7 @@ package com.blackship.battlesheep;
 
 import com.blackship.battlesheep.communication.network.AppServerSocket;
 import com.blackship.battlesheep.communication.network.ServerCommunicationHandler;
+import com.blackship.battlesheep.game.state.exceptions.WrongStateException;
 
 import java.io.IOException;
 
@@ -11,7 +12,7 @@ import java.io.IOException;
  */
 public class AppServer {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, WrongStateException {
 
         new ServerCommunicationHandler(
                 new AppServerSocket(8096))

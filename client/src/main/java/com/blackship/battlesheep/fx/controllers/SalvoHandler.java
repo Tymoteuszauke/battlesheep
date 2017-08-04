@@ -9,10 +9,7 @@ import com.blackship.battlesheep.utils.LogUtils;
 import org.slf4j.Logger;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Observable;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Mateusz Słaboński
@@ -22,15 +19,15 @@ public class SalvoHandler extends Observable {
 
     private static final Logger log = LogUtils.getLogger();
 
-    private Set<Integer> enemyHitPositions = new HashSet<>();
-    private Set<Integer> playerHitPositions = new HashSet<>();
+    private List<Integer> enemyHitPositions = new ArrayList<>();
+    private List<Integer> playerHitPositions = new ArrayList<>();
 
     private AppClientCommunicationHandler appClientCommunicationHandler;
 
     public SalvoHandler(AppClientCommunicationHandler appClientCommunicationHandler) {
         this.appClientCommunicationHandler = appClientCommunicationHandler;
-        enemyHitPositions = new HashSet<>();
-        enemyHitPositions = new HashSet<>();
+        enemyHitPositions = new ArrayList<>();
+        enemyHitPositions = new ArrayList<>();
     }
 
     public boolean encounterSalvos() throws IOException, ClassNotFoundException {
@@ -39,7 +36,8 @@ public class SalvoHandler extends Observable {
 
         if (((Packet)packet).getPacketType() == PacketType.MOVE) {
             enemyHitPositions.addAll(packet.getPositions().get(0));
-            playerHitPositions.addAll(packet.getPositions().get(1));
+            //playerHitPositions.addAll();
+          
             setChanged();
             notifyObservers();
             enemyHitPositions.clear();
@@ -49,15 +47,15 @@ public class SalvoHandler extends Observable {
         return false;
     }
 
-    public Set<Integer> getEnemyHitPositions() {
+    public List<Integer> getEnemyHitPositions() {
         return enemyHitPositions;
     }
 
-    public Set<Integer> getPlayerHitPositions() {
+    public List<Integer> getPlayerHitPositions() {
         return playerHitPositions;
     }
 
-    public void fireSalvoCannonade(List<Integer> positionsToBeBalled) {
+    public boolean fireSalvoCannonade(List<Integer> positionsToBeBalled) {
 
         try {
             Packet packet = PacketFactory.createMove();
@@ -70,5 +68,6 @@ public class SalvoHandler extends Observable {
         } catch (IOException | ClassNotFoundException e) {
             log.error(e.getMessage());
         }
+        return true;
     }
 }

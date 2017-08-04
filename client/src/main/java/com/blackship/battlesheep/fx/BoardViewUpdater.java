@@ -55,35 +55,46 @@ public class BoardViewUpdater implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         salvoHandler = (SalvoHandler) o;
-
-        updateEnemyBoard(salvoHandler.getEnemyHitPositions());
+        List<Integer> enemyHitPositions = salvoHandler.getEnemyHitPositions();
+        updateEnemyBoard(enemyHitPositions);
         updatePlayerBoard(salvoHandler.getPlayerHitPositions());
         enemyMastPositions
                 .stream()
-                .filter(data -> !data.isDisabled())
-                .forEach(data -> data.setStyle(ButtonUtils.defaultButtonColorStyle()));
+                .filter(data -> enemyHitPositions.contains(Integer.parseInt(data.getId())))
+                .forEach(data -> {
+                    data.setDisable(false);
+                    data.setStyle(ButtonUtils.defaultButtonColorStyle());
+                });
     }
 
     public void feedCannon(int cannonBall) {
         loadedCannons.add(cannonBall);
-        if (loadedCannons.size() == playerMastPositions.size()) {
-            salvoHandler.fireSalvoCannonade(loadedCannons);
-            loadedCannons.clear();
-            boardViewUpdaterListener.update("...!!!!FIRE!!!!...\n");
+        long availableCannons = playerMastPositions
+                .stream()
+                .filter(data -> !data.isDisabled())
+                .count();
+
+        if (loadedCannons.size() == availableCannons) {
+            fireCannons(loadedCannons);
         }
     }
+
+    private void fireCannons(List<Integer> cannons) {
+        salvoHandler.fireSalvoCannonade(cannons);
+        loadedCannons.clear();
+        boardViewUpdaterListener.update("...!!!!FIRE!!!!...\n");
+    }
     //TODO Solve magic number bug(?)
-    private void updatePlayerBoard(Set<Integer> positions) {
+    private void updatePlayerBoard(List<Integer> positions) {
         positions.forEach(data -> {
             Button playerMast = playerMastPositions.get(data - 1);
-            playerMastPositions.remove(data - 1);
             playerMast.setText("X");
             playerMast.setDisable(true);
         });
     }
 
     //TODO Solve magic number bug(?)
-    private void updateEnemyBoard(Set<Integer> positions) {
+    private void updateEnemyBoard(List<Integer> positions) {
         positions.forEach(data -> {
             Button enemyMast = enemyMastPositions.get(data - 1);
             enemyMast.setText("X");
