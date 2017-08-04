@@ -16,14 +16,14 @@ import static org.testng.Assert.assertEquals;
 public class FleetTest {
 
     @DataProvider
-    private Object[][] shipCreationDataWithExpectationsOfSunk() {
+    private Object[][] sunkenAndAfloatShips() {
         return new Object[][] {
                 {Arrays.asList(1, 2), Arrays.asList(1, 2), true},
                 {Arrays.asList(1, 2), Arrays.asList(), false}
         };
     }
 
-    @Test(dataProvider = "shipCreationDataWithExpectationsOfSunk")
+    @Test(dataProvider = "sunkenAndAfloatShips")
     public void shouldReturnFalseForAliveShip(
             List<Integer> givenShipPositions,
             List<Integer> givenShotPositions,
