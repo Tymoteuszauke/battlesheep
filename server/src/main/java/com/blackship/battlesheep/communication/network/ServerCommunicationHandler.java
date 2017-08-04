@@ -25,7 +25,6 @@ public class ServerCommunicationHandler {
 
     private AppServerSocket server;
     private List<ClientSocketHandler> clients;
-    private transient boolean runningLoop;
 
     public ServerCommunicationHandler(AppServerSocket server) {
         this.server = server;
@@ -45,10 +44,6 @@ public class ServerCommunicationHandler {
         return this;
     }
 
-    public void stopLoop() {
-        runningLoop = false;
-    }
-
     public void echo() throws IOException, ClassNotFoundException, FirstPlayerWon, SecondPlayerWon {
         ClientSocketHandler firstClient = clients.get(0);
         ClientSocketHandler secondClient = clients.get(1);
@@ -56,7 +51,7 @@ public class ServerCommunicationHandler {
         Game game = new Game();
         game.startGame(FleetGenerator.hardcodeShips(), FleetGenerator.hardcodeShips());
 
-        while(runningLoop) {
+        while(true) {
 
             log.info("...Receiving packet...");
             Packet receivedPacketFirstPlayer = firstClient.read();
@@ -80,6 +75,7 @@ public class ServerCommunicationHandler {
 
             } catch (FirstPlayerWon | SecondPlayerWon e) {
                 log.error(e.getMessage());
+                log.info("ONE PLAYER WON!!!!");
                 break;
             }
 
