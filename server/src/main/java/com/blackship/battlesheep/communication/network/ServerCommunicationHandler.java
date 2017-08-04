@@ -4,8 +4,7 @@ import com.blackship.battlesheep.communication.network.packet.PacketFactory;
 import com.blackship.battlesheep.communication.packet.Packet;
 import com.blackship.battlesheep.communication.packet.PacketMove;
 import com.blackship.battlesheep.game.Game;
-import com.blackship.battlesheep.game.state.exceptions.FirstPlayerWon;
-import com.blackship.battlesheep.game.state.exceptions.SecondPlayerWon;
+import com.blackship.battlesheep.game.state.exceptions.WrongStateException;
 import com.blackship.battlesheep.game.state.fleet.FleetGenerator;
 import com.blackship.battlesheep.utils.LogUtils;
 import org.slf4j.Logger;
@@ -44,7 +43,7 @@ public class ServerCommunicationHandler {
         return this;
     }
 
-    public void echo() throws IOException, ClassNotFoundException, FirstPlayerWon, SecondPlayerWon {
+    public void echo() throws IOException, ClassNotFoundException, WrongStateException {
         ClientSocketHandler firstClient = clients.get(0);
         ClientSocketHandler secondClient = clients.get(1);
 
@@ -70,14 +69,8 @@ public class ServerCommunicationHandler {
             secondPlayerShotPositions.add(receivedPacketMoveSecondPlayer.getPositions().get(0));
 
             List<List<Integer>> shotPositions;
-            try {
-                shotPositions = game.move(firstPlayerShotPositions, secondPlayerShotPositions);
 
-            } catch (FirstPlayerWon | SecondPlayerWon e) {
-                log.error(e.getMessage());
-                log.info("ONE PLAYER WON!!!!");
-                break;
-            }
+            shotPositions = game.move(firstPlayerShotPositions, secondPlayerShotPositions);
 
             PacketMove shotPositionsForFirstPlayer = PacketFactory.createMove();
             shotPositionsForFirstPlayer.addPositions(shotPositions.get(0));
@@ -87,10 +80,10 @@ public class ServerCommunicationHandler {
             shotPositionsForSecondPlayer.addPositions(shotPositions.get(1));
             shotPositionsForSecondPlayer.addPositions(shotPositions.get(0));
 
-            firstClient.write(((Packet)shotPositionsForSecondPlayer).setCreationTime(LocalTime.now()));
+            firstClient.write(((Packet) shotPositionsForSecondPlayer).setCreationTime(LocalTime.now()));
             log.info("..." + shotPositionsForSecondPlayer + " has been sent to " + firstClient + "...");
 
-            secondClient.write(((Packet)shotPositionsForSecondPlayer).setCreationTime(LocalTime.now()));
+            secondClient.write(((Packet) shotPositionsForSecondPlayer).setCreationTime(LocalTime.now()));
             log.info("..." + shotPositionsForSecondPlayer + " has been sent to " + secondClient + "...");
         }
     }
