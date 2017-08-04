@@ -50,7 +50,7 @@ public class ServerCommunicationHandler {
         Game game = new Game();
         game.startGame(FleetGenerator.hardcodeShips(), FleetGenerator.hardcodeShips());
 
-        while (true) {
+        while(true) {
 
             log.info("...Receiving packet...");
             Packet receivedPacketFirstPlayer = firstClient.read();
@@ -69,6 +69,7 @@ public class ServerCommunicationHandler {
             secondPlayerShotPositions.add(receivedPacketMoveSecondPlayer.getPositions().get(0));
 
             List<List<Integer>> shotPositions;
+
             shotPositions = game.move(firstPlayerShotPositions, secondPlayerShotPositions);
 
             PacketMove shotPositionsForFirstPlayer = PacketFactory.createMove();
