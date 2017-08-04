@@ -41,6 +41,10 @@ public class Game {
         return shotPositions;
     }
 
+    public GameState getGameState() {
+        return gameState;
+    }
+
     public static void main(String[] args) throws WrongStateException {
 
         List<List<Integer>> abc = FleetGenerator.hardcodeShips();
