@@ -16,7 +16,7 @@ import java.util.Arrays;
  */
 public class AppClientHandler {
 
-    private final static Logger log = LogUtils.getLogger();
+    private static final Logger log = LogUtils.getLogger();
 
     private AppClientCommunicationHandler clientCommunicationHandler;
 
@@ -39,11 +39,11 @@ public class AppClientHandler {
 
         log.info("...Sending packet...");
         clientCommunicationHandler.write(packageToSend);
-        log.info("..." + packageToSend + " has been sent...");
+        log.info(String.format("...%s has been sent...", packageToSend));
 
         log.info("...Reading from server...");
         Packet receivedPacket = clientCommunicationHandler.read();
-        log.info("...Received: " + receivedPacket + "  " + receivedPacket.getCreationTime());
+        log.info(String.format("...Received: %s %s", receivedPacket, receivedPacket.getCreationTime()));
 
         return this;
     }
@@ -51,7 +51,7 @@ public class AppClientHandler {
     public AppClientHandler receiveBoards() throws IOException, ClassNotFoundException {
         log.info("...Reading boards from server...");
         Packet receivedPacket = clientCommunicationHandler.read();
-        log.info("...Received: " + receivedPacket + "  " + receivedPacket.getCreationTime());
+        log.info(String.format("...Received: %s %s", receivedPacket, receivedPacket.getCreationTime()));
 
         return this;
     }

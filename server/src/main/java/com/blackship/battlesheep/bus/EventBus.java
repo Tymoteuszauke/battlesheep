@@ -1,8 +1,8 @@
 package com.blackship.battlesheep.bus;
 
+import com.blackship.battlesheep.bus.exceptions.InterruptedGameThreadException;
 import com.blackship.battlesheep.utils.LogUtils;
 import org.slf4j.Logger;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -38,8 +38,9 @@ public class EventBus implements Runnable {
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
+            log.error(e.getMessage());
             Thread.currentThread().interrupt();
-            log.error("...Thread.sleep() exception...");
+            throw new InterruptedGameThreadException("...Game thread was interrupted!...", e);
         }
         isFinished = true;
     }
@@ -51,11 +52,11 @@ public class EventBus implements Runnable {
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
+                e.printStackTrace();
+                log.error(e.getMessage());
                 Thread.currentThread().interrupt();
-                log.error("...Thread.sleep() exception...");
+                throw new InterruptedGameThreadException("...Game thread was interrupted!...", e);
             }
         }
-
-
     }
 }

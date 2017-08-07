@@ -2,7 +2,6 @@ package com.blackship.battlesheep.fx.controllers;
 
 import com.blackship.battlesheep.communication.ClientCommunicationHandlerKeeper;
 import com.blackship.battlesheep.communication.RandomizedBoardReceiver;
-import com.blackship.battlesheep.communication.network.AppClientCommunicationHandler;
 import com.blackship.battlesheep.fx.SalvoHandler;
 import com.blackship.battlesheep.fx.board_view_updater.BoardViewUpdater;
 import com.blackship.battlesheep.fx.board_view_updater.BoardViewUpdaterListener;
@@ -11,20 +10,15 @@ import com.blackship.battlesheep.fx.utils.PositionUtils;
 import com.blackship.battlesheep.utils.LogUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -34,11 +28,11 @@ import java.util.stream.IntStream;
  */
 public class BoardController implements BoardViewUpdaterListener {
 
-    private final static Logger log = LogUtils.getLogger();
-    private final static int BOARD_SIZE = 10;
-    private final static int X = 0;
-    private final static int Y = 1;
-    private final static int BOARD_OFFSET = 1;
+    private static final Logger log = LogUtils.getLogger();
+    private static final int BOARD_SIZE = 10;
+    private static final int X = 0;
+    private static final int Y = 1;
+    private static final int BOARD_OFFSET = 1;
 
     private BoardViewUpdater boardViewUpdater;
     private List<Button> enemyMastPositions;
@@ -88,7 +82,7 @@ public class BoardController implements BoardViewUpdaterListener {
 
     private void arrangeButtonsOnPlayerBoard() throws IOException, ClassNotFoundException {
         playerMastPositions = new ArrayList<>();
-        RandomizedBoardReceiver randomizedBoardReceiver = new RandomizedBoardReceiver(ClientCommunicationHandlerKeeper.Instance.getAppClientCommunicationHandler());
+        RandomizedBoardReceiver randomizedBoardReceiver = new RandomizedBoardReceiver(ClientCommunicationHandlerKeeper.INSTANCE.getAppClientCommunicationHandler());
         List<Integer> randomizedPlayerShips = randomizedBoardReceiver.receiveRandomizedPlayerBoard();
         randomizedPlayerShips.forEach(data -> {
             Button button = ButtonUtils.createStyledButton(data);
@@ -100,15 +94,15 @@ public class BoardController implements BoardViewUpdaterListener {
         });
     }
 
-    private SalvoHandler setupSalvoHandler() throws IOException {
-        return new SalvoHandler(ClientCommunicationHandlerKeeper.Instance.getAppClientCommunicationHandler());
+    private SalvoHandler setupSalvoHandler() {
+        return new SalvoHandler(ClientCommunicationHandlerKeeper.INSTANCE.getAppClientCommunicationHandler());
     }
 
     private Button setButtonListener(Button button) {
         button.setOnAction(event -> {
             button.setStyle(ButtonUtils.pinkButtonColorStyle());
             log.info(String.format("...Preparing to shoot into position %s...", button.getText()));
-            loggerInfoTextArea.appendText(String.format("...Player shoots on position %s...\n", button.getId()));
+            loggerInfoTextArea.appendText(String.format("...Player shoots on position %s...%s", button.getId(), System.lineSeparator()));
             button.setDisable(true);
             enemyGridPane.requestFocus();
             boardViewUpdater.feedCannon(Integer.parseInt(button.getText()));
@@ -118,7 +112,7 @@ public class BoardController implements BoardViewUpdaterListener {
 
     @FXML
     private void tutorialButtonActionHandler() throws IOException {
-        System.out.println(getClass().getResource("/tutorial.txt").toString());
+        log.info(getClass().getResource("/tutorial.txt").toString());
         String path = getClass().getResource("/tutorial.txt").toString().substring(5);
         String tutorialTextFileContent = new String(Files.readAllBytes(Paths.get(path)));
 

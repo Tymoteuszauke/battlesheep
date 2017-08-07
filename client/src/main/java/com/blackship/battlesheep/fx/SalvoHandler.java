@@ -1,7 +1,6 @@
 package com.blackship.battlesheep.fx;
 
 import com.blackship.battlesheep.communication.network.AppClientCommunicationHandler;
-import com.blackship.battlesheep.communication.network.packet.NetworkPacketWinner;
 import com.blackship.battlesheep.communication.network.packet.PacketFactory;
 import com.blackship.battlesheep.communication.packet.Packet;
 import com.blackship.battlesheep.communication.packet.PacketMove;
@@ -11,7 +10,9 @@ import com.blackship.battlesheep.utils.LogUtils;
 import org.slf4j.Logger;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
 
 /**
  * @author Mateusz Słaboński
@@ -60,7 +61,7 @@ public class SalvoHandler extends Observable {
             Packet packet = PacketFactory.createMove();
             ((PacketMove) packet).addPositions(positionsToBeBalled);
             appClientCommunicationHandler.write(packet);
-            log.info(String.format("...!!!!FIRE!!!!... \n%s", packet.getPacketType().name()));
+            log.info(String.format("...!!!!FIRE!!!!... %s%s", System.lineSeparator(), packet.getPacketType().name()));
 
             encounterSalvos();
 

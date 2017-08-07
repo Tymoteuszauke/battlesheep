@@ -74,8 +74,8 @@ public class ServerCommunicationHandler implements Listener {
         log.info("...Receiving packet...");
         Packet receivedPacketFirstPlayer = client.read();
         PacketMove receivedPacketMoveFirstPlayer = (PacketMove) receivedPacketFirstPlayer;
-        log.info(String.format("...%s has been received from client %s...", receivedPacketFirstPlayer.getPacketType(), client));
 
+        log.info(String.format("...%s has been receinved from client %s ...", receivedPacketFirstPlayer.getPacketType(), client));
         return receivedPacketMoveFirstPlayer;
     }
 
@@ -166,5 +166,4 @@ public class ServerCommunicationHandler implements Listener {
             reportClients.report();
         }
     }
-
 }
