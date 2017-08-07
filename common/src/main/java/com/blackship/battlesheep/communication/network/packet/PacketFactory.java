@@ -14,8 +14,12 @@ public class PacketFactory {
         return new NetworkPacketMove(PacketType.MOVE);
     }
 
-    public static NetworkPacketBoard createBoards() {
-        return new NetworkPacketBoard(PacketType.BOARDS);
+    public static NetworkPacketBoard createBoard() {
+        return new NetworkPacketBoard(PacketType.BOARD);
+    }
+
+    public static NetworkPacketWinner createWinner() {
+        return new NetworkPacketWinner(PacketType.WINNER);
     }
 
 }

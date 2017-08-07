@@ -3,6 +3,7 @@ package com.blackship.battlesheep.communication.network;
 import com.blackship.battlesheep.bus.Event;
 import com.blackship.battlesheep.bus.EventBus;
 import com.blackship.battlesheep.bus.Listener;
+import com.blackship.battlesheep.communication.network.packet.NetworkPacketBoard;
 import com.blackship.battlesheep.communication.network.packet.PacketFactory;
 import com.blackship.battlesheep.communication.packet.Packet;
 import com.blackship.battlesheep.communication.packet.PacketMove;
@@ -47,6 +48,23 @@ public class ServerCommunicationHandler implements Listener {
         clients.add(new ClientSocketHandler(server.getSockets().get(1)));
 
         return this;
+    }
+
+    public ServerCommunicationHandler sendRandomBoardToClients() throws IOException {
+        ClientSocketHandler firstClient = clients.get(0);
+        ClientSocketHandler secondClient = clients.get(1);
+
+        sendRandomBoard(firstClient);
+        sendRandomBoard(secondClient);
+
+        return this;
+    }
+
+    void sendRandomBoard(ClientSocketHandler client) throws IOException {
+        NetworkPacketBoard networkPacketBoard = PacketFactory.createBoard();
+        networkPacketBoard.addPositions(new FleetGenerator().generateRandomFleet());
+
+        client.write(networkPacketBoard.setCreationTime(LocalTime.now()));
     }
 
     PacketMove receivePacketMove(ClientSocketHandler client) throws IOException, ClassNotFoundException {

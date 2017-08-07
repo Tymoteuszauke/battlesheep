@@ -52,7 +52,7 @@ public class AppClientSocketIT {
 
         givenClientSocket.getOutputStream().write(
                 new NetworkPacketConverter().toByte(
-                        PacketFactory.createBoards().setCreationTime(LocalTime.now())));
+                        PacketFactory.createBoard().setCreationTime(LocalTime.now())));
         byte [] receivedMoveBytesFromClient = readBytesFromServer(givenClientSocket);
         givenClientSocket.getOutputStream().write(receivedMoveBytesFromClient);
 

@@ -1,7 +1,7 @@
 package com.blackship.battlesheep.communication.network.packet;
 
 import com.blackship.battlesheep.communication.packet.BasePacket;
-import com.blackship.battlesheep.communication.packet.PacketBoards;
+import com.blackship.battlesheep.communication.packet.PacketBoard;
 import com.blackship.battlesheep.communication.packet.enums.PacketType;
 
 import java.util.*;
@@ -10,40 +10,22 @@ import java.util.*;
  * @author milosz
  * @since 31.07.2017
  */
-public class NetworkPacketBoard extends BasePacket implements PacketBoards {
+public class NetworkPacketBoard extends BasePacket implements PacketBoard {
 
-    private Set<Integer> playerPositions;
-    private Set<Integer> enemyPositions;
+    private List<List<Integer>> playerPositions;
 
     NetworkPacketBoard(PacketType packetType) {
         super.packetType = packetType;
-        this.playerPositions = new HashSet<>();
-        this.enemyPositions = new HashSet<>();
+        this.playerPositions = new ArrayList<>();
     }
 
     @Override
-    public Set<Integer> getPlayerPositions() {
+    public List<List<Integer>> getPlayerPositions() {
         return playerPositions;
     }
 
     @Override
-    public Set<Integer> getEnemyPositions() {
-        return enemyPositions;
-    }
-
-    @Override
-    public Boolean addPositions(Set<Integer> positions, Collection<? extends Integer> addedPositions) {
-        return positions.addAll(addedPositions);
-    }
-
-    @Override
-    public NetworkPacketBoard swapBoards() {
-        List<Integer> tempList = new ArrayList<>(playerPositions);
-        playerPositions.clear();
-        playerPositions.addAll(enemyPositions);
-        enemyPositions.clear();
-        enemyPositions.addAll(tempList);
-
-        return this;
+    public Boolean addPositions(List<List<Integer>> addedPositions) {
+        return playerPositions.addAll(addedPositions);
     }
 }
