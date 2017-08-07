@@ -17,7 +17,6 @@ import org.slf4j.Logger;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -124,8 +123,11 @@ public class ServerCommunicationHandler implements Listener {
             );
 
             if (game.getGameState() instanceof FinishedGameState) {
+                log.info("Game won!");
                 FinishedGameState winner = (FinishedGameState) game.getGameState();
+
                 winnerBus.submit(new Event(new ReportClients(firstClient, secondClient, winner.getWinner())));
+
                 break;
             }
 
@@ -139,6 +141,8 @@ public class ServerCommunicationHandler implements Listener {
 
             Thread.sleep(300);
         }
+
+        winnerBus.stop();
     }
 
     @Override

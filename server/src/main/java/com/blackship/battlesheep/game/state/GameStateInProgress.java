@@ -15,7 +15,6 @@ public class GameStateInProgress implements GameState {
     private Fleet secondPlayerFleet;
 
     public GameStateInProgress(List<List<Integer>> firstPlayerPositions, List<List<Integer>> secondPlayerPositions) {
-
         firstPlayerFleet = new Fleet(firstPlayerPositions);
         secondPlayerFleet = new Fleet(secondPlayerPositions);
     }
@@ -24,14 +23,15 @@ public class GameStateInProgress implements GameState {
     public GameState changeState(List<List<Integer>> firstPlayerPositions, List<List<Integer>> secondPlayerPositions) {
         makeAMove(firstPlayerPositions, secondPlayerPositions);
         GameWinner winner = isGameWon();
-        if(winner != GameWinner.NONE) return new FinishedGameState(winner.toString());
+        if(winner != GameWinner.NONE) {
+            return new FinishedGameState(winner.toString(), firstPlayerFleet, secondPlayerFleet);
+        }
 
         return this;
     }
 
     @Override
     public List<List<Integer>> shotPositions() {
-
         List<List<Integer>> shotPositions = new ArrayList<>(NUMBER_OF_PLAYERS);
         shotPositions.add(firstPlayerFleet.getShotPositions());
         shotPositions.add(secondPlayerFleet.getShotPositions());
@@ -40,7 +40,6 @@ public class GameStateInProgress implements GameState {
     }
 
     private void makeAMove(List<List<Integer>> firstPlayerPositions, List<List<Integer>> secondPlayerPositions) {
-
         List<Integer> firstPlayerMoves = firstPlayerPositions.get(0);
         List<Integer> secondPlayerMoves = secondPlayerPositions.get(0);
         firstPlayerFleet.shootShipPositions(secondPlayerMoves);
@@ -48,10 +47,10 @@ public class GameStateInProgress implements GameState {
     }
 
     private GameWinner isGameWon() {
-
         if(firstPlayerFleet.isSunk() && secondPlayerFleet.isSunk()) return GameWinner.BOTH_PLAYERS;
         if(firstPlayerFleet.isSunk()) return GameWinner.PLAYER_TWO;
         if(secondPlayerFleet.isSunk()) return GameWinner.PLAYER_ONE;
+
         return GameWinner.NONE;
     }
 }
