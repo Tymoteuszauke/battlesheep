@@ -1,9 +1,13 @@
 package com.blackship.battlesheep.communication.network;
 
+import com.blackship.battlesheep.bus.Event;
+import com.blackship.battlesheep.bus.EventBus;
+import com.blackship.battlesheep.bus.Listener;
 import com.blackship.battlesheep.communication.network.packet.PacketFactory;
 import com.blackship.battlesheep.communication.packet.Packet;
 import com.blackship.battlesheep.communication.packet.PacketMove;
 import com.blackship.battlesheep.game.Game;
+import com.blackship.battlesheep.game.state.FinishedGameState;
 import com.blackship.battlesheep.game.state.exceptions.WrongStateException;
 import com.blackship.battlesheep.game.state.fleet.FleetGenerator;
 import com.blackship.battlesheep.utils.LogUtils;
@@ -20,7 +24,7 @@ import java.util.List;
  * @author milosz
  * @since 27.7.17
  */
-public class ServerCommunicationHandler {
+public class ServerCommunicationHandler implements Listener {
 
     private final static Logger log = LogUtils.getLogger();
 
@@ -87,6 +91,10 @@ public class ServerCommunicationHandler {
         Game game = new Game();
         game.startGame(FleetGenerator.hardcodeShips(), FleetGenerator.hardcodeShips());
 
+        EventBus winnerBus = new EventBus();
+        winnerBus.register(this);
+        new Thread(winnerBus).start();
+
         while(true) {
 
             PacketMove receivedPacketFromFirstClient = receivePacketMove(firstClient);
@@ -101,10 +109,26 @@ public class ServerCommunicationHandler {
 
             sendShotPositions(shotPositionsPlayers, firstClient);
 
+            List<List<Integer>> shotPositions = game.move(firstPlayerShotPositions, secondPlayerShotPositions);
+
+            if (game.getGameState() instanceof FinishedGameState) {
+                FinishedGameState winner = (FinishedGameState) game.getGameState();
+                winnerBus.submit(new Event(new ReportClients(firstClient, secondClient, winner.getWinner())));
+                break;
+            }
+
             swapPositionsInPacketMove(shotPositionsPlayers);
 
             sendShotPositions(shotPositionsPlayers, secondClient);
-
         }
     }
+
+    @Override
+    public void update(Event event) {
+        if (event.getObject() instanceof ReportClients) {
+            ReportClients reportClients = (ReportClients) event.getObject();
+            reportClients.report();
+        }
+    }
+
 }
