@@ -45,18 +45,4 @@ public class Game {
         return gameState;
     }
 
-    public static void main(String[] args) throws WrongStateException {
-
-        List<List<Integer>> abc = FleetGenerator.hardcodeShips();
-
-        Game game = new Game();
-        game.startGame(abc, abc);
-
-        List<List<Integer>> moves = new ArrayList<>();
-        moves.add(Arrays.asList(12, 14));
-        game.move(moves, moves);
-        moves = new ArrayList<>();
-        moves.add(Arrays.asList(100));
-        game.move(moves, moves);
-    }
 }

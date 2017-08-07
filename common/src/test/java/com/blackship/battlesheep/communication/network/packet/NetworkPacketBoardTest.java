@@ -1,6 +1,6 @@
 package com.blackship.battlesheep.communication.network.packet;
 
-import com.blackship.battlesheep.communication.packet.PacketBoards;
+import com.blackship.battlesheep.communication.packet.PacketBoard;
 import com.blackship.battlesheep.communication.packet.enums.PacketType;
 import org.testng.annotations.Test;
 
@@ -34,39 +34,15 @@ public class NetworkPacketBoardTest {
     public void shouldAddPositionsToPacketBoardsAndPutPositionsInBoardsSet() {
 
         //given
-        PacketBoards givenPacketBoard = PacketFactory.createBoards();
-        List<Integer> givenPositions = Arrays.asList(1, 2, 3);
+        PacketBoard givenPacketBoard = PacketFactory.createBoard();
+        List<List<Integer>> givenPositions = Arrays.asList(Arrays.asList(1, 2, 3));
 
         //when
-        Boolean givenAddStatementPlayer = givenPacketBoard.addPositions(givenPacketBoard.getPlayerPositions(), givenPositions);
-        Boolean givenAddStatementEnemy = givenPacketBoard.addPositions(givenPacketBoard.getEnemyPositions(), givenPositions);
-        Set<Integer> givenPlayerPositions = givenPacketBoard.getPlayerPositions();
-        Set<Integer> givenEnemyPositions = givenPacketBoard.getEnemyPositions();
+        Boolean givenAddStatementPlayer = givenPacketBoard.addPositions(givenPositions);
+        List<List<Integer>> givenPlayerPositions = givenPacketBoard.getPlayerPositions();
 
         //then
         assertTrue(givenAddStatementPlayer);
-        assertTrue(givenAddStatementEnemy);
         assertTrue(givenPlayerPositions.containsAll(givenPositions));
-        assertTrue(givenEnemyPositions.containsAll(givenPositions));
-    }
-
-    @Test
-    public void shouldSwapPlayerBoardWithEnemyBoard() {
-
-        //given
-        PacketBoards givenPacketBoard = PacketFactory.createBoards();
-
-        List<Integer> playerPositions = Arrays.asList(1, 2);
-        List<Integer> enemyPositions = Arrays.asList(3, 4);
-
-        givenPacketBoard.addPositions(givenPacketBoard.getPlayerPositions(), playerPositions);
-        givenPacketBoard.addPositions(givenPacketBoard.getEnemyPositions(), enemyPositions);
-
-        //when
-        givenPacketBoard.swapBoards();
-
-        //then
-        assertTrue(givenPacketBoard.getEnemyPositions().containsAll(playerPositions));
-        assertTrue(givenPacketBoard.getPlayerPositions().containsAll(enemyPositions));
     }
 }
