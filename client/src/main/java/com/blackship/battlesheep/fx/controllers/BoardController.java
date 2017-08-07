@@ -83,6 +83,8 @@ public class BoardController implements BoardViewUpdaterListener {
         playerMastPositions = new ArrayList<>();
         Arrays.stream(hardCodedArray).forEach(data -> {
             Button button = ButtonUtils.createStyledButton(data);
+            button.setDisable(true);
+            button.setStyle(ButtonUtils.disabledButtonColorStyle());
             playerMastPositions.add(button);
             int[] twoDimensionalBoardPosition = PositionUtils.calculateFromOneDimensionalPosition(data - BOARD_OFFSET, BOARD_SIZE);
             playerGridPane.add(button, twoDimensionalBoardPosition[X], twoDimensionalBoardPosition[Y]);

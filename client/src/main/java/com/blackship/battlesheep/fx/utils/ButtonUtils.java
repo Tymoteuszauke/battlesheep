@@ -22,6 +22,8 @@ public class ButtonUtils {
         return "-fx-background-color: pink;";
     }
 
+    public static String disabledButtonColorStyle() {return "-fx-opacity: 1.0";}
+
     public static String defaultButtonColorStyle() {
         return "";
     }
