@@ -44,6 +44,7 @@ public class ServerCommunicationHandler {
     }
 
     public void echo() throws IOException, ClassNotFoundException, WrongStateException {
+
         ClientSocketHandler firstClient = clients.get(0);
         ClientSocketHandler secondClient = clients.get(1);
 
@@ -80,12 +81,11 @@ public class ServerCommunicationHandler {
             shotPositionsForSecondPlayer.addPositions(shotPositions.get(1));
             shotPositionsForSecondPlayer.addPositions(shotPositions.get(0));
 
-            firstClient.write(((Packet) shotPositionsForSecondPlayer).setCreationTime(LocalTime.now()));
-            log.info("..." + shotPositionsForSecondPlayer + " has been sent to " + firstClient + "...");
+            firstClient.write(((Packet) shotPositionsForFirstPlayer).setCreationTime(LocalTime.now()));
+            log.info("..." + shotPositionsForFirstPlayer + " has been sent to " + firstClient + "...");
 
             secondClient.write(((Packet) shotPositionsForSecondPlayer).setCreationTime(LocalTime.now()));
             log.info("..." + shotPositionsForSecondPlayer + " has been sent to " + secondClient + "...");
         }
     }
-
 }

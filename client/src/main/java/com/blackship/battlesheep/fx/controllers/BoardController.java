@@ -4,6 +4,8 @@ import com.blackship.battlesheep.communication.network.AppClientCommunicationHan
 import com.blackship.battlesheep.communication.network.AppClientSocket;
 import com.blackship.battlesheep.fx.BoardViewUpdater;
 import com.blackship.battlesheep.fx.BoardViewUpdaterListener;
+import com.blackship.battlesheep.fx.ClientCommunicationHandlerKeeper;
+import com.blackship.battlesheep.fx.SalvoHandler;
 import com.blackship.battlesheep.fx.utils.ButtonUtils;
 import com.blackship.battlesheep.fx.utils.PositionUtils;
 import com.blackship.battlesheep.utils.LogUtils;
@@ -88,10 +90,7 @@ public class BoardController implements BoardViewUpdaterListener {
     }
 
     private SalvoHandler setupSalvoHandler() throws IOException {
-        AppClientSocket appClientSocket = new AppClientSocket("localhost", 8096);
-        AppClientCommunicationHandler appClientCommunicationHandler = new AppClientCommunicationHandler(appClientSocket);
-        appClientCommunicationHandler.connect();
-        return new SalvoHandler(appClientCommunicationHandler);
+        return new SalvoHandler(ClientCommunicationHandlerKeeper.Instance.getAppClientCommunicationHandler());
     }
 
     private Button setButtonListener(Button button) {

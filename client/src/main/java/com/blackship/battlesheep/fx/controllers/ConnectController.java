@@ -1,5 +1,8 @@
 package com.blackship.battlesheep.fx.controllers;
 
+import com.blackship.battlesheep.communication.network.AppClientCommunicationHandler;
+import com.blackship.battlesheep.communication.network.AppClientSocket;
+import com.blackship.battlesheep.fx.ClientCommunicationHandlerKeeper;
 import com.blackship.battlesheep.utils.LogUtils;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -29,6 +32,9 @@ public class ConnectController extends Application {
     @FXML
     public TextField ipAddressTextField;
 
+    @FXML
+    public TextField portTextField;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         log.info("...Starting battlesheep client...");
@@ -48,7 +54,12 @@ public class ConnectController extends Application {
         Stage boardStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         boardStage.setScene(scene);
 
-        log.info("...Connecting to ...");
+        AppClientSocket appClientSocket = new AppClientSocket(ipAddressTextField.getText(), Integer.parseInt(portTextField.getText()));
+        AppClientCommunicationHandler appClientCommunicationHandler = new AppClientCommunicationHandler(appClientSocket);
+        ClientCommunicationHandlerKeeper.Instance.setAppClientCommunicationHandler(appClientCommunicationHandler);
+
+        appClientCommunicationHandler.connect();
+        log.info(String.format("...Connecting to %s %s...", ipAddressTextField.getText(), portTextField.getText()));
         boardStage.show();
     }
 }

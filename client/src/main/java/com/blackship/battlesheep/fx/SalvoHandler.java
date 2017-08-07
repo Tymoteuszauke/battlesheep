@@ -1,4 +1,4 @@
-package com.blackship.battlesheep.fx.controllers;
+package com.blackship.battlesheep.fx;
 
 import com.blackship.battlesheep.communication.network.AppClientCommunicationHandler;
 import com.blackship.battlesheep.communication.network.packet.PacketFactory;
@@ -19,40 +19,40 @@ public class SalvoHandler extends Observable {
 
     private static final Logger log = LogUtils.getLogger();
 
-    private List<Integer> enemyHitPositions = new ArrayList<>();
-    private List<Integer> playerHitPositions = new ArrayList<>();
+    private List<Integer> enemyDestroyedMasts;
+    private List<Integer> playerDestroyedMasts;
+
 
     private AppClientCommunicationHandler appClientCommunicationHandler;
 
     public SalvoHandler(AppClientCommunicationHandler appClientCommunicationHandler) {
         this.appClientCommunicationHandler = appClientCommunicationHandler;
-        enemyHitPositions = new ArrayList<>();
-        enemyHitPositions = new ArrayList<>();
     }
 
     public boolean encounterSalvos() throws IOException, ClassNotFoundException {
 
+        enemyDestroyedMasts.clear();
+        playerDestroyedMasts.clear();
         PacketMove packet = (PacketMove) appClientCommunicationHandler.read();
 
         if (((Packet)packet).getPacketType() == PacketType.MOVE) {
-            enemyHitPositions.addAll(packet.getPositions().get(0));
-            //playerHitPositions.addAll();
-          
+            enemyDestroyedMasts.addAll(packet.getPositions().get(0));
+            playerDestroyedMasts.addAll(packet.getPositions().get(1));
+
             setChanged();
             notifyObservers();
-            enemyHitPositions.clear();
-            playerHitPositions.clear();
+
             return true;
         }
         return false;
     }
 
-    public List<Integer> getEnemyHitPositions() {
-        return enemyHitPositions;
+    public List<Integer> getEnemyDestroyedMasts() {
+        return enemyDestroyedMasts;
     }
 
-    public List<Integer> getPlayerHitPositions() {
-        return playerHitPositions;
+    public List<Integer> getPlayerDestroyedMasts() {
+        return playerDestroyedMasts;
     }
 
     public boolean fireSalvoCannonade(List<Integer> positionsToBeBalled) {
