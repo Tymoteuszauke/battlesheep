@@ -12,7 +12,7 @@ public class EventBus implements Runnable {
 
     private Queue<Event> events = new LinkedList<>();
     private List<Listener> listeners = new LinkedList<>();
-    private boolean isFinished;
+    private transient boolean isFinished;
 
     public void register(Listener listener) {
         listeners.add(listener);
@@ -29,10 +29,26 @@ public class EventBus implements Runnable {
         }
     }
 
+    public void stop() {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        isFinished = true;
+    }
+
     @Override
     public void run() {
         while(!isFinished) {
             pushEvents();
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
+
     }
 }

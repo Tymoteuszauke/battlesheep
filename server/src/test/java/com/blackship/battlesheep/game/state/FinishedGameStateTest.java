@@ -37,17 +37,10 @@ public class FinishedGameStateTest {
         assertEquals(givenFinishedGameState.getWinner(), expectedState.toString());
     }
 
-    @Test(expectedExceptions = WrongStateException.class)
-    public void shouldThrowException() throws WrongStateException {
-
-        FinishedGameState givenFinishedGameState = new FinishedGameState("");
-        givenFinishedGameState.shotPositions();
-    }
-
     @Test
     public void shouldReturnFinishedGame() {
+        FinishedGameState givenFinishedGameState = new FinishedGameState("", null, null);
 
-        FinishedGameState givenFinishedGameState = new FinishedGameState("");
         assertEquals(givenFinishedGameState.changeState(null, null).getClass(), FinishedGameState.class);
     }
 }
