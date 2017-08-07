@@ -62,9 +62,9 @@ public class ServerCommunicationHandler implements Listener {
         PacketBoard secondClientPacket = PacketFactory.createBoard();
         secondClientPacket.addPositions(secondPlayerBoard);
 
-        log.info("...Sending board to first client");
+        log.info("...Sending board to first client...");
         firstClient.write(((Packet)firstClientPacket).setCreationTime(LocalTime.now()));
-        log.info("...Sending board to second client");
+        log.info("...Sending board to second client...");
         secondClient.write(((Packet)secondClientPacket).setCreationTime(LocalTime.now()));
 
         return this;
@@ -74,7 +74,7 @@ public class ServerCommunicationHandler implements Listener {
         log.info("...Receiving packet...");
         Packet receivedPacketFirstPlayer = client.read();
         PacketMove receivedPacketMoveFirstPlayer = (PacketMove) receivedPacketFirstPlayer;
-        log.info("..." + receivedPacketFirstPlayer.getPacketType() + " has been received from client " + client + "...");
+        log.info(String.format("...%s has been received from client %s...", receivedPacketFirstPlayer.getPacketType(), client));
 
         return receivedPacketMoveFirstPlayer;
     }
@@ -101,7 +101,7 @@ public class ServerCommunicationHandler implements Listener {
 
     void sendShotPositions(PacketMove packetMove, ClientSocketHandler client) throws IOException {
         client.write(((Packet)packetMove).setCreationTime(LocalTime.now()));
-        log.info("..." + packetMove + " has been sent to " + client + "...");
+        log.info(String.format("...%s has been sent to %s...", packetMove,  client));
     }
 
     public void echo() throws IOException, ClassNotFoundException, WrongStateException, InterruptedException {
@@ -110,8 +110,9 @@ public class ServerCommunicationHandler implements Listener {
         ClientSocketHandler secondClient = clients.get(1);
 
         log.info("...Generating fleets...");
-        List<List<Integer>> firstPlayerBoard = new FleetGenerator().generateRandomFleet();
-        List<List<Integer>> secondPlayerBoard = new FleetGenerator().generateRandomFleet();
+        FleetGenerator fleetGenerator = new FleetGenerator();
+        List<List<Integer>> firstPlayerBoard = fleetGenerator.generateRandomFleet();
+        List<List<Integer>> secondPlayerBoard = fleetGenerator.generateRandomFleet();
 
         log.info("...Sending boards to clients...");
         sendRandomBoardToClients(firstPlayerBoard, secondPlayerBoard);

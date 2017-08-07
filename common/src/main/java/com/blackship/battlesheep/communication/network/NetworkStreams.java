@@ -16,7 +16,7 @@ import java.util.Optional;
  */
 public class NetworkStreams implements Streams {
 
-    private final static Logger log = LogUtils.getLogger();
+    private static final Logger log = LogUtils.getLogger();
 
     private Socket socket;
 

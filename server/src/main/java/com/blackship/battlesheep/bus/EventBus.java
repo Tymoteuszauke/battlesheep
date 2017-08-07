@@ -1,5 +1,8 @@
 package com.blackship.battlesheep.bus;
 
+import com.blackship.battlesheep.utils.LogUtils;
+import org.slf4j.Logger;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -9,6 +12,8 @@ import java.util.Queue;
  * @since 04.08.2017
  */
 public class EventBus implements Runnable {
+
+    private static final Logger log = LogUtils.getLogger();
 
     private Queue<Event> events = new LinkedList<>();
     private List<Listener> listeners = new LinkedList<>();
@@ -33,7 +38,8 @@ public class EventBus implements Runnable {
         try {
             Thread.sleep(500);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
+            log.error("...Thread.sleep() exception...");
         }
         isFinished = true;
     }
@@ -45,7 +51,8 @@ public class EventBus implements Runnable {
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
+                log.error("...Thread.sleep() exception...");
             }
         }
 
