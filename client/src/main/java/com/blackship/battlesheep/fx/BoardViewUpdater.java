@@ -1,6 +1,5 @@
 package com.blackship.battlesheep.fx;
 
-import com.blackship.battlesheep.fx.controllers.SalvoHandler;
 import com.blackship.battlesheep.fx.utils.ButtonUtils;
 import javafx.scene.control.Button;
 
@@ -55,12 +54,12 @@ public class BoardViewUpdater implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         salvoHandler = (SalvoHandler) o;
-        List<Integer> enemyHitPositions = salvoHandler.getEnemyHitPositions();
+        List<Integer> enemyHitPositions = salvoHandler.getEnemyDestroyedMasts();
         updateEnemyBoard(enemyHitPositions);
-        updatePlayerBoard(salvoHandler.getPlayerHitPositions());
+        updatePlayerBoard(salvoHandler.getPlayerDestroyedMasts());
         enemyMastPositions
                 .stream()
-                .filter(data -> enemyHitPositions.contains(Integer.parseInt(data.getId())))
+                .filter(data -> !data.getText().equals("X"))
                 .forEach(data -> {
                     data.setDisable(false);
                     data.setStyle(ButtonUtils.defaultButtonColorStyle());
@@ -84,21 +83,22 @@ public class BoardViewUpdater implements Observer {
         loadedCannons.clear();
         boardViewUpdaterListener.update("...!!!!FIRE!!!!...\n");
     }
-    //TODO Solve magic number bug(?)
+
     private void updatePlayerBoard(List<Integer> positions) {
-        positions.forEach(data -> {
-            Button playerMast = playerMastPositions.get(data - 1);
-            playerMast.setText("X");
-            playerMast.setDisable(true);
+        playerMastPositions.forEach(button -> {
+            if (positions.contains(Integer.parseInt(button.getId()))) {
+                button.setText("X");
+                button.setDisable(true);
+            }
         });
     }
 
-    //TODO Solve magic number bug(?)
     private void updateEnemyBoard(List<Integer> positions) {
-        positions.forEach(data -> {
-            Button enemyMast = enemyMastPositions.get(data - 1);
-            enemyMast.setText("X");
-            enemyMast.setDisable(true);
+        enemyMastPositions.forEach(button -> {
+            if (positions.contains(Integer.parseInt(button.getId()))) {
+                button.setText("X");
+                button.setDisable(true);
+            }
         });
     }
 }

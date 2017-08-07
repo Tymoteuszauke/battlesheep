@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.blackship.battlesheep.fx.controllers.ConnectController">
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.blackship.battlesheep.fx.controllers.ConnectController">
    <children>
-      <Button layoutX="269.0" layoutY="232.0" mnemonicParsing="false" text="Connect" fx:id="connectButton" onAction="#handleConnectButtonAction"/>
-      <TextField layoutX="215.0" layoutY="187.0" promptText="IP address" onAction="#handleConnectButtonAction" fx:id="ipAddressTextField" />
+      <Button fx:id="connectButton" layoutX="269.0" layoutY="232.0" mnemonicParsing="false" onAction="#handleConnectButtonAction" text="Connect" />
+      <TextField fx:id="ipAddressTextField" layoutX="215.0" layoutY="187.0" onAction="#handleConnectButtonAction" promptText="IP address" text="localhost" />
+      <TextField fx:id="portTextField" layoutX="215.0" layoutY="113.0" promptText="port" text="8096" />
    </children>
 </AnchorPane>
