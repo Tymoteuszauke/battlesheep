@@ -47,11 +47,6 @@ public class StartingBoard implements Board {
         return positions.get(shipPosition);
     }
 
-    @Override
-    public boolean isEmpty() {
-        return positions.isEmpty();
-    }
-
     private boolean isNewLine(Integer position) {
         return position % BoardSettings.BOARD_WIDTH.getValue() == 0;
     }

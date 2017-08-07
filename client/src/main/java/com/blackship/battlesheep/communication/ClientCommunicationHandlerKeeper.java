@@ -1,14 +1,13 @@
 package com.blackship.battlesheep.communication;
 
-import com.blackship.battlesheep.AppClient;
 import com.blackship.battlesheep.communication.network.AppClientCommunicationHandler;
-import com.blackship.battlesheep.communication.network.AppClientSocket;
 
 /**
- * Created by Mateusz on 04.08.2017.
+ * @author Mateusz Słaboński
+ * @since 27.07.2017
  */
 public enum ClientCommunicationHandlerKeeper {
-    Instance;
+    INSTANCE;
 
     private AppClientCommunicationHandler appClientCommunicationHandler;
 

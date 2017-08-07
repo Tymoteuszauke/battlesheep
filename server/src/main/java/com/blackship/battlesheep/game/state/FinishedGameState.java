@@ -1,6 +1,5 @@
 package com.blackship.battlesheep.game.state;
 
-import com.blackship.battlesheep.game.state.exceptions.WrongStateException;
 import com.blackship.battlesheep.game.state.fleet.Fleet;
 
 import java.util.ArrayList;
