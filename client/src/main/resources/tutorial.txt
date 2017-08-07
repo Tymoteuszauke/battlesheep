@@ -1,0 +1,5 @@
+At the beginning you have 10 ships and 20 cannons (masts).
+You can shoot at once as much cannons you have.
+If enemy hits your mast, your cannon is destroyed,
+    therefore your firepower decreases.
+You loose if your enemy sunks all your ships.

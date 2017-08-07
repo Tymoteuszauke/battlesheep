@@ -1,4 +1,4 @@
-package com.blackship.battlesheep.fx;
+package com.blackship.battlesheep.fx.board_view_updater;
 
 /**
  * @author Mateusz Słaboński

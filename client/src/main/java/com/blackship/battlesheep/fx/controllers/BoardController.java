@@ -1,22 +1,28 @@
 package com.blackship.battlesheep.fx.controllers;
 
+import com.blackship.battlesheep.communication.ClientCommunicationHandlerKeeper;
+import com.blackship.battlesheep.communication.RandomizedBoardReceiver;
 import com.blackship.battlesheep.communication.network.AppClientCommunicationHandler;
-import com.blackship.battlesheep.communication.network.AppClientSocket;
-import com.blackship.battlesheep.fx.BoardViewUpdater;
-import com.blackship.battlesheep.fx.BoardViewUpdaterListener;
-import com.blackship.battlesheep.fx.ClientCommunicationHandlerKeeper;
 import com.blackship.battlesheep.fx.SalvoHandler;
+import com.blackship.battlesheep.fx.board_view_updater.BoardViewUpdater;
+import com.blackship.battlesheep.fx.board_view_updater.BoardViewUpdaterListener;
 import com.blackship.battlesheep.fx.utils.ButtonUtils;
 import com.blackship.battlesheep.fx.utils.PositionUtils;
 import com.blackship.battlesheep.utils.LogUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,6 +46,9 @@ public class BoardController implements BoardViewUpdaterListener {
 
     @FXML
     public TextArea loggerInfoTextArea;
+
+    @FXML
+    public Button tutorialButton;
 
     @FXML
     public Button moveButton;
@@ -77,11 +86,11 @@ public class BoardController implements BoardViewUpdaterListener {
         });
     }
 
-    //TODO remove hard coding and refactor
-    private void arrangeButtonsOnPlayerBoard() {
-        int[] hardCodedArray = {12, 14, 15, 16, 19, 22, 32, 37, 42, 47, 54, 57, 72, 73, 76, 77, 80, 94, 99, 100};
+    private void arrangeButtonsOnPlayerBoard() throws IOException, ClassNotFoundException {
         playerMastPositions = new ArrayList<>();
-        Arrays.stream(hardCodedArray).forEach(data -> {
+        RandomizedBoardReceiver randomizedBoardReceiver = new RandomizedBoardReceiver(ClientCommunicationHandlerKeeper.Instance.getAppClientCommunicationHandler());
+        List<Integer> randomizedPlayerShips = randomizedBoardReceiver.receiveRandomizedPlayerBoard();
+        randomizedPlayerShips.forEach(data -> {
             Button button = ButtonUtils.createStyledButton(data);
             button.setDisable(true);
             button.setStyle(ButtonUtils.disabledButtonColorStyle());
@@ -105,6 +114,15 @@ public class BoardController implements BoardViewUpdaterListener {
             boardViewUpdater.feedCannon(Integer.parseInt(button.getText()));
         });
         return button;
+    }
+
+    @FXML
+    private void tutorialButtonActionHandler() throws IOException {
+        System.out.println(getClass().getResource("/tutorial.txt").toString());
+        String path = getClass().getResource("/tutorial.txt").toString().substring(5);
+        String tutorialTextFileContent = new String(Files.readAllBytes(Paths.get(path)));
+
+        loggerInfoTextArea.appendText(tutorialTextFileContent + System.lineSeparator());
     }
 
     @Override
