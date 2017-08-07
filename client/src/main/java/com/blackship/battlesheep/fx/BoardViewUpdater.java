@@ -85,28 +85,22 @@ public class BoardViewUpdater implements Observer {
         loadedCannons.clear();
         boardViewUpdaterListener.update("...!!!!FIRE!!!!...\n");
     }
-    //TODO update to fix
+
     private void updatePlayerBoard(List<Integer> positions) {
-        positions.forEach(data -> {
-            Button playerMast = playerMastPositions
-                    .stream()
-                    .filter(button -> button.getId().equals(String.valueOf(data)))
-                    .findAny()
-                    .get();
-            playerMast.setText("X");
-            playerMast.setDisable(true);
+        playerMastPositions.forEach(button -> {
+            if (positions.contains(Integer.parseInt(button.getId()))) {
+                button.setText("X");
+                button.setDisable(true);
+            }
         });
     }
-    //TODO update to fix
+
     private void updateEnemyBoard(List<Integer> positions) {
-        positions.forEach(data -> {
-            Button enemyMast = enemyMastPositions
-                    .stream()
-                    .filter(button -> button.getId().equals(String.valueOf(data)))
-                    .findAny()
-                    .get();
-            enemyMast.setText("X");
-            enemyMast.setDisable(true);
+        playerMastPositions.forEach(button -> {
+            if (positions.contains(Integer.parseInt(button.getId()))) {
+                button.setText("X");
+                button.setDisable(true);
+            }
         });
     }
 }
