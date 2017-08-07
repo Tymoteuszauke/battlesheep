@@ -13,7 +13,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 
@@ -68,7 +67,7 @@ public class ConnectController extends Application {
     private void connectToServerSocket(String host, int port) throws IOException {
         AppClientSocket appClientSocket = new AppClientSocket(host, port);
         AppClientCommunicationHandler appClientCommunicationHandler = new AppClientCommunicationHandler(appClientSocket);
-        ClientCommunicationHandlerKeeper.Instance.setAppClientCommunicationHandler(appClientCommunicationHandler);
+        ClientCommunicationHandlerKeeper.INSTANCE.setAppClientCommunicationHandler(appClientCommunicationHandler);
         appClientCommunicationHandler.connect();
     }
 }

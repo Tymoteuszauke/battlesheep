@@ -2,9 +2,11 @@ package com.blackship.battlesheep.fx.board_view_updater;
 
 import com.blackship.battlesheep.fx.SalvoHandler;
 import com.blackship.battlesheep.fx.utils.ButtonUtils;
+import com.blackship.battlesheep.utils.LogUtils;
 import javafx.scene.control.Button;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -15,6 +17,8 @@ import java.util.*;
  * @since 01.08.2017
  */
 public class BoardViewUpdater implements Observer {
+
+    private static final Logger log = LogUtils.getLogger();
 
     private BoardViewUpdaterListener boardViewUpdaterListener;
     private List<Button> enemyMastPositions = new ArrayList<>();
@@ -114,7 +118,7 @@ public class BoardViewUpdater implements Observer {
 
     private void playCannonSound() {
         new Thread(() -> {
-            System.out.println(getClass().getResource("/sounds/cannons.mp3").toString());
+            log.info(getClass().getResource("/sounds/cannons.mp3").toString());
             String pathToSound = getClass().getResource("/sounds/cannons.mp3").toString().substring(5);
             Media sound = null;
             try {

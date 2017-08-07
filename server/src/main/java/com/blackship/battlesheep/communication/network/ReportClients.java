@@ -3,8 +3,6 @@ package com.blackship.battlesheep.communication.network;
 import com.blackship.battlesheep.bus.Event;
 import com.blackship.battlesheep.bus.Listener;
 import com.blackship.battlesheep.communication.network.packet.PacketFactory;
-import com.blackship.battlesheep.communication.packet.Packet;
-import com.blackship.battlesheep.communication.packet.PacketWinner;
 import com.blackship.battlesheep.utils.LogUtils;
 import org.slf4j.Logger;
 
@@ -17,7 +15,7 @@ import java.time.LocalTime;
  */
 public class ReportClients implements Listener {
 
-    private final static Logger log = LogUtils.getLogger();
+    private static final Logger log = LogUtils.getLogger();
 
     private ClientSocketHandler firstClient;
     private ClientSocketHandler secondClient;
@@ -31,7 +29,7 @@ public class ReportClients implements Listener {
 
     public void report() {
         //TODO send package to others
-        log.info("...MESSAGE FROM BUS: PLAYER WON -> " + winner + " ...");
+        log.info(String.format("...MESSAGE FROM BUS: PLAYER WON %s ...", winner));
         log.info("...Sending packet about won to clients...");
         try {
             firstClient.write(PacketFactory.createWinner().setWinner(winner).setCreationTime(LocalTime.now()));
