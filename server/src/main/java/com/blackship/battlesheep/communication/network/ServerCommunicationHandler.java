@@ -107,15 +107,13 @@ public class ServerCommunicationHandler implements Listener {
 
             PacketMove shotPositionsPlayers = createPacketMoveWithResponse(shotPositions);
 
-            sendShotPositions(shotPositionsPlayers, firstClient);
-
-            List<List<Integer>> shotPositions = game.move(firstPlayerShotPositions, secondPlayerShotPositions);
-
             if (game.getGameState() instanceof FinishedGameState) {
                 FinishedGameState winner = (FinishedGameState) game.getGameState();
                 winnerBus.submit(new Event(new ReportClients(firstClient, secondClient, winner.getWinner())));
                 break;
             }
+
+            sendShotPositions(shotPositionsPlayers, firstClient);
 
             swapPositionsInPacketMove(shotPositionsPlayers);
 
