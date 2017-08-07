@@ -14,11 +14,7 @@ import java.util.stream.IntStream;
  */
 public class FleetGenerator {
 
-    private final List<Integer> takenPositions;
-
-    public FleetGenerator() {
-        takenPositions = new ArrayList<>();
-    }
+    private List<Integer> takenPositions;
 
     public static List<List<Integer>> hardcodeShips() {
         List<List<Integer>> ships = new ArrayList<>();
@@ -38,6 +34,7 @@ public class FleetGenerator {
 
     public List<List<Integer>> generateRandomFleet() {
         List<List<Integer>> generatedShipPositions = new ArrayList<>();
+        takenPositions = new ArrayList<>();
 
         //4 mast
         List<Integer> currentShip = null;
