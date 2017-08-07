@@ -3,12 +3,9 @@ package com.blackship.battlesheep.game;
 import com.blackship.battlesheep.game.state.GameState;
 import com.blackship.battlesheep.game.state.StartingGameState;
 import com.blackship.battlesheep.game.state.exceptions.WrongStateException;
-import com.blackship.battlesheep.game.state.fleet.FleetGenerator;
 import com.blackship.battlesheep.utils.LogUtils;
 import org.slf4j.Logger;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,7 +14,7 @@ import java.util.List;
  */
 public class Game {
 
-    private final static Logger log = LogUtils.getLogger();
+    private static final Logger log = LogUtils.getLogger();
 
     private GameState gameState;
 
@@ -34,9 +31,9 @@ public class Game {
         gameState = gameState.changeState(firstPlayerPositions, secondPlayerPositions);
         List<List<Integer>> shotPositions = gameState.shotPositions();
 
-        log.info(String.format("Positions to shoot from the first player: %s", firstPlayerPositions));
-        log.info(String.format("Positions to shoot from the second player: %s", secondPlayerPositions));
-        log.info(String.format("Positions shot: %s", shotPositions));
+        log.info("Positions to shoot from the first player: %s", firstPlayerPositions);
+        log.info("Positions to shoot from the second player: %s", secondPlayerPositions);
+        log.info("Positions shot: %s", shotPositions);
 
         return shotPositions;
     }

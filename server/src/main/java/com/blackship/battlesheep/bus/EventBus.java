@@ -12,7 +12,7 @@ public class EventBus implements Runnable {
 
     private Queue<Event> events = new LinkedList<>();
     private List<Listener> listeners = new LinkedList<>();
-    private transient boolean isFinished;
+    private boolean isFinished;
 
     public void register(Listener listener) {
         listeners.add(listener);
