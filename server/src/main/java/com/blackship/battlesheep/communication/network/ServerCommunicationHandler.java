@@ -83,7 +83,7 @@ public class ServerCommunicationHandler implements Listener {
         log.info("..." + packetMove + " has been sent to " + client + "...");
     }
 
-    public void echo() throws IOException, ClassNotFoundException, WrongStateException {
+    public void echo() throws IOException, ClassNotFoundException, WrongStateException, InterruptedException {
 
         ClientSocketHandler firstClient = clients.get(0);
         ClientSocketHandler secondClient = clients.get(1);
@@ -105,19 +105,21 @@ public class ServerCommunicationHandler implements Listener {
                         playerShotPositions(receivedPacketFromSecondClient.getPositions())
             );
 
-            PacketMove shotPositionsPlayers = createPacketMoveWithResponse(shotPositions);
-
             if (game.getGameState() instanceof FinishedGameState) {
                 FinishedGameState winner = (FinishedGameState) game.getGameState();
                 winnerBus.submit(new Event(new ReportClients(firstClient, secondClient, winner.getWinner())));
                 break;
             }
 
+            PacketMove shotPositionsPlayers = createPacketMoveWithResponse(shotPositions);
+
             sendShotPositions(shotPositionsPlayers, firstClient);
 
             swapPositionsInPacketMove(shotPositionsPlayers);
 
             sendShotPositions(shotPositionsPlayers, secondClient);
+
+            Thread.sleep(300);
         }
     }
 

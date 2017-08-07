@@ -30,7 +30,7 @@ public class FleetGenerator {
         ships.add(Arrays.asList(99, 100));
         ships.add(Arrays.asList(19));
         ships.add(Arrays.asList(54));
-        ships.add(Arrays.asList(90));
+        ships.add(Arrays.asList(80));
         ships.add(Arrays.asList(94));
 
         return ships;
