@@ -3,7 +3,6 @@ package com.blackship.battlesheep.communication.network;
 import com.blackship.battlesheep.bus.Event;
 import com.blackship.battlesheep.bus.EventBus;
 import com.blackship.battlesheep.bus.Listener;
-import com.blackship.battlesheep.communication.network.packet.NetworkPacketBoard;
 import com.blackship.battlesheep.communication.network.packet.PacketFactory;
 import com.blackship.battlesheep.communication.packet.Packet;
 import com.blackship.battlesheep.communication.packet.PacketBoard;
@@ -27,7 +26,7 @@ import java.util.List;
  */
 public class ServerCommunicationHandler implements Listener {
 
-    private final static Logger log = LogUtils.getLogger();
+    private static final Logger log = LogUtils.getLogger();
 
     private AppServerSocket server;
     private List<ClientSocketHandler> clients;
@@ -57,7 +56,6 @@ public class ServerCommunicationHandler implements Listener {
         ClientSocketHandler firstClient = clients.get(0);
         ClientSocketHandler secondClient = clients.get(1);
 
-        log.info("lol");
         PacketBoard firstClientPacket = PacketFactory.createBoard();
         firstClientPacket.addPositions(firstPlayerBoard);
 
@@ -112,7 +110,6 @@ public class ServerCommunicationHandler implements Listener {
         ClientSocketHandler secondClient = clients.get(1);
 
         log.info("...Generating fleets...");
-//        FleetGenerator fleetGenerator = new FleetGenerator();
         List<List<Integer>> firstPlayerBoard = new FleetGenerator().generateRandomFleet();
         List<List<Integer>> secondPlayerBoard = new FleetGenerator().generateRandomFleet();
 
@@ -140,7 +137,7 @@ public class ServerCommunicationHandler implements Listener {
             if (game.getGameState() instanceof FinishedGameState) {
                 log.info("Game won!");
                 FinishedGameState winner = (FinishedGameState) game.getGameState();
-                System.out.println(winner.getWinner());
+                log.info(winner.getWinner());
 
                 winnerBus.submit(new Event(new ReportClients(firstClient, secondClient, winner.getWinner())));
 

@@ -31,9 +31,9 @@ public class Game {
         gameState = gameState.changeState(firstPlayerPositions, secondPlayerPositions);
         List<List<Integer>> shotPositions = gameState.shotPositions();
 
-        log.info("Positions to shoot from the first player: %s", firstPlayerPositions);
-        log.info("Positions to shoot from the second player: %s", secondPlayerPositions);
-        log.info("Positions shot: %s", shotPositions);
+        log.info(String.format("Positions to shoot from the first player: %s", firstPlayerPositions));
+        log.info(String.format("Positions to shoot from the second player: %s", secondPlayerPositions));
+        log.info(String.format("Positions shot: %s", shotPositions));
 
         return shotPositions;
     }
