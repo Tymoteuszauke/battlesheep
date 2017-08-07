@@ -12,8 +12,8 @@ import java.util.*;
 public class BoardViewUpdater implements Observer {
 
     private BoardViewUpdaterListener boardViewUpdaterListener;
-    private List<Button> enemyMastPositions;
-    private List<Button> playerMastPositions;
+    private List<Button> enemyMastPositions = new ArrayList<>();
+    private List<Button> playerMastPositions = new ArrayList<>();
     private SalvoHandler salvoHandler;
 
     private List<Integer> loadedCannons;
