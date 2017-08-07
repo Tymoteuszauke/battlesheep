@@ -29,13 +29,13 @@ public class ReportClients implements Listener {
 
     public void report() {
         //TODO send package to others
-        log.info(String.format("...MESSAGE FROM BUS: PLAYER WON %s ...", winner));
-        log.info("...Sending packet about won to clients...");
+        log.info(String.format("...MESSAGE FROM BUS: PLAYER WON -> %s...", winner));
+        log.info("...Sending packet about the win to clients...");
         try {
             firstClient.write(PacketFactory.createWinner().setWinner(winner).setCreationTime(LocalTime.now()));
             secondClient.write(PacketFactory.createWinner().setWinner(winner).setCreationTime(LocalTime.now()));
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("...Socket IOException...");
         }
     }
 

@@ -74,8 +74,8 @@ public class ServerCommunicationHandler implements Listener {
         log.info("...Receiving packet...");
         Packet receivedPacketFirstPlayer = client.read();
         PacketMove receivedPacketMoveFirstPlayer = (PacketMove) receivedPacketFirstPlayer;
-        log.info(String.format("...%s has been receinved from client %s ...", receivedPacketFirstPlayer.getPacketType(), client));
 
+        log.info(String.format("...%s has been receinved from client %s ...", receivedPacketFirstPlayer.getPacketType(), client));
         return receivedPacketMoveFirstPlayer;
     }
 
@@ -101,7 +101,7 @@ public class ServerCommunicationHandler implements Listener {
 
     void sendShotPositions(PacketMove packetMove, ClientSocketHandler client) throws IOException {
         client.write(((Packet)packetMove).setCreationTime(LocalTime.now()));
-        log.info(String.format("...%s has been sent to %s...", packetMove, client));
+        log.info(String.format("...%s has been sent to %s...", packetMove,  client));
     }
 
     public void echo() throws IOException, ClassNotFoundException, WrongStateException, InterruptedException {
@@ -110,9 +110,9 @@ public class ServerCommunicationHandler implements Listener {
         ClientSocketHandler secondClient = clients.get(1);
 
         log.info("...Generating fleets...");
-//        FleetGenerator fleetGenerator = new FleetGenerator();
-        List<List<Integer>> firstPlayerBoard = new FleetGenerator().generateRandomFleet();
-        List<List<Integer>> secondPlayerBoard = new FleetGenerator().generateRandomFleet();
+        FleetGenerator fleetGenerator = new FleetGenerator();
+        List<List<Integer>> firstPlayerBoard = fleetGenerator.generateRandomFleet();
+        List<List<Integer>> secondPlayerBoard = fleetGenerator.generateRandomFleet();
 
         log.info("...Sending boards to clients...");
         sendRandomBoardToClients(firstPlayerBoard, secondPlayerBoard);
