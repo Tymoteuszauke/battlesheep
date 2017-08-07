@@ -6,6 +6,7 @@ import com.blackship.battlesheep.bus.Listener;
 import com.blackship.battlesheep.communication.network.packet.NetworkPacketBoard;
 import com.blackship.battlesheep.communication.network.packet.PacketFactory;
 import com.blackship.battlesheep.communication.packet.Packet;
+import com.blackship.battlesheep.communication.packet.PacketBoard;
 import com.blackship.battlesheep.communication.packet.PacketMove;
 import com.blackship.battlesheep.game.Game;
 import com.blackship.battlesheep.game.state.FinishedGameState;
@@ -49,21 +50,23 @@ public class ServerCommunicationHandler implements Listener {
         return this;
     }
 
-    public ServerCommunicationHandler sendRandomBoardToClients() throws IOException {
+    public ServerCommunicationHandler sendRandomBoardToClients(
+            List<List<Integer>> firstPlayerBoard,
+            List<List<Integer>> secondPlayerBoard
+            ) throws IOException {
         ClientSocketHandler firstClient = clients.get(0);
         ClientSocketHandler secondClient = clients.get(1);
 
-        sendRandomBoard(firstClient);
-        sendRandomBoard(secondClient);
+        PacketBoard firstClientPacket = PacketFactory.createBoard();
+        firstClientPacket.addPositions(firstPlayerBoard);
+
+        PacketBoard secondClientPacket = PacketFactory.createBoard();
+        secondClientPacket.addPositions(secondPlayerBoard);
+
+        firstClient.write(((Packet)firstClientPacket).setCreationTime(LocalTime.now()));
+        secondClient.write(((Packet)secondClientPacket).setCreationTime(LocalTime.now()));
 
         return this;
-    }
-
-    void sendRandomBoard(ClientSocketHandler client) throws IOException {
-        NetworkPacketBoard networkPacketBoard = PacketFactory.createBoard();
-        networkPacketBoard.addPositions(new FleetGenerator().generateRandomFleet());
-
-        client.write(networkPacketBoard.setCreationTime(LocalTime.now()));
     }
 
     PacketMove receivePacketMove(ClientSocketHandler client) throws IOException, ClassNotFoundException {
@@ -105,8 +108,14 @@ public class ServerCommunicationHandler implements Listener {
         ClientSocketHandler firstClient = clients.get(0);
         ClientSocketHandler secondClient = clients.get(1);
 
+        FleetGenerator fleetGenerator = new FleetGenerator();
+        List<List<Integer>> firstPlayerBoard = fleetGenerator.generateRandomFleet();
+        List<List<Integer>> secondPlayerBoard = fleetGenerator.generateRandomFleet();
+
         Game game = new Game();
-        game.startGame(FleetGenerator.hardcodeShips(), FleetGenerator.hardcodeShips());
+        game.startGame(firstPlayerBoard, secondPlayerBoard);
+
+        sendRandomBoardToClients(firstPlayerBoard, secondPlayerBoard);
 
         EventBus winnerBus = new EventBus();
         winnerBus.register(this);

@@ -16,7 +16,6 @@ public class AppServer {
         new ServerCommunicationHandler(
                 new AppServerSocket(8096))
                 .acceptClients()
-                .sendRandomBoardToClients()
                 .echo();
     }
 }
