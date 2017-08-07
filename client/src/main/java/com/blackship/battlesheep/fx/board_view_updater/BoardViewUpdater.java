@@ -3,7 +3,11 @@ package com.blackship.battlesheep.fx.board_view_updater;
 import com.blackship.battlesheep.fx.SalvoHandler;
 import com.blackship.battlesheep.fx.utils.ButtonUtils;
 import javafx.scene.control.Button;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.*;
 
 /**
@@ -80,6 +84,7 @@ public class BoardViewUpdater implements Observer {
 
         if (loadedCannons.size() == availableCannons) {
             fireCannons(loadedCannons);
+            playCannonSound();
         }
     }
 
@@ -105,5 +110,20 @@ public class BoardViewUpdater implements Observer {
                 button.setDisable(true);
             }
         });
+    }
+
+    private void playCannonSound() {
+        new Thread(() -> {
+            System.out.println(getClass().getResource("/sounds/cannons.mp3").toString());
+            String pathToSound = getClass().getResource("/sounds/cannons.mp3").toString().substring(5);
+            Media sound = null;
+            try {
+                sound = new Media(new File(pathToSound).toURL().toExternalForm());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            MediaPlayer mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.play();
+        }).start();
     }
 }
