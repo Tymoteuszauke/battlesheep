@@ -79,7 +79,7 @@ public class ServerCommunicationHandler {
         log.info("..." + packetMove + " has been sent to " + client + "...");
     }
 
-    public void echo() throws IOException, ClassNotFoundException, FirstPlayerWon, SecondPlayerWon {
+    public void echo() throws IOException, ClassNotFoundException, WrongStateException {
 
         ClientSocketHandler firstClient = clients.get(0);
         ClientSocketHandler secondClient = clients.get(1);
