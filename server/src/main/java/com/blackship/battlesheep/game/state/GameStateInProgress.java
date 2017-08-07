@@ -22,7 +22,6 @@ public class GameStateInProgress implements GameState {
 
     @Override
     public GameState changeState(List<List<Integer>> firstPlayerPositions, List<List<Integer>> secondPlayerPositions) {
-
         makeAMove(firstPlayerPositions, secondPlayerPositions);
         GameWinner winner = isGameWon();
         if(winner != GameWinner.NONE) return new FinishedGameState(winner.toString());

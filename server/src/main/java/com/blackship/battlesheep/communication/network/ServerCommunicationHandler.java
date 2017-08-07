@@ -16,6 +16,8 @@ import org.slf4j.Logger;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -47,7 +49,42 @@ public class ServerCommunicationHandler implements Listener {
         return this;
     }
 
+    PacketMove receivePacketMove(ClientSocketHandler client) throws IOException, ClassNotFoundException {
+        log.info("...Receiving packet...");
+        Packet receivedPacketFirstPlayer = client.read();
+        PacketMove receivedPacketMoveFirstPlayer = (PacketMove) receivedPacketFirstPlayer;
+        log.info("..." + receivedPacketFirstPlayer.getPacketType() + " has been received from client " + client + "...");
+
+        return receivedPacketMoveFirstPlayer;
+    }
+
+    List<List<Integer>> playerShotPositions(List<List<Integer>> listOfPositions) {
+        List<List<Integer>> playerShotPositions = new ArrayList<>(1);
+        playerShotPositions.add(listOfPositions.get(0));
+
+        return playerShotPositions;
+    }
+
+    PacketMove createPacketMoveWithResponse(List<List<Integer>> shotPositions) {
+        PacketMove packetMoveWithResult = PacketFactory.createMove();
+        packetMoveWithResult.addPositions(shotPositions.get(0));
+        packetMoveWithResult.addPositions(shotPositions.get(1));
+
+        return packetMoveWithResult;
+    }
+
+    PacketMove swapPositionsInPacketMove(PacketMove packetMove) {
+        Collections.swap(packetMove.getPositions(), 0, 1);
+        return  packetMove;
+    }
+
+    void sendShotPositions(PacketMove packetMove, ClientSocketHandler client) throws IOException {
+        client.write(((Packet)packetMove).setCreationTime(LocalTime.now()));
+        log.info("..." + packetMove + " has been sent to " + client + "...");
+    }
+
     public void echo() throws IOException, ClassNotFoundException, WrongStateException {
+
         ClientSocketHandler firstClient = clients.get(0);
         ClientSocketHandler secondClient = clients.get(1);
 
@@ -60,21 +97,17 @@ public class ServerCommunicationHandler implements Listener {
 
         while(true) {
 
-            log.info("...Receiving packet...");
-            Packet receivedPacketFirstPlayer = firstClient.read();
-            PacketMove receivedPacketMoveFirstPlayer = (PacketMove) receivedPacketFirstPlayer;
-            log.info("..." + receivedPacketFirstPlayer.getPacketType() + " has been received from client " + firstClient + "...");
+            PacketMove receivedPacketFromFirstClient = receivePacketMove(firstClient);
+            PacketMove receivedPacketFromSecondClient = receivePacketMove(secondClient);
 
-            log.info("...Receiving packet...");
-            Packet receivedPacketSecondPlayer = secondClient.read();
-            PacketMove receivedPacketMoveSecondPlayer = (PacketMove) receivedPacketSecondPlayer;
-            log.info("..." + receivedPacketSecondPlayer.getPacketType() + " has been received from client " + secondClient + "...");
+            List<List<Integer>> shotPositions = game.move(
+                        playerShotPositions(receivedPacketFromFirstClient.getPositions()),
+                        playerShotPositions(receivedPacketFromSecondClient.getPositions())
+            );
 
-            List<List<Integer>> firstPlayerShotPositions = new ArrayList<>(1);
-            firstPlayerShotPositions.add(receivedPacketMoveFirstPlayer.getPositions().get(0));
+            PacketMove shotPositionsPlayers = createPacketMoveWithResponse(shotPositions);
 
-            List<List<Integer>> secondPlayerShotPositions = new ArrayList<>(1);
-            secondPlayerShotPositions.add(receivedPacketMoveSecondPlayer.getPositions().get(0));
+            sendShotPositions(shotPositionsPlayers, firstClient);
 
             List<List<Integer>> shotPositions = game.move(firstPlayerShotPositions, secondPlayerShotPositions);
 
@@ -84,19 +117,9 @@ public class ServerCommunicationHandler implements Listener {
                 break;
             }
 
-            PacketMove shotPositionsForFirstPlayer = PacketFactory.createMove();
-            shotPositionsForFirstPlayer.addPositions(shotPositions.get(0));
-            shotPositionsForFirstPlayer.addPositions(shotPositions.get(1));
+            swapPositionsInPacketMove(shotPositionsPlayers);
 
-            PacketMove shotPositionsForSecondPlayer = PacketFactory.createMove();
-            shotPositionsForSecondPlayer.addPositions(shotPositions.get(1));
-            shotPositionsForSecondPlayer.addPositions(shotPositions.get(0));
-
-            firstClient.write(((Packet) shotPositionsForSecondPlayer).setCreationTime(LocalTime.now()));
-            log.info("..." + shotPositionsForSecondPlayer + " has been sent to " + firstClient + "...");
-
-            secondClient.write(((Packet) shotPositionsForSecondPlayer).setCreationTime(LocalTime.now()));
-            log.info("..." + shotPositionsForSecondPlayer + " has been sent to " + secondClient + "...");
+            sendShotPositions(shotPositionsPlayers, secondClient);
         }
     }
 
@@ -107,4 +130,5 @@ public class ServerCommunicationHandler implements Listener {
             reportClients.report();
         }
     }
+
 }
