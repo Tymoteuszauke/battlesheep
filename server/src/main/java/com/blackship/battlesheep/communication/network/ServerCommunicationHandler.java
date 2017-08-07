@@ -3,7 +3,6 @@ package com.blackship.battlesheep.communication.network;
 import com.blackship.battlesheep.bus.Event;
 import com.blackship.battlesheep.bus.EventBus;
 import com.blackship.battlesheep.bus.Listener;
-import com.blackship.battlesheep.communication.network.packet.NetworkPacketBoard;
 import com.blackship.battlesheep.communication.network.packet.PacketFactory;
 import com.blackship.battlesheep.communication.packet.Packet;
 import com.blackship.battlesheep.communication.packet.PacketBoard;
@@ -27,7 +26,7 @@ import java.util.List;
  */
 public class ServerCommunicationHandler implements Listener {
 
-    private final static Logger log = LogUtils.getLogger();
+    private static final Logger log = LogUtils.getLogger();
 
     private AppServerSocket server;
     private List<ClientSocketHandler> clients;
@@ -57,16 +56,15 @@ public class ServerCommunicationHandler implements Listener {
         ClientSocketHandler firstClient = clients.get(0);
         ClientSocketHandler secondClient = clients.get(1);
 
-        log.info("lol");
         PacketBoard firstClientPacket = PacketFactory.createBoard();
         firstClientPacket.addPositions(firstPlayerBoard);
 
         PacketBoard secondClientPacket = PacketFactory.createBoard();
         secondClientPacket.addPositions(secondPlayerBoard);
 
-        log.info("...Sending board to first client");
+        log.info("...Sending board to first client...");
         firstClient.write(((Packet)firstClientPacket).setCreationTime(LocalTime.now()));
-        log.info("...Sending board to second client");
+        log.info("...Sending board to second client...");
         secondClient.write(((Packet)secondClientPacket).setCreationTime(LocalTime.now()));
 
         return this;
@@ -76,7 +74,7 @@ public class ServerCommunicationHandler implements Listener {
         log.info("...Receiving packet...");
         Packet receivedPacketFirstPlayer = client.read();
         PacketMove receivedPacketMoveFirstPlayer = (PacketMove) receivedPacketFirstPlayer;
-        log.info("..." + receivedPacketFirstPlayer.getPacketType() + " has been received from client " + client + "...");
+        log.info(String.format("...%s has been received from client %s...", receivedPacketFirstPlayer.getPacketType(), client));
 
         return receivedPacketMoveFirstPlayer;
     }
@@ -103,7 +101,7 @@ public class ServerCommunicationHandler implements Listener {
 
     void sendShotPositions(PacketMove packetMove, ClientSocketHandler client) throws IOException {
         client.write(((Packet)packetMove).setCreationTime(LocalTime.now()));
-        log.info("..." + packetMove + " has been sent to " + client + "...");
+        log.info(String.format("...%s has been sent to %s...", packetMove,  client));
     }
 
     public void echo() throws IOException, ClassNotFoundException, WrongStateException, InterruptedException {
@@ -112,9 +110,9 @@ public class ServerCommunicationHandler implements Listener {
         ClientSocketHandler secondClient = clients.get(1);
 
         log.info("...Generating fleets...");
-//        FleetGenerator fleetGenerator = new FleetGenerator();
-        List<List<Integer>> firstPlayerBoard = new FleetGenerator().generateRandomFleet();
-        List<List<Integer>> secondPlayerBoard = new FleetGenerator().generateRandomFleet();
+        FleetGenerator fleetGenerator = new FleetGenerator();
+        List<List<Integer>> firstPlayerBoard = fleetGenerator.generateRandomFleet();
+        List<List<Integer>> secondPlayerBoard = fleetGenerator.generateRandomFleet();
 
         log.info("...Sending boards to clients...");
         sendRandomBoardToClients(firstPlayerBoard, secondPlayerBoard);
@@ -140,7 +138,7 @@ public class ServerCommunicationHandler implements Listener {
             if (game.getGameState() instanceof FinishedGameState) {
                 log.info("Game won!");
                 FinishedGameState winner = (FinishedGameState) game.getGameState();
-                System.out.println(winner.getWinner());
+                log.info(winner.getWinner());
 
                 winnerBus.submit(new Event(new ReportClients(firstClient, secondClient, winner.getWinner())));
 
