@@ -1,4 +1,4 @@
-package com.blackship.battlesheep.fx;
+package com.blackship.battlesheep.communication;
 
 import com.blackship.battlesheep.AppClient;
 import com.blackship.battlesheep.communication.network.AppClientCommunicationHandler;

@@ -1,8 +1,13 @@
-package com.blackship.battlesheep.fx;
+package com.blackship.battlesheep.fx.board_view_updater;
 
+import com.blackship.battlesheep.fx.SalvoHandler;
 import com.blackship.battlesheep.fx.utils.ButtonUtils;
 import javafx.scene.control.Button;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+import java.io.File;
+import java.net.MalformedURLException;
 import java.util.*;
 
 /**
@@ -54,26 +59,31 @@ public class BoardViewUpdater implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         salvoHandler = (SalvoHandler) o;
-        List<Integer> enemyHitPositions = salvoHandler.getEnemyDestroyedMasts();
-        updateEnemyBoard(enemyHitPositions);
-        updatePlayerBoard(salvoHandler.getPlayerDestroyedMasts());
-        enemyMastPositions
-                .stream()
-                .filter(data -> !data.getText().equals("X"))
-                .forEach(data -> {
-                    data.setDisable(false);
-                    data.setStyle(ButtonUtils.defaultButtonColorStyle());
-                });
+        if (salvoHandler.hasWinner()) {
+            boardViewUpdaterListener.update("The winner is: " + salvoHandler.getWinner());
+        } else {
+            List<Integer> enemyHitPositions = salvoHandler.getEnemyDestroyedMasts();
+            updateEnemyBoard(enemyHitPositions);
+            updatePlayerBoard(salvoHandler.getPlayerDestroyedMasts());
+            enemyMastPositions
+                    .stream()
+                    .filter(data -> !data.getText().equals("X"))
+                    .forEach(data -> {
+                        data.setDisable(false);
+                        data.setStyle(ButtonUtils.defaultButtonColorStyle());
+                    });
+        }
     }
 
     public void feedCannon(int cannonBall) {
         loadedCannons.add(cannonBall);
         long availableCannons = playerMastPositions
                 .stream()
-                .filter(data -> !data.isDisabled())
+                .filter(data -> !data.getText().equals("X"))
                 .count();
 
         if (loadedCannons.size() == availableCannons) {
+            playCannonSound();
             fireCannons(loadedCannons);
         }
     }
@@ -100,5 +110,20 @@ public class BoardViewUpdater implements Observer {
                 button.setDisable(true);
             }
         });
+    }
+
+    private void playCannonSound() {
+        new Thread(() -> {
+            System.out.println(getClass().getResource("/sounds/cannons.mp3").toString());
+            String pathToSound = getClass().getResource("/sounds/cannons.mp3").toString().substring(5);
+            Media sound = null;
+            try {
+                sound = new Media(new File(pathToSound).toURL().toExternalForm());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+            MediaPlayer mediaPlayer = new MediaPlayer(sound);
+            mediaPlayer.play();
+        }).start();
     }
 }

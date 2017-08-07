@@ -1,9 +1,11 @@
 package com.blackship.battlesheep.fx;
 
 import com.blackship.battlesheep.communication.network.AppClientCommunicationHandler;
+import com.blackship.battlesheep.communication.network.packet.NetworkPacketWinner;
 import com.blackship.battlesheep.communication.network.packet.PacketFactory;
 import com.blackship.battlesheep.communication.packet.Packet;
 import com.blackship.battlesheep.communication.packet.PacketMove;
+import com.blackship.battlesheep.communication.packet.PacketWinner;
 import com.blackship.battlesheep.communication.packet.enums.PacketType;
 import com.blackship.battlesheep.utils.LogUtils;
 import org.slf4j.Logger;
@@ -18,12 +20,12 @@ import java.util.*;
 public class SalvoHandler extends Observable {
 
     private static final Logger log = LogUtils.getLogger();
-
+    private AppClientCommunicationHandler appClientCommunicationHandler;
     private List<Integer> enemyDestroyedMasts;
     private List<Integer> playerDestroyedMasts;
 
-
-    private AppClientCommunicationHandler appClientCommunicationHandler;
+    private String winner;
+    private boolean hasWinner;
 
     public SalvoHandler(AppClientCommunicationHandler appClientCommunicationHandler) {
         this.appClientCommunicationHandler = appClientCommunicationHandler;
@@ -31,22 +33,17 @@ public class SalvoHandler extends Observable {
         playerDestroyedMasts = new ArrayList<>();
     }
 
-    public boolean encounterSalvos() throws IOException, ClassNotFoundException {
+    public void encounterSalvos() throws IOException, ClassNotFoundException {
 
         enemyDestroyedMasts.clear();
         playerDestroyedMasts.clear();
-        PacketMove packet = (PacketMove) appClientCommunicationHandler.read();
+        Packet packet = appClientCommunicationHandler.read();
 
-        if (((Packet)packet).getPacketType() == PacketType.MOVE) {
-            enemyDestroyedMasts.addAll(packet.getPositions().get(1));
-            playerDestroyedMasts.addAll(packet.getPositions().get(0));
+        if (packet.getPacketType() == PacketType.MOVE) handlePacketMove((PacketMove) packet);
+        if (packet.getPacketType() == PacketType.WINNER) handlePacketWinner((PacketWinner) packet);
 
-            setChanged();
-            notifyObservers();
-
-            return true;
-        }
-        return false;
+        setChanged();
+        notifyObservers();
     }
 
     public List<Integer> getEnemyDestroyedMasts() {
@@ -71,5 +68,23 @@ public class SalvoHandler extends Observable {
             log.error(e.getMessage());
         }
         return true;
+    }
+
+    public boolean hasWinner() {
+        return hasWinner;
+    }
+
+    public String getWinner() {
+        return winner;
+    }
+
+    private void handlePacketMove(PacketMove packetMove) {
+        enemyDestroyedMasts.addAll(packetMove.getPositions().get(1));
+        playerDestroyedMasts.addAll(packetMove.getPositions().get(0));
+    }
+
+    private void handlePacketWinner(PacketWinner packetWinner) {
+        winner = packetWinner.getWinner();
+        hasWinner = true;
     }
 }

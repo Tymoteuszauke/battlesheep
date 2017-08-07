@@ -57,13 +57,16 @@ public class ServerCommunicationHandler implements Listener {
         ClientSocketHandler firstClient = clients.get(0);
         ClientSocketHandler secondClient = clients.get(1);
 
+        log.info("lol");
         PacketBoard firstClientPacket = PacketFactory.createBoard();
         firstClientPacket.addPositions(firstPlayerBoard);
 
         PacketBoard secondClientPacket = PacketFactory.createBoard();
         secondClientPacket.addPositions(secondPlayerBoard);
 
+        log.info("...Sending board to first client");
         firstClient.write(((Packet)firstClientPacket).setCreationTime(LocalTime.now()));
+        log.info("...Sending board to second client");
         secondClient.write(((Packet)secondClientPacket).setCreationTime(LocalTime.now()));
 
         return this;
@@ -104,23 +107,26 @@ public class ServerCommunicationHandler implements Listener {
     }
 
     public void echo() throws IOException, ClassNotFoundException, WrongStateException, InterruptedException {
-
+        log.info("..Starting echo...");
         ClientSocketHandler firstClient = clients.get(0);
         ClientSocketHandler secondClient = clients.get(1);
 
-        FleetGenerator fleetGenerator = new FleetGenerator();
-        List<List<Integer>> firstPlayerBoard = fleetGenerator.generateRandomFleet();
-        List<List<Integer>> secondPlayerBoard = fleetGenerator.generateRandomFleet();
+        log.info("...Generating fleets...");
+//        FleetGenerator fleetGenerator = new FleetGenerator();
+        List<List<Integer>> firstPlayerBoard = new FleetGenerator().generateRandomFleet();
+        List<List<Integer>> secondPlayerBoard = new FleetGenerator().generateRandomFleet();
+
+        log.info("...Sending boards to clients...");
+        sendRandomBoardToClients(firstPlayerBoard, secondPlayerBoard);
 
         Game game = new Game();
         game.startGame(firstPlayerBoard, secondPlayerBoard);
-
-        sendRandomBoardToClients(firstPlayerBoard, secondPlayerBoard);
 
         EventBus winnerBus = new EventBus();
         winnerBus.register(this);
         new Thread(winnerBus).start();
 
+        log.info("...start game loop...");
         while(true) {
 
             PacketMove receivedPacketFromFirstClient = receivePacketMove(firstClient);
@@ -134,6 +140,7 @@ public class ServerCommunicationHandler implements Listener {
             if (game.getGameState() instanceof FinishedGameState) {
                 log.info("Game won!");
                 FinishedGameState winner = (FinishedGameState) game.getGameState();
+                System.out.println(winner.getWinner());
 
                 winnerBus.submit(new Event(new ReportClients(firstClient, secondClient, winner.getWinner())));
 
