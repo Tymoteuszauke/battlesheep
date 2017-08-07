@@ -1,5 +1,6 @@
-package com.blackship.battlesheep.fx;
+package com.blackship.battlesheep.fx.board_view_updater;
 
+import com.blackship.battlesheep.fx.SalvoHandler;
 import com.blackship.battlesheep.fx.utils.ButtonUtils;
 import javafx.scene.control.Button;
 
@@ -54,23 +55,27 @@ public class BoardViewUpdater implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         salvoHandler = (SalvoHandler) o;
-        List<Integer> enemyHitPositions = salvoHandler.getEnemyDestroyedMasts();
-        updateEnemyBoard(enemyHitPositions);
-        updatePlayerBoard(salvoHandler.getPlayerDestroyedMasts());
-        enemyMastPositions
-                .stream()
-                .filter(data -> !data.getText().equals("X"))
-                .forEach(data -> {
-                    data.setDisable(false);
-                    data.setStyle(ButtonUtils.defaultButtonColorStyle());
-                });
+        if (salvoHandler.hasWinner()) {
+            boardViewUpdaterListener.update("The winner is: " + salvoHandler.getWinner());
+        } else {
+            List<Integer> enemyHitPositions = salvoHandler.getEnemyDestroyedMasts();
+            updateEnemyBoard(enemyHitPositions);
+            updatePlayerBoard(salvoHandler.getPlayerDestroyedMasts());
+            enemyMastPositions
+                    .stream()
+                    .filter(data -> !data.getText().equals("X"))
+                    .forEach(data -> {
+                        data.setDisable(false);
+                        data.setStyle(ButtonUtils.defaultButtonColorStyle());
+                    });
+        }
     }
 
     public void feedCannon(int cannonBall) {
         loadedCannons.add(cannonBall);
         long availableCannons = playerMastPositions
                 .stream()
-                .filter(data -> !data.isDisabled())
+                .filter(data -> !data.getText().equals("X"))
                 .count();
 
         if (loadedCannons.size() == availableCannons) {

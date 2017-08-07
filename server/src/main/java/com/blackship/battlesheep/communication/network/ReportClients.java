@@ -9,6 +9,7 @@ import com.blackship.battlesheep.utils.LogUtils;
 import org.slf4j.Logger;
 
 import java.io.IOException;
+import java.time.LocalTime;
 
 /**
  * @author milosz
@@ -33,8 +34,8 @@ public class ReportClients implements Listener {
         log.info("...MESSAGE FROM BUS: PLAYER WON -> " + winner + " ...");
         log.info("...Sending packet about won to clients...");
         try {
-            firstClient.write(PacketFactory.createWinner().setWinner(winner));
-            secondClient.write(PacketFactory.createWinner().setWinner(winner));
+            firstClient.write(PacketFactory.createWinner().setWinner(winner).setCreationTime(LocalTime.now()));
+            secondClient.write(PacketFactory.createWinner().setWinner(winner).setCreationTime(LocalTime.now()));
         } catch (IOException e) {
             e.printStackTrace();
         }

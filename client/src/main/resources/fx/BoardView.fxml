@@ -2,7 +2,11 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+
 <Pane maxHeight="600" maxWidth="1000" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.blackship.battlesheep.fx.controllers.BoardController">
     <children>
         <GridPane fx:id="playerGridPane" layoutX="14.0" layoutY="14.0" prefHeight="320.0" prefWidth="480.0">
@@ -57,7 +61,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
         </GridPane>
-      <Button fx:id="moveButton" layoutX="223.0" layoutY="417.0" mnemonicParsing="false" onAction="#handleCreateEnemyBoardActionButton" text="Create Enemy Board" />
+      <Button fx:id="moveButton" layoutX="223.0" layoutY="417.0" mnemonicParsing="false" onAction="#handleCreateEnemyBoardActionButton" text="Prepare Ships" />
       <TextArea fx:id="loggerInfoTextArea" editable="false" layoutX="552.0" layoutY="344.0" prefHeight="221.0" prefWidth="434.0" />
+      <Button layoutX="223.0" layoutY="455.0" mnemonicParsing="false" text="Show tutorial" onAction="#tutorialButtonActionHandler" fx:id="tutorialButton"/>
     </children>
 </Pane>

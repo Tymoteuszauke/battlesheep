@@ -18,7 +18,7 @@ public class NetworkPacketWinner extends BasePacket implements PacketWinner {
 
     @Override
     public String getWinner() {
-        return null;
+        return winner;
     }
 
     public NetworkPacketWinner setWinner(String winner) {
