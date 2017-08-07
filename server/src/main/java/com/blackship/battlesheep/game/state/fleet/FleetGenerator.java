@@ -13,7 +13,7 @@ public class FleetGenerator {
 
     private List<Integer> takenPositions;
 
-    public static List<List<Integer>> hardcodeShips() {
+    public List<List<Integer>> hardcodeShips() {
         List<List<Integer>> ships = new ArrayList<>();
         ships.add(Arrays.asList(12, 22, 32, 42));
         ships.add(Arrays.asList(14, 15, 16));

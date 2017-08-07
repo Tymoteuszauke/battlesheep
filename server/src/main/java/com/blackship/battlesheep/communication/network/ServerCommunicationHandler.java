@@ -104,18 +104,30 @@ public class ServerCommunicationHandler implements Listener {
         log.info(String.format("...%s has been sent to %s...", packetMove,  client));
     }
 
-    public void echo() throws IOException, ClassNotFoundException, WrongStateException, InterruptedException {
+    public void echo() throws ClassNotFoundException, WrongStateException, InterruptedException, IOException {
+        echo(false);
+    }
+
+    public void echo(boolean hardcodedFleet) throws IOException, ClassNotFoundException, WrongStateException, InterruptedException {
         log.info("..Starting echo...");
         ClientSocketHandler firstClient = clients.get(0);
         ClientSocketHandler secondClient = clients.get(1);
 
         log.info("...Generating fleets...");
-        FleetGenerator fleetGenerator = new FleetGenerator();
-        List<List<Integer>> firstPlayerBoard = fleetGenerator.generateRandomFleet();
-        List<List<Integer>> secondPlayerBoard = fleetGenerator.generateRandomFleet();
 
-        log.info("...Sending boards to clients...");
-        sendRandomBoardToClients(firstPlayerBoard, secondPlayerBoard);
+        List<List<Integer>> firstPlayerBoard;
+        List<List<Integer>> secondPlayerBoard;
+        FleetGenerator fleetGenerator = new FleetGenerator();
+        if (hardcodedFleet) {
+            firstPlayerBoard = fleetGenerator.hardcodeShips();
+            secondPlayerBoard = fleetGenerator.hardcodeShips();
+        } else {
+            firstPlayerBoard = fleetGenerator.generateRandomFleet();
+            secondPlayerBoard = fleetGenerator.generateRandomFleet();
+
+            log.info("...Sending boards to clients...");
+            sendRandomBoardToClients(firstPlayerBoard, secondPlayerBoard);
+        }
 
         Game game = new Game();
         game.startGame(firstPlayerBoard, secondPlayerBoard);
@@ -138,10 +150,8 @@ public class ServerCommunicationHandler implements Listener {
             if (game.getGameState() instanceof FinishedGameState) {
                 log.info("Game won!");
                 FinishedGameState winner = (FinishedGameState) game.getGameState();
-                log.info(winner.getWinner());
 
                 winnerBus.submit(new Event(new ReportClients(firstClient, secondClient, winner.getWinner())));
-
                 break;
             }
 
