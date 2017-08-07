@@ -27,6 +27,8 @@ public class SalvoHandler extends Observable {
 
     public SalvoHandler(AppClientCommunicationHandler appClientCommunicationHandler) {
         this.appClientCommunicationHandler = appClientCommunicationHandler;
+        enemyDestroyedMasts = new ArrayList<>();
+        playerDestroyedMasts = new ArrayList<>();
     }
 
     public boolean encounterSalvos() throws IOException, ClassNotFoundException {
@@ -36,8 +38,8 @@ public class SalvoHandler extends Observable {
         PacketMove packet = (PacketMove) appClientCommunicationHandler.read();
 
         if (((Packet)packet).getPacketType() == PacketType.MOVE) {
-            enemyDestroyedMasts.addAll(packet.getPositions().get(0));
-            playerDestroyedMasts.addAll(packet.getPositions().get(1));
+            enemyDestroyedMasts.addAll(packet.getPositions().get(1));
+            playerDestroyedMasts.addAll(packet.getPositions().get(0));
 
             setChanged();
             notifyObservers();
