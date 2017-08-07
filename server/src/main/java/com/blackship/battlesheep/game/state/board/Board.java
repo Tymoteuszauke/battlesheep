@@ -20,6 +20,4 @@ public interface Board {
      * @return State of the field that is being checked.
      */
     FieldState getPositionState(Integer shipPosition);
-
-    boolean isEmpty();
 }
