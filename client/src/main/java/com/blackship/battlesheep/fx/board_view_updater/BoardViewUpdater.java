@@ -83,8 +83,8 @@ public class BoardViewUpdater implements Observer {
                 .count();
 
         if (loadedCannons.size() == availableCannons) {
-            fireCannons(loadedCannons);
             playCannonSound();
+            fireCannons(loadedCannons);
         }
     }
 
