@@ -65,6 +65,7 @@ public class BoardViewUpdater implements Observer {
         salvoHandler = (SalvoHandler) o;
         if (salvoHandler.hasWinner()) {
             boardViewUpdaterListener.update("The winner is: " + salvoHandler.getWinner());
+            setButtonsDisabled();
         } else {
             List<Integer> enemyHitPositions = salvoHandler.getEnemyDestroyedMasts();
             updateEnemyBoard(enemyHitPositions);
@@ -77,6 +78,10 @@ public class BoardViewUpdater implements Observer {
                         data.setStyle(ButtonUtils.defaultButtonColorStyle());
                     });
         }
+    }
+
+    private void setButtonsDisabled() {
+        enemyMastPositions.forEach(button -> button.setDisable(true));
     }
 
     public void feedCannon(int cannonBall) {
