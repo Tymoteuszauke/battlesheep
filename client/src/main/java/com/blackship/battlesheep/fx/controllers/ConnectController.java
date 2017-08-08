@@ -3,6 +3,7 @@ package com.blackship.battlesheep.fx.controllers;
 import com.blackship.battlesheep.communication.network.AppClientCommunicationHandler;
 import com.blackship.battlesheep.communication.network.AppClientSocket;
 import com.blackship.battlesheep.communication.ClientCommunicationHandlerKeeper;
+import com.blackship.battlesheep.database.DatabaseConnectionHandler;
 import com.blackship.battlesheep.utils.LogUtils;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -40,7 +41,7 @@ public class ConnectController extends Application {
         log.info("...Starting battlesheep client...");
         primaryStage.setTitle("Blackship battlesheep");
         Parent root = FXMLLoader.load(getClass().getResource("/fx/ConnectView.fxml"));
-
+        DatabaseConnectionHandler.getConnection();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
