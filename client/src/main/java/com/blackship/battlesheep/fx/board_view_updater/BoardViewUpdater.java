@@ -1,5 +1,6 @@
 package com.blackship.battlesheep.fx.board_view_updater;
 
+import com.blackship.battlesheep.database.DatabaseConnectionHandler;
 import com.blackship.battlesheep.fx.SalvoHandler;
 import com.blackship.battlesheep.fx.utils.ButtonUtils;
 import com.blackship.battlesheep.utils.LogUtils;
@@ -66,6 +67,7 @@ public class BoardViewUpdater implements Observer {
         if (salvoHandler.hasWinner()) {
             boardViewUpdaterListener.update("The winner is: " + salvoHandler.getWinner());
             setButtonsDisabled();
+            savePlayerIntoDatabase(salvoHandler.getWinner());
         } else {
             List<Integer> enemyHitPositions = salvoHandler.getEnemyDestroyedMasts();
             updateEnemyBoard(enemyHitPositions);
@@ -134,5 +136,11 @@ public class BoardViewUpdater implements Observer {
             MediaPlayer mediaPlayer = new MediaPlayer(sound);
             mediaPlayer.play();
         }).start();
+    }
+
+    private void savePlayerIntoDatabase(String winner) {
+        DatabaseConnectionHandler.getConnection("jdbc:mysql://localhost:3306/battlesheep_db", "root", "dupadupa");
+        DatabaseConnectionHandler.saveWinnerResult(winner);
+        DatabaseConnectionHandler.closeConnection();
     }
 }

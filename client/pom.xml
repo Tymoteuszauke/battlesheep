@@ -30,6 +30,7 @@
         <jacocoFlag>-j</jacocoFlag>
         <findbugsResultFlag>-f</findbugsResultFlag>
         <checkstyleFlag>-c</checkstyleFlag>
+        <mysqlVersion>5.1.6</mysqlVersion>
     </properties>
 
     <dependencies>
@@ -37,6 +38,11 @@
             <groupId>com.blackship.battlesheep</groupId>
             <artifactId>common</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysqlVersion}</version>
         </dependency>
     </dependencies>
 

@@ -227,6 +227,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>${execVersion}</version>
             </plugin>
+
         </plugins>
     </build>
 

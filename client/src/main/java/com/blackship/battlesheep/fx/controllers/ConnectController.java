@@ -41,7 +41,6 @@ public class ConnectController extends Application {
         log.info("...Starting battlesheep client...");
         primaryStage.setTitle("Blackship battlesheep");
         Parent root = FXMLLoader.load(getClass().getResource("/fx/ConnectView.fxml"));
-        DatabaseConnectionHandler.getConnection();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
